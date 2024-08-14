@@ -1,0 +1,8 @@
+pre-commit:
+  parallel: true
+  commands:
+    linter:
+      run: npm run lint
+    format:
+      run: npm run format
+      trim_output: true
