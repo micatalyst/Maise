@@ -27,7 +27,16 @@ $informative-Blue: #1167d3; // White (5.38) | Dark_Gray (3.17) // Será usado co
   --bg-color: #{$light-blue};
   --base-text-color: #{$dark-gray};
 
+  --level-1-content-bg: #{$gray-3};
+  --level-2-content-bg: #{$gray-2};
+  --level-3-content-bg: #{$gray-1};
+
+  --icons-1-color: #{$dark-gray};
+
   --placeholders-text-color: #{$gray-2};
+  --input-background-color: #{$white};
+  --input-border-color: #{$gray-1};
+
   --captions-text-color: #{$gray-2};
   --additional-text-color: #{$gray-2};
 
@@ -37,11 +46,8 @@ $informative-Blue: #1167d3; // White (5.38) | Dark_Gray (3.17) // Será usado co
   --main-container: #{$white};
   --cards-bg: #{$white};
 
-  --icons-1-color: #{$dark-gray};
-
-  --level-1-content-bg: #{$gray-3};
-  --level-2-content-bg: #{$gray-2};
-  --level-3-content-bg: #{$gray-1};
+  --toolbar-background-color: #{$dark-gray};
+  --toolbar-text-color: #{$white};
 }
 
 /* [data-theme='dark'] {

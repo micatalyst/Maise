@@ -1,29 +1,24 @@
-/*
-  1. Use a more-intuitive box-sizing model.
-*/
+:root {
+  -webkit-tap-highlight-color: transparent;
+}
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
-/*
-    2. Remove default margin
-  */
+
 * {
   margin: 0;
+  padding: 0;
+  font: inherit;
 }
-/*
-    Typographic tweaks!
-    3. Add accessible line-height
-    4. Improve text rendering
-  */
+
 body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
-/*
-    5. Improve media defaults
-  */
+
 img,
 picture,
 video,
@@ -32,18 +27,30 @@ svg {
   display: block;
   max-width: 100%;
 }
-/*
-    6. Remove built-in form typography styles
-  */
+
+img {
+  height: auto;
+  width: auto;
+  vertical-align: middle;
+  font-style: italic;
+}
+
 input,
 button,
 textarea,
 select {
   font: inherit;
 }
-/*
-    7. Avoid text overflows
-  */
+
+button {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+a {
+  text-decoration: none;
+}
+
 p,
 h1,
 h2,

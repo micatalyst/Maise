@@ -1,9 +1,9 @@
-import { Inter } from "next/font/google";
-import "@/styles/Global.scss";
+import "@/styles/Global.scss"; // Scss Global
+
+//import fontAwesomeConfig from "@/lib/fontawesome";
+import "@/lib/fontawesome";
 
 import Header from "@/components/Header";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "MAISE",
@@ -13,7 +13,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="pt">
-      <body className={inter.className}>
+      <body>
         <Header />
         {children}
       </body>

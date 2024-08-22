@@ -1,7 +1,7 @@
 @import "../Variables.scss";
 
 .nav {
-  background-color: #2c2c2c;
+  background-color: var(--navbar-bg);
   border-radius: $border-radius-5;
   padding: 0 20px;
   height: max-content;
@@ -10,6 +10,20 @@
     list-style: none;
     display: flex;
     gap: 30px;
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-items: center;
+      height: 100%;
+      background-color: var(--navbar-bg);
+      border: 0;
+      padding: 12px 0;
+
+      svg {
+        height: 22px;
+      }
+    }
 
     a {
       cursor: pointer;

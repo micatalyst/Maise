@@ -1,4 +1,9 @@
 import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCircleHalfStroke,
+  faUniversalAccess,
+} from "@fortawesome/free-solid-svg-icons";
 
 import "@/styles/components/Navbar.scss";
 
@@ -20,6 +25,16 @@ export default function Navbar() {
         </li>
         <li>
           <Link href="/Sobre">Sobre</Link>
+        </li>
+        <li>
+          <button type="button">
+            <FontAwesomeIcon icon={faCircleHalfStroke} />
+          </button>
+        </li>
+        <li>
+          <button type="button">
+            <FontAwesomeIcon icon={faUniversalAccess} />
+          </button>
         </li>
       </ul>
     </nav>
