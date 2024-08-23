@@ -17,6 +17,7 @@
       justify-items: center;
       height: 100%;
       background-color: var(--navbar-bg);
+      border-radius: $border-radius-2; //Necessário mesmo que a border = 0 por causa do outline focus (motivos de coerência)
       border: 0;
       padding: 12px 0;
 
@@ -30,6 +31,8 @@
       font-weight: $bold;
       font-size: $nav-font-size;
       color: var(--navbar-elements-color);
+
+      border-radius: $border-radius-2;
 
       padding: 12px 0;
       text-decoration: none;

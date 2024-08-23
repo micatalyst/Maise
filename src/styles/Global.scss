@@ -1,5 +1,6 @@
-@import "Reset";
 @import "Variables";
+@import "Reset";
+
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
 
 :root {
@@ -9,7 +10,7 @@
 
 body {
   -moz-osx-font-smoothing: grayscale;
-  overflow: hidden;
+  //overflow: hidden;
   background-color: var(--bg-color);
   color: var(--base-text-color);
   /* min-height: 100svh; */

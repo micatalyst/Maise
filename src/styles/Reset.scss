@@ -42,6 +42,15 @@ select {
   font: inherit;
 }
 
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid $notice-Yellow;
+  outline-offset: 2px;
+}
+
 button {
   cursor: pointer;
   text-decoration: none;
@@ -60,9 +69,7 @@ h5,
 h6 {
   overflow-wrap: break-word;
 }
-/*
-    8. Create a root stacking context
-  */
+
 #root,
 #__next {
   isolation: isolate;

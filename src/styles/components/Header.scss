@@ -1,16 +1,17 @@
 @import "../Variables.scss";
 
 .header {
-  padding: $navbar-padding;
   display: grid;
   grid-template-columns: max-content 1fr max-content;
   gap: 70px;
+
+  padding: $header-padding;
 
   button {
     display: flex;
     align-items: center;
     justify-items: center;
-    gap: 8px;
+    column-gap: 8px;
 
     height: 100%;
 

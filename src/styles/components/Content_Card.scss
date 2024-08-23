@@ -1,0 +1,70 @@
+@import "../Variables.scss";
+
+.content-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: max-content 1fr max-content;
+  row-gap: 40px;
+
+  background-color: var(--cards-bg);
+  min-width: min-content;
+  width: $content-cards-width;
+  height: $content-cards-height;
+
+  padding: $content-cards-padding;
+
+  overflow: hidden;
+
+  .content-card-header {
+    display: grid;
+    grid-template-columns: auto auto;
+
+    justify-content: space-between;
+
+    .content-type {
+      display: grid;
+      grid-template-columns: max-content max-content;
+      column-gap: 4px;
+
+      align-items: center;
+
+      span {
+        font-size: $caption-text-size;
+        font-weight: $medium;
+      }
+    }
+  }
+
+  .content-card-title {
+    max-width: calc($content-cards-width - ($content-cards-padding * 2));
+
+    h4 {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+
+      line-clamp: 3;
+      box-orient: vertical;
+
+      white-space: normal;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      //white-space: nowrap;
+    }
+  }
+
+  .content-card-date {
+    display: grid;
+
+    justify-items: right;
+    align-self: end;
+
+    span {
+      font-size: $caption-text-size;
+      font-weight: $regular;
+      color: var(--placeholders-text-color);
+    }
+  }
+}
+
+

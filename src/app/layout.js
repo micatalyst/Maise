@@ -1,6 +1,5 @@
 import "@/styles/Global.scss"; // Scss Global
 
-//import fontAwesomeConfig from "@/lib/fontawesome";
 import "@/lib/fontawesome";
 
 import Header from "@/components/Header";

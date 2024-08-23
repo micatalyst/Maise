@@ -1,0 +1,24 @@
+@import "../Variables.scss";
+
+.content-cards-container {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax($content-cards-width, $content-cards-width)
+  );
+  column-gap: 40px;
+  row-gap: 50px;
+  justify-content: space-between;
+
+  /* display: grid;
+  grid-template-columns: repeat(5, max-content);
+  column-gap: 30px;
+  row-gap: 50px; 
+  justify-content: space-between; */
+
+  padding: $content-cards-container-padding;
+
+  /* @media (min-width: 600px) {
+    justify-content: space-between;
+  } */
+}

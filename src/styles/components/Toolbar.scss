@@ -6,6 +6,8 @@
   gap: 40px;
   align-items: center;
 
+  padding: $toolbar-padding;
+
   .search {
     display: grid;
     grid-template-columns: max-content max-content;
@@ -16,11 +18,11 @@
       border-radius: $border-radius-5;
       //border: 1px solid var(--input-border-color);
       border: 0;
-      outline: none;
+      //outline: none;
       width: 384px;
       padding: 12px 45px 12px 20px;
 
-      background-color: var(--input-background-color);
+      background-color: var(--input-bg-color);
       font-size: $body-text-2;
 
       color: var(--base-text-color);
@@ -36,7 +38,7 @@
       justify-items: center;
 
       border: 0;
-      border-radius: $border-radius-5;
+      border-radius: $border-radius-2;
       font-weight: $bold;
       font-size: $nav-font-size;
 
@@ -78,7 +80,7 @@
         font-weight: $medium;
 
         &:hover {
-          background-color: var(--toolbar-background-color);
+          background-color: var(--toolbar-bg-color);
           color: var(--toolbar-text-color);
         }
       }
