@@ -1,0 +1,33 @@
+@import "../Variables.scss";
+
+.content-typology-card {
+  display: grid;
+
+  background-color: var(--cards-bg);
+  width: $typology-cards-width;
+
+  padding: $content-typology-cards-padding;
+
+  h2 {
+    position: relative;
+    display: inline-block;
+
+    margin-bottom: 30px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 37px; // Adjust the width of the underline
+      height: 3px; // Thickness of the underline
+      background-color: var(--base-text-color); // Color of the underline
+    }
+  }
+
+  p {
+    span {
+      font-weight: $extra-bold;
+    }
+  }
+}

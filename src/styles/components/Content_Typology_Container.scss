@@ -1,0 +1,28 @@
+@import "../Variables.scss";
+
+.content-typology-pre-info {
+  .content-typology-pre-info-paragraph {
+    font-size: $body-text-1;
+    font-weight: $medium;
+
+    width: 70ch; // Aproximação da largura entendida pela universidade para parágrafos mais acessíveis com 80 a 100 caracteres por linha
+
+    margin: $content-typology-pre-info-margin;
+
+    span {
+      font-weight: $extra-bold;
+    }
+  }
+
+  .content-typology-card-container {
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax($typology-cards-width, $typology-cards-width)
+    );
+    column-gap: 30px;
+    row-gap: 40px;
+
+    justify-content: space-between;
+  }
+}

@@ -36,7 +36,8 @@
   }
 
   .content-card-title {
-    max-width: calc($content-cards-width - ($content-cards-padding * 2));
+    max-width: calc(#{$content-cards-width - ($content-cards-padding * 2)});
+    height: calc(#{$heading-4 * $line-height-value * 3});
 
     h4 {
       display: -webkit-box;
@@ -66,5 +67,3 @@
     }
   }
 }
-
-

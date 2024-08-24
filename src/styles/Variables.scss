@@ -57,10 +57,12 @@ $informative-Blue: #1167d3; // White (5.38) | Dark_Gray (3.17) // Será usado co
 // Spacing
 
 $header-padding: 40px 70px 0;
-$main-padding: 60px 70px 70px;
-$toolbar-padding: 0 0 40px;
+$main-padding: 40px 70px 70px;
+$toolbar-margin: 0 0 40px;
 $content-cards-container-padding: 0 0 40px;
 $content-cards-padding: 15px;
+$content-typology-pre-info-margin: 0 0 40px;
+$content-typology-cards-padding: 30px;
 
 // Border
 
@@ -77,7 +79,13 @@ $nav-padding: 12px 20px;
 $content-cards-width: 210px;
 $content-cards-height: 250px;
 
+// Typology Cards
+
+$typology-cards-width: 374px;
+
 // Typography
+
+$line-height-value: 1.5;
 
 $light: 300;
 $regular: 400;

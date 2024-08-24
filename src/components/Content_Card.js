@@ -21,10 +21,7 @@ export default function Content_Card() {
         {/* <FontAwesomeIcon icon={faBookmarkSolid} /> */}
       </div>
       <div className="content-card-title">
-        <h4>
-          Manual Laboratório Química Orgânica Manual Laboratório Química
-          Orgânica Manual Laboratório Química Orgânica
-        </h4>
+        <h4>Manual Laboratório Química Orgânica</h4>
       </div>
       <div className="content-card-date">
         <span>24-03-2024</span>
