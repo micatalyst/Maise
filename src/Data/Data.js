@@ -1,4 +1,4 @@
-export const products = [
+const products = [
   {
     id: 1,
     title: "Explosão Cultural 2024",
@@ -97,7 +97,7 @@ export const products = [
     idiom: "Português",
     publish_date: "19-11-2023",
     author: "Francisco Rodrigues",
-    saved: false,
+    saved: true,
   },
   {
     id: 10,
@@ -133,3 +133,5 @@ export const products = [
     saved: false,
   },
 ];
+
+export default products;

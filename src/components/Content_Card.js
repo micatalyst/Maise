@@ -9,22 +9,25 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import { faBookmark as faBookmarkSolid } from "@fortawesome/free-solid-svg-icons";
 
-export default function Content_Card() {
+export default function Content_Card(props) {
   return (
     <div className="content-card">
       <div className="content-card-header">
         <div className="content-type">
           <FontAwesomeIcon icon={faFileImage} />
-          <span>Imagem</span>
+          <span>{props.type}</span>
         </div>
-        <FontAwesomeIcon icon={faBookmarkRegular} />
-        {/* <FontAwesomeIcon icon={faBookmarkSolid} /> */}
+        {props.saved ? (
+          <FontAwesomeIcon icon={faBookmarkSolid} />
+        ) : (
+          <FontAwesomeIcon icon={faBookmarkRegular} />
+        )}
       </div>
       <div className="content-card-title">
-        <h4>Manual Laboratório Química Orgânica</h4>
+        <h4>{props.title}</h4>
       </div>
       <div className="content-card-date">
-        <span>24-03-2024</span>
+        <span>{props.date}</span>
       </div>
     </div>
   );

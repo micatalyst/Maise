@@ -24,5 +24,11 @@
     row-gap: 40px;
 
     justify-content: space-between;
+
+    //user-select: text;
+
+    a {
+      color: var(--base-text-color);
+    }
   }
 }

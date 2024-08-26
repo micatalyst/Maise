@@ -2,9 +2,11 @@
 
 .content-typology-card {
   display: grid;
+  grid-template-rows: repeat(4, max-content) 1fr;
 
   background-color: var(--cards-bg);
   width: $typology-cards-width;
+  min-height: 100%;
 
   padding: $content-typology-cards-padding;
 
@@ -25,9 +27,42 @@
     }
   }
 
-  p {
+  p.content-typology-info {
+    margin-bottom: 40px;
+
     span {
       font-weight: $extra-bold;
     }
+  }
+
+  p.content-typology-examples-title {
+    font-size: $body-text-2;
+    font-weight: $medium;
+    color: var(--content-typology-example-title);
+
+    margin-bottom: 10px;
+
+    height: max-content;
+  }
+
+  .type-examples-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: start;
+
+    margin-bottom: 50px;
+
+    span {
+      font-size: $body-text-2;
+      padding: 4px 8px;
+      background-color: var(--content-typology-examples-bg);
+      height: max-content;
+    }
+  }
+
+  .type-image-container {
+    display: grid;
+    align-items: end;
   }
 }

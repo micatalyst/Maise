@@ -3,7 +3,9 @@
 // É recomendado para elementos não textuais um Contrast Ratio (+3.1) em relação ao background | Nível AA
 // É recomendado para elementos de texto um Contrast Ratio (+4.5) em relação ao background | Nível AA
 
-$light-blue: #f1f1f5; // Background 1 // White (1.48) //
+$light-blue: #f1f1f5; // Background light-mode // White (1.48) //
+
+$light-gray: #d9d9d9; //
 
 $gray-1: #878787; // White (3.59) | Background_Color (3.19) //
 $gray-2: #6d6d6d; // White (5.17) // PlaceHolders (Texto) | Pequenas captions (Texto) | Informações de texto adicional (texto) //
@@ -48,6 +50,9 @@ $informative-Blue: #1167d3; // White (5.38) | Dark_Gray (3.17) // Será usado co
 
   --toolbar-bg-color: #{$dark-gray};
   --toolbar-text-color: #{$white};
+
+  --content-typology-example-title: #{$dark-gray};
+  --content-typology-examples-bg: #{$light-gray};
 }
 
 /* [data-theme='dark'] {
