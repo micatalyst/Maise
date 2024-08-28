@@ -12,7 +12,9 @@ export default function Navbar() {
     <nav className="nav" aria-label="Navegação principal">
       <ul>
         <li>
-          <Link href="/">Arquivo UA</Link>
+          <Link href="/" className="active">
+            Arquivo UA
+          </Link>
         </li>
         <li>
           <Link href="/Tornar_Acessivel">Tornar Acessível</Link>

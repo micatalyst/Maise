@@ -75,13 +75,18 @@
         padding: 4px 10px;
 
         background-color: $transparent;
-        //color: var(--toolbar-text-color);
+        color: var(--toolbar-text-color);
 
         font-weight: $medium;
 
         &:hover {
-          background-color: var(--toolbar-bg-color);
-          color: var(--toolbar-text-color);
+          background-color: var(--toolbar-text-color);
+          color: var(--toolbar-bg-color);
+        }
+
+        &.active {
+          background-color: var(--toolbar-text-color);
+          color: var(--toolbar-bg-color);
         }
       }
     }

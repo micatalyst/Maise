@@ -1,6 +1,6 @@
-import "@/styles/Global.scss"; // Scss Global
-
+import "@/styles/Global.scss";
 import "@/lib/fontawesome";
+import StoreProvider from "./StoreProvider";
 
 import Header from "@/components/Header";
 
@@ -13,8 +13,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="pt">
       <body>
-        <Header />
-        {children}
+        <StoreProvider>
+          <Header />
+          {children}
+        </StoreProvider>
       </body>
     </html>
   );
