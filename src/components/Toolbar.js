@@ -2,12 +2,82 @@
 
 import "@/styles/components/Toolbar.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass, faXmark } from "@fortawesome/free-solid-svg-icons";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function Toolbar({ onFilter }) {
+export default function Toolbar({ onFilter, onSearch }) {
   const [activeFilter, setActiveFilter] = useState("Tudo");
+
+  const [searchValue, setSearchValue] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
+
+  const handleInputChange = (event) => {
+    setSearchValue(event.target.value);
+  };
+
+  // Função para a pesquisa dos conteúdos (pelo teclado) por input recebido pelo utilizador
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      onSearch(searchValue);
+      if (searchValue) {
+        setHasSearched(true);
+      } else {
+        setHasSearched(false);
+      }
+    }
+  };
+
+  // Função para a pesquisa dos conteúdos (pelo botão) por input recebido pelo utilizador // Garante que o botão não é spamado caso não esteja a ser feita qualquer tipo de pesquisa
+
+  const handleSearchButton = () => {
+    onSearch(searchValue);
+    if (searchValue) {
+      setHasSearched(true);
+    } else {
+      setHasSearched(false);
+    }
+  };
+
+  const handleClearSearchButton = () => {
+    setHasSearched(false);
+    onSearch(""); // Garante que a pesquisa é limpa de qualquer filtragem por input de texto devolvendo / mostrando ao utilizador todos os possiveis conteúdos novamente
+    setSearchValue(""); // limpeza do campo de pesquisa / input de texto
+  };
+
+  useEffect(() => {
+    if (hasSearched) {
+      // Com este useEffect é possivel que o utilizador consiga o mesmo resultado acima apenas apagando todo o texto do campo de pesquisa
+      if (!searchValue) {
+        setHasSearched(false);
+        onSearch(searchValue);
+      }
+    }
+  }, [searchValue, hasSearched]);
+
+  // Componentes dos Botões de pesquisa e limpeza da pesquisa
+
+  const SearchButton = (
+    <button
+      type="button"
+      onMouseDown={handleSearchButton} // Troquei o onClic event pelo "onMouseDown" para prevenir que ao carregar no botão, este perde-se o seu focus provocando a funcionalidade do botão sem focus / de limpeza
+      aria-label="botão de pesquisa de conteúdos"
+    >
+      <FontAwesomeIcon icon={faMagnifyingGlass} />
+    </button>
+  );
+
+  const ClearSearchButton = (
+    <button
+      type="button"
+      onMouseDown={handleClearSearchButton}
+      aria-label="botão de limpeza da pesquisa dos conteúdos"
+    >
+      <FontAwesomeIcon icon={faXmark} />
+    </button>
+  );
 
   return (
     <div className="toolbar">
@@ -15,11 +85,25 @@ export default function Toolbar({ onFilter }) {
         <input
           type="text"
           placeholder="Pesquise por documentos e/ou autores"
+          value={searchValue}
           aria-label="Campo de pesquisa de conteúdos"
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
+          onFocus={() => {
+            setIsFocused(true);
+          }}
+          onBlur={() => {
+            setIsFocused(false);
+          }}
         />
-        <button type="button" aria-label="botão de pesquisa dos conteúdos">
-          <FontAwesomeIcon icon={faMagnifyingGlass} />
-        </button>
+        {/* Ternary Operator com as condições para a renderização dos botões */}
+        {!isFocused && !searchValue
+          ? SearchButton
+          : isFocused
+            ? SearchButton
+            : !isFocused && searchValue && !hasSearched
+              ? SearchButton
+              : ClearSearchButton}
       </div>
       <div className="filter" aria-label="Filtragem por tipos de conteúdo">
         <span>Filtrar por:</span>

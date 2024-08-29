@@ -15,7 +15,7 @@ const dataSlice = createSlice({
     },
     updateItem: (state, action) => {
       const index = state.data.findIndex(
-        (item) => item.id === action.payload.id
+        (item) => item.id === action.payload.id,
       );
       if (index !== -1) {
         state.data[index] = action.payload;
