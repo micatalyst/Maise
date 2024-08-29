@@ -42,7 +42,7 @@ export default function Arquivo_UA() {
       // Depois aqui posso colocar aqui o que acontece quando o array de resultados está vazio ou tratar disso apenas na outra página.
     } else {
       filteredDataLayer1 = Data.filter(
-        (item) => item.content_typology === filter
+        (item) => item.content_typology === filter,
       );
 
       // Depois aqui posso colocar aqui o que acontece quando o array de resultados está vazio ou tratar disso apenas na outra página.
@@ -50,7 +50,7 @@ export default function Arquivo_UA() {
 
     if (filterLevel2) {
       filteredDataLayer2 = filteredDataLayer1.filter(
-        (item) => item.title.toLowerCase().includes(searchParam.toLowerCase())
+        (item) => item.title.toLowerCase().includes(searchParam.toLowerCase()),
         // Depois aqui posso colocar aqui o que acontece quando o array de resultados está vazio ou tratar disso apenas na outra página.
       );
 
