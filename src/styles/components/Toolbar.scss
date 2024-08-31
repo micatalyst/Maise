@@ -80,13 +80,13 @@
         font-weight: $medium;
 
         &:hover {
-          background-color: var(--toolbar-text-color);
-          color: var(--toolbar-bg-color);
+          background-color: var(--toolbar-bg-hover-color);
+          color: var(--toolbar-bg-pressed-color);
         }
 
         &.active {
           background-color: var(--toolbar-text-color);
-          color: var(--toolbar-bg-color);
+          color: var(--toolbar-bg-pressed-color);
         }
       }
     }

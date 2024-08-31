@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 
 export default function Arquivo_UA() {
-  const Data = useSelector((state) => state.dataSlice.data);
+  const Data = useSelector((state) => state.dataSlice.data); // Chamada da informação da "API" para mostrar o conteúdo
 
   const [filterLevel2, setFilterLevel2] = useState(false);
   const [finalData, setFinalData] = useState([]);
@@ -42,7 +42,7 @@ export default function Arquivo_UA() {
       // Depois aqui posso colocar aqui o que acontece quando o array de resultados está vazio ou tratar disso apenas na outra página.
     } else {
       filteredDataLayer1 = Data.filter(
-        (item) => item.content_typology === filter,
+        (item) => item.content_typology === filter
       );
 
       // Depois aqui posso colocar aqui o que acontece quando o array de resultados está vazio ou tratar disso apenas na outra página.
@@ -50,7 +50,7 @@ export default function Arquivo_UA() {
 
     if (filterLevel2) {
       filteredDataLayer2 = filteredDataLayer1.filter(
-        (item) => item.title.toLowerCase().includes(searchParam.toLowerCase()),
+        (item) => item.title.toLowerCase().includes(searchParam.toLowerCase())
         // Depois aqui posso colocar aqui o que acontece quando o array de resultados está vazio ou tratar disso apenas na outra página.
       );
 
@@ -62,7 +62,7 @@ export default function Arquivo_UA() {
 
   return (
     <main className="main">
-      <Toolbar onFilter={handleFilter} onSearch={handleSearch} />
+      <Toolbar onFilterType={handleFilter} onSearch={handleSearch} />
       <Content_Cards_Container data={finalData} />
     </main>
   );

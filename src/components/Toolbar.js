@@ -6,7 +6,7 @@ import { faMagnifyingGlass, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 import { useState, useEffect } from "react";
 
-export default function Toolbar({ onFilter, onSearch }) {
+export default function Toolbar({ onFilterType, onSearch, onTabUpdate }) {
   const [activeFilter, setActiveFilter] = useState("Tudo");
 
   const [searchValue, setSearchValue] = useState("");
@@ -47,9 +47,19 @@ export default function Toolbar({ onFilter, onSearch }) {
     setSearchValue(""); // limpeza do campo de pesquisa / input de texto
   };
 
+  // Tab Update Filters Reset
+
+  useEffect(() => {
+    setHasSearched(false);
+    onSearch("");
+    setSearchValue("");
+    setActiveFilter("Tudo");
+  }, [onTabUpdate]);
+
+  // Com este useEffect é possivel que o utilizador consiga o mesmo resultado acima apenas apagando todo o texto do campo de pesquisa
+
   useEffect(() => {
     if (hasSearched) {
-      // Com este useEffect é possivel que o utilizador consiga o mesmo resultado acima apenas apagando todo o texto do campo de pesquisa
       if (!searchValue) {
         setHasSearched(false);
         onSearch(searchValue);
@@ -113,7 +123,7 @@ export default function Toolbar({ onFilter, onSearch }) {
             className={activeFilter === "Tudo" ? "active" : ""}
             aria-pressed={activeFilter === "Tudo"}
             onClick={() => {
-              onFilter("Tudo");
+              onFilterType("Tudo");
               setActiveFilter("Tudo");
             }}
           >
@@ -124,7 +134,7 @@ export default function Toolbar({ onFilter, onSearch }) {
             className={activeFilter === "Texto" ? "active" : ""}
             aria-pressed={activeFilter === "Texto"}
             onClick={() => {
-              onFilter("Texto");
+              onFilterType("Texto");
               setActiveFilter("Texto");
             }}
           >
@@ -135,7 +145,7 @@ export default function Toolbar({ onFilter, onSearch }) {
             className={activeFilter === "Imagem" ? "active" : ""}
             aria-pressed={activeFilter === "Imagem"}
             onClick={() => {
-              onFilter("Imagem");
+              onFilterType("Imagem");
               setActiveFilter("Imagem");
             }}
           >
@@ -146,7 +156,7 @@ export default function Toolbar({ onFilter, onSearch }) {
             className={activeFilter === "Áudio" ? "active" : ""}
             aria-pressed={activeFilter === "Áudio"}
             onClick={() => {
-              onFilter("Áudio");
+              onFilterType("Áudio");
               setActiveFilter("Áudio");
             }}
           >
@@ -157,7 +167,7 @@ export default function Toolbar({ onFilter, onSearch }) {
             className={activeFilter === "Vídeo" ? "active" : ""}
             aria-pressed={activeFilter === "Vídeo"}
             onClick={() => {
-              onFilter("Vídeo");
+              onFilterType("Vídeo");
               setActiveFilter("Vídeo");
             }}
           >

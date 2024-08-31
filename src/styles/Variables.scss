@@ -48,11 +48,22 @@ $informative-Blue: #1167d3; // White (5.38) | Dark_Gray (3.17) // Será usado co
   --main-container: #{$white};
   --cards-bg: #{$white};
 
-  --toolbar-bg-color: #{$white};
+  --toolbar-bg-pressed-color: #{$white};
+  --toolbar-bg-hover-color: #{$gray-3};
   --toolbar-text-color: #{$dark-gray};
+
+  --tab-text-color: #{$dark-gray};
+  --tab-border-color: #{$informative-Blue};
+  --tab-under-line-color: #{$light-gray};
 
   --content-typology-example-title: #{$dark-gray};
   --content-typology-examples-bg: #{$light-gray};
+
+  --button-1-border-color: #{$informative-Blue};
+  --button-1-bg-color: #{$white};
+  --button-1-text-color: #{$dark-gray};
+  --button-1-bg-hover-color: #{$informative-Blue};
+  --button-1-text-hover-color: #{$white};
 }
 
 /* [data-theme='dark'] {
@@ -63,11 +74,27 @@ $informative-Blue: #1167d3; // White (5.38) | Dark_Gray (3.17) // Será usado co
 
 $header-padding: 40px 70px 0;
 $main-padding: 40px 70px 70px;
+$tab-container-margin: 0 0 20px;
+$tab-padding-bottom: 10px;
 $toolbar-margin: 0 0 40px;
 $content-cards-container-padding: 0 0 40px;
 $content-cards-padding: 15px;
 $content-typology-pre-info-margin: 0 0 40px;
 $content-typology-cards-padding: 30px;
+
+$content-typology-card-min-height: calc(
+  100svh - #{nth($header-padding, 1)} - 48px - #{nth($main-padding, 1)} - #{nth(
+      $main-padding,
+      3
+    )} - 48px - #{nth($content-typology-pre-info-margin, 3)}
+);
+
+$content-typology-general-card-min-height: calc(
+  100svh - #{nth($header-padding, 1)} - 48px - #{nth($main-padding, 1)} - #{nth(
+      $main-padding,
+      3
+    )} - 37px - 2px - #{nth($tab-container-margin, 3)}
+);
 
 // Border
 
@@ -78,6 +105,10 @@ $border-radius-5: 5px;
 
 $nav-font-size: 16px;
 $nav-padding: 12px 20px;
+
+// Tab
+
+$tab-font-size: 18px;
 
 // Content Cards
 

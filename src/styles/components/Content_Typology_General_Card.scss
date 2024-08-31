@@ -1,0 +1,57 @@
+@import "../Variables.scss";
+
+.content-typology-general-card {
+  display: grid;
+  grid-template-rows: repeat(3, max-content) 1fr;
+
+  background-color: var(--cards-bg);
+  width: $typology-cards-width;
+  min-height: $content-typology-general-card-min-height;
+
+  padding: $content-typology-cards-padding;
+
+  h2 {
+    position: relative;
+    display: inline-block;
+
+    margin-bottom: 30px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 37px; // Adjust the width of the underline
+      height: 3px; // Thickness of the underline
+      background-color: var(--base-text-color); // Color of the underline
+    }
+  }
+
+  p.content-typology-general-info {
+    margin-bottom: 20px;
+
+    span {
+      font-weight: $extra-bold;
+    }
+  }
+
+  a.primary-button {
+    font-size: $button-text-size;
+    padding: 6px 12px;
+    border: 1px solid var(--button-1-border-color);
+
+    background-color: var(--button-1-bg-color);
+    color: var(--button-1-text-color);
+    width: max-content;
+
+    &:hover {
+      background-color: var(--button-1-bg-hover-color);
+      color: var(--button-1-text-hover-color);
+    }
+  }
+
+  .type-image-container {
+    display: grid;
+    align-items: end;
+  }
+}

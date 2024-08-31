@@ -49,6 +49,12 @@ h5 {
   font-size: $heading-5;
 }
 
+.RightSide-Grid-Container {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr max-content;
+}
+
 /* .main {
   padding: $main-padding;
   min-height: 100svh;

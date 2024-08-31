@@ -1,0 +1,34 @@
+@import "../Variables.scss";
+
+.tab-container {
+  display: flex;
+  gap: 30px;
+
+  margin: $tab-container-margin;
+
+  border-bottom: 2px solid var(--tab-under-line-color);
+
+  button {
+    border: 0;
+    padding-bottom: $tab-padding-bottom;
+
+    // serve para alinhar a borda da "tab" com a linha do "tab container"
+    transform: translateY(2px);
+
+    background-color: $transparent;
+    color: var(--tab-text-color);
+
+    font-size: $tab-font-size;
+    font-weight: $bold;
+
+    &:hover {
+      border-bottom: 2px solid var(--tab-border-color);
+      padding-bottom: calc($tab-padding-bottom - 2px);
+    }
+
+    &.active {
+      border-bottom: 2px solid var(--tab-border-color);
+      padding-bottom: calc($tab-padding-bottom - 2px);
+    }
+  }
+}

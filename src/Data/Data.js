@@ -8,8 +8,9 @@ const products = [
     content_category: "Poster",
     idiom: "Português",
     publish_date: "12-06-2024",
-    author: "João Pereira",
-    saved: true,
+    author: "Miguel Teixeira",
+    num_mecan: 100402,
+    saved: false,
   },
   {
     id: 2,
@@ -20,6 +21,7 @@ const products = [
     idiom: "Português",
     publish_date: "30-05-2024",
     author: "Maria Silva",
+    num_mecan: 99348,
     saved: false,
   },
   {
@@ -31,6 +33,7 @@ const products = [
     idiom: "Português",
     publish_date: "15-05-2024",
     author: "Pedro Santos",
+    num_mecan: 100176,
     saved: false,
   },
   {
@@ -42,6 +45,7 @@ const products = [
     idiom: "Português",
     publish_date: "08-04-2024",
     author: "Ana Costa",
+    num_mecan: 98567,
     saved: false,
   },
   {
@@ -53,6 +57,7 @@ const products = [
     idiom: "Português",
     publish_date: "24-03-2024",
     author: "Miguel Ferreira",
+    num_mecan: 97213,
     saved: false,
   },
   {
@@ -64,6 +69,7 @@ const products = [
     idiom: "Português",
     publish_date: "14-02-2024",
     author: "Sofia Martins",
+    num_mecan: 99845,
     saved: true,
   },
   {
@@ -75,6 +81,7 @@ const products = [
     idiom: "Português",
     publish_date: "22-01-2024",
     author: "António Oliveira",
+    num_mecan: 97562,
     saved: true,
   },
   {
@@ -86,6 +93,7 @@ const products = [
     idiom: "Português",
     publish_date: "06-12-2023",
     author: "Inês Carvalho",
+    num_mecan: 98790,
     saved: false,
   },
   {
@@ -97,6 +105,7 @@ const products = [
     idiom: "Português",
     publish_date: "19-11-2023",
     author: "Francisco Rodrigues",
+    num_mecan: 99024,
     saved: true,
   },
   {
@@ -108,6 +117,7 @@ const products = [
     idiom: "Português",
     publish_date: "02-10-2023",
     author: "Isabel Almeida",
+    num_mecan: 100012,
     saved: false,
   },
   {
@@ -119,6 +129,7 @@ const products = [
     idiom: "Português",
     publish_date: "15-09-2023",
     author: "Luís Ferreira",
+    num_mecan: 97987,
     saved: false,
   },
   {
@@ -130,6 +141,7 @@ const products = [
     idiom: "Português",
     publish_date: "01-09-2023",
     author: "Carla Mendes",
+    num_mecan: 99234,
     saved: false,
   },
 ];
