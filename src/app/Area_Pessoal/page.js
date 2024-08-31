@@ -62,7 +62,7 @@ export default function Area_Pessoal() {
       // Depois aqui posso colocar aqui o que acontece quando o array de resultados está vazio ou tratar disso apenas na outra página.
     } else {
       filteredDataLayer1 = filteredDataLayer0.filter(
-        (item) => item.content_typology === filterType
+        (item) => item.content_typology === filterType,
       );
 
       // Depois aqui posso colocar aqui o que acontece quando o array de resultados está vazio ou tratar disso apenas na outra página.
@@ -70,7 +70,7 @@ export default function Area_Pessoal() {
 
     if (filterLevel2) {
       filteredDataLayer2 = filteredDataLayer1.filter(
-        (item) => item.title.toLowerCase().includes(searchParam.toLowerCase())
+        (item) => item.title.toLowerCase().includes(searchParam.toLowerCase()),
         // Depois aqui posso colocar aqui o que acontece quando o array de resultados está vazio ou tratar disso apenas na outra página.
       );
 
