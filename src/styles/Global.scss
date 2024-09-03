@@ -27,11 +27,13 @@ body {
 h1 {
   font-weight: $bold;
   font-size: $heading-1;
+  margin-bottom: $heading-1-margin-bottom;
 }
 
 h2 {
   font-weight: $bold;
   font-size: $heading-2;
+  margin-bottom: $heading-2-margin-bottom;
 }
 
 h3 {
@@ -53,6 +55,37 @@ h5 {
   display: grid;
   gap: 10px;
   grid-template-columns: 1fr max-content;
+}
+
+a.primary-button {
+  font-size: $primary-button-text-size;
+  padding: 8px 12px;
+  border: 1px solid var(--button-primary-border-color);
+
+  background-color: var(--button-primary-bg-color);
+  color: var(--button-primary-text-color);
+  width: max-content;
+
+  &:hover {
+    background-color: var(--button-primary-bg-hover-color);
+    color: var(--button-primary-text-hover-color);
+  }
+}
+
+button.forms-button {
+  font-size: $forms-button-text-size;
+  font-weight: $semi-bold;
+  padding: 6px 12px;
+  border: 3px solid var(--button-forms-border-color);
+
+  background-color: var(--button-forms-bg-color);
+  color: var(--button-forms-text-color);
+  width: max-content;
+
+  &:hover {
+    background-color: var(--button-forms-bg-hover-color);
+    color: var(--button-forms-text-hover-color);
+  }
 }
 
 /* .main {

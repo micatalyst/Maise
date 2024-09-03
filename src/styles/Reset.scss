@@ -48,7 +48,7 @@ input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
   outline: 2px solid $notice-Yellow;
-  outline-offset: 2px;
+  outline-offset: 0;
 }
 
 button {

@@ -14,16 +14,16 @@
     position: relative;
     display: inline-block;
 
-    margin-bottom: 30px;
+    //margin-bottom: 20px;
 
     &::before {
       content: "";
       position: absolute;
       bottom: -5px;
       left: 0;
-      width: 37px; // Adjust the width of the underline
-      height: 3px; // Thickness of the underline
-      background-color: var(--base-text-color); // Color of the underline
+      width: 37px;
+      height: 3px;
+      background-color: var(--base-text-color);
     }
   }
 
@@ -32,21 +32,6 @@
 
     span {
       font-weight: $extra-bold;
-    }
-  }
-
-  a.primary-button {
-    font-size: $button-text-size;
-    padding: 6px 12px;
-    border: 1px solid var(--button-1-border-color);
-
-    background-color: var(--button-1-bg-color);
-    color: var(--button-1-text-color);
-    width: max-content;
-
-    &:hover {
-      background-color: var(--button-1-bg-hover-color);
-      color: var(--button-1-text-hover-color);
     }
   }
 

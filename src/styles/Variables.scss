@@ -47,6 +47,7 @@ $informative-Blue: #1167d3; // White (5.38) | Dark_Gray (3.17) // Será usado co
 
   --main-container: #{$white};
   --cards-bg: #{$white};
+  --forms-container-bg: #{$white};
 
   --toolbar-bg-pressed-color: #{$white};
   --toolbar-bg-hover-color: #{$gray-3};
@@ -59,11 +60,17 @@ $informative-Blue: #1167d3; // White (5.38) | Dark_Gray (3.17) // Será usado co
   --content-typology-example-title: #{$dark-gray};
   --content-typology-examples-bg: #{$light-gray};
 
-  --button-1-border-color: #{$informative-Blue};
-  --button-1-bg-color: #{$white};
-  --button-1-text-color: #{$dark-gray};
-  --button-1-bg-hover-color: #{$informative-Blue};
-  --button-1-text-hover-color: #{$white};
+  --button-primary-border-color: #{$informative-Blue};
+  --button-primary-bg-color: #{$white};
+  --button-primary-text-color: #{$dark-gray};
+  --button-primary-bg-hover-color: #{$informative-Blue};
+  --button-primary-text-hover-color: #{$white};
+
+  --button-forms-border-color: #{$positive-Green};
+  --button-forms-bg-color: #{$white};
+  --button-forms-text-color: #{$dark-gray};
+  --button-forms-bg-hover-color: #{$positive-Green};
+  --button-forms-text-hover-color: #{$white};
 }
 
 /* [data-theme='dark'] {
@@ -77,6 +84,7 @@ $main-padding: 40px 70px 70px;
 $tab-container-margin: 0 0 20px;
 $tab-padding-bottom: 10px;
 $toolbar-margin: 0 0 40px;
+$input-padding: 12px 45px 12px 20px;
 $content-cards-container-padding: 0 0 40px;
 $content-cards-padding: 15px;
 $content-typology-pre-info-margin: 0 0 40px;
@@ -95,6 +103,8 @@ $content-typology-general-card-min-height: calc(
       3
     )} - 37px - 2px - #{nth($tab-container-margin, 3)}
 );
+
+$forms-step1-padding: 30px 40px;
 
 // Border
 
@@ -136,12 +146,22 @@ $heading-3: 18px;
 $heading-4: 16px;
 $heading-5: 15px;
 
+$heading-1-margin-bottom: 40px;
+$heading-2-margin-bottom: 20px;
+$heading-3-margin-bottom: 15px;
+$heading-4-margin-bottom: 15px; // Em alguns casos não se aplicam as margens (Ex: titulos dos cards de conteúdo no Arquivo UA)
+$heading-5-margin-bottom: 15px;
+
 $body-text-1: 16px;
 $body-text-2: 15px;
 
 $overline-text-size: 15px;
-$button-text-size: 15px;
 $caption-text-size: 12px;
+
+$primary-button-text-size: 15px;
+
+$forms-button-text-size: 22px;
+$forms-label-text-size: 18px;
 
 // MediaQueries
 

@@ -97,6 +97,7 @@ export default function Toolbar({ onFilterType, onSearch, onTabUpdate }) {
           placeholder="Pesquise por documentos e/ou autores"
           value={searchValue}
           aria-label="Campo de pesquisa de conteúdos"
+          aria-keyshortcuts="Enter" // ponderar em fazer um sistema que realmente distribui automaticamente os aria-keyshortcuts (em caso da existência de keyshortcuts).
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
           onFocus={() => {

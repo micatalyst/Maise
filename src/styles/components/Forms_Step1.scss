@@ -1,0 +1,52 @@
+@import "../Variables.scss";
+
+.forms-step1-container {
+  display: grid;
+  grid-template-columns: max-content 1fr max-content;
+  gap: 40px;
+
+  width: 100%;
+  background-color: var(--forms-container-bg);
+
+  padding: $forms-step1-padding;
+
+  .forms-triple-input {
+    display: grid;
+    grid-template-columns: max-content;
+  }
+
+  .forms-triple-input {
+    display: grid;
+    grid-template-columns: max-content;
+    gap: 40px;
+  }
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+
+  font-size: $forms-label-text-size;
+  font-weight: bold;
+}
+
+input {
+  border-radius: $border-radius-5;
+  border: 1px solid var(--input-border-color);
+  //outline: none;
+  width: 384px;
+  padding: $input-padding;
+
+  background-color: var(--input-bg-color);
+  font-size: $body-text-2;
+
+  color: var(--base-text-color);
+
+  &::placeholder {
+    color: var(--placeholders-text-color);
+  }
+
+  &:focus {
+    border: 1px solid $transparent;
+  }
+}

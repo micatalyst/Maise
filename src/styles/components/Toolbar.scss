@@ -16,11 +16,10 @@
 
     input {
       border-radius: $border-radius-5;
-      //border: 1px solid var(--input-border-color);
       border: 0;
       //outline: none;
       width: 384px;
-      padding: 12px 45px 12px 20px;
+      padding: $input-padding;
 
       background-color: var(--input-bg-color);
       font-size: $body-text-2;

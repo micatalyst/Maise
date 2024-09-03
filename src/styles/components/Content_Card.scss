@@ -13,6 +13,11 @@
 
   padding: $content-cards-padding;
 
+  &:hover {
+    border: 3px solid var(--button-primary-border-color);
+    padding: calc($content-cards-padding - 3px);
+  }
+
   overflow: hidden;
 
   .content-card-header {

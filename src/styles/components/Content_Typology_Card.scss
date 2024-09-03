@@ -11,20 +11,25 @@
 
   padding: $content-typology-cards-padding;
 
+  &:hover {
+    border: 3px solid var(--button-primary-border-color);
+    padding: calc($content-typology-cards-padding - 3px);
+  }
+
   h2 {
     position: relative;
     display: inline-block;
 
-    margin-bottom: 30px;
+    //margin-bottom: 20px;
 
     &::before {
       content: "";
       position: absolute;
       bottom: -5px;
       left: 0;
-      width: 37px; // Adjust the width of the underline
-      height: 3px; // Thickness of the underline
-      background-color: var(--base-text-color); // Color of the underline
+      width: 37px;
+      height: 3px;
+      background-color: var(--base-text-color);
     }
   }
 
