@@ -38,6 +38,7 @@ $informative-Blue: #1167d3; // White (5.38) | Dark_Gray (3.17) // Será usado co
   --placeholders-text-color: #{$gray-2};
   --input-bg-color: #{$white};
   --input-border-color: #{$gray-1};
+  --input-file-type-color: #{$gray-1};
 
   --captions-text-color: #{$gray-2};
   --additional-text-color: #{$gray-2};
@@ -66,6 +67,12 @@ $informative-Blue: #1167d3; // White (5.38) | Dark_Gray (3.17) // Será usado co
   --button-primary-bg-hover-color: #{$informative-Blue};
   --button-primary-text-hover-color: #{$white};
 
+  --button-negative-border-color: #{$negative-Red};
+  --button-negative-bg-color: #{$white};
+  --button-negative-text-color: #{$dark-gray};
+  --button-negative-bg-hover-color: #{$negative-Red};
+  --button-negative-text-hover-color: #{$white};
+
   --button-forms-border-color: #{$positive-Green};
   --button-forms-bg-color: #{$white};
   --button-forms-text-color: #{$dark-gray};
@@ -85,6 +92,7 @@ $tab-container-margin: 0 0 20px;
 $tab-padding-bottom: 10px;
 $toolbar-margin: 0 0 40px;
 $input-padding: 12px 45px 12px 20px;
+$input-forms-padding: 12px 20px;
 $content-cards-container-padding: 0 0 40px;
 $content-cards-padding: 15px;
 $content-typology-pre-info-margin: 0 0 40px;
@@ -159,9 +167,13 @@ $overline-text-size: 15px;
 $caption-text-size: 12px;
 
 $primary-button-text-size: 15px;
+$negative-button-text-size: 15px;
 
 $forms-button-text-size: 22px;
 $forms-label-text-size: 18px;
+$forms-input-file-p: 22px;
+
+$dropzone-file-type-text-size: 57px;
 
 // MediaQueries
 
