@@ -170,10 +170,14 @@ export default function Text_Forms_Step1({
           />
         </div>
         {file ? (
-          <div className="forms-input-file">
-            {/* Aqui em cima, acrescentei um "aria-live" para notificar os leitores de ecrâ (de forma "amigável" / sem interromper outras mensagens) que este conteudo atualizou */}
+          <div className="forms-input-file" aria-live="assertive">
             <label>Conteúdo original</label>
-            <div className="file-uploded-container">
+            <div
+              className="file-uploded-container"
+              aria-label="Acabaste de carregar aqui um documento"
+              tabIndex="0"
+            >
+              {/* Aqui em cima, acrescentei um "aria-live" para notificar os leitores de ecrâ (de forma "amigável" / sem interromper outras mensagens) que este conteudo atualizou */}
               <div className="file-uploded-zone">
                 <div className="file-side-bar">
                   <FontAwesomeIcon icon={faFileLines} />
@@ -213,10 +217,21 @@ export default function Text_Forms_Step1({
             </div>
           </div>
         ) : (
-          <div className="forms-input-file">
+          <div
+            className="forms-input-file"
+            aria-live="assertive"
+            aria-label="procura o documento, que pretendes carregar, presente no teu PC"
+          >
             {/* Aqui em cima, acrescentei um "aria-live" para notificar os leitores de ecrâ (de forma "amigável" / sem interromper outras mensagens) que este conteudo atualizou */}
             <label htmlFor="fileImport">Conteúdo original</label>
-            <div {...getRootProps({ className: "dropzone" })}>
+            <div
+              {...getRootProps({
+                className: "dropzone",
+                tabIndex: 0,
+                "aria-labelledby": "dropzone-label",
+              })}
+            >
+              {/* Estou a colocar o tabIndex para grantir que seja navegavel por teclado */}
               <input {...getInputProps({ id: "fileImport" })} />
               <div className="dropzone-info">
                 <FontAwesomeIcon icon={faFileArrowUp} />
@@ -285,6 +300,7 @@ export default function Text_Forms_Step1({
             className={nextStep ? "forms-button" : "forms-button invalid"}
             type="button"
             onClick={handleNextStep}
+            aria-disabled={nextStep ? false : true}
           >
             Continuar
           </button>
