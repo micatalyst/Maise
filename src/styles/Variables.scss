@@ -22,7 +22,8 @@ $transparent: rgba(255, 255, 255, 0); // Transparente
 
 $negative-Red: #d33535; // White (4.85) | Dark_Gray (3.51) //
 $notice-Yellow: #f3b21b; // Dark_Gray (9.08) //
-$positive-Green: #86cc3f; // Dark_Gray (8.70) //
+$positive-Green-dark-mode: #86cc3f; // Dark_Gray (8.70) //
+$positive-Green-light-mode: #1c810e; // White (5.00)
 $informative-Blue: #1167d3; // White (5.38) | Dark_Gray (3.17) // Será usado como cor substituta do Ciano_Studying por ser bem mais agradável e acessível.
 
 :root {
@@ -73,11 +74,16 @@ $informative-Blue: #1167d3; // White (5.38) | Dark_Gray (3.17) // Será usado co
   --button-negative-bg-hover-color: #{$negative-Red};
   --button-negative-text-hover-color: #{$white};
 
-  --button-forms-border-color: #{$positive-Green};
+  --button-forms-border-color: #{$positive-Green-light-mode};
   --button-forms-bg-color: #{$white};
   --button-forms-text-color: #{$dark-gray};
-  --button-forms-bg-hover-color: #{$positive-Green};
+  --button-forms-bg-hover-color: #{$positive-Green-light-mode};
   --button-forms-text-hover-color: #{$white};
+  --invalid-button-forms-border-color: #{$gray-1};
+  --invalid-button-forms-bg-color: #{$light-gray};
+
+  --forms-step1-feedback-bar-color: #{$gray-2};
+  --forms-step1-valid-feedback-bar-color: #{$positive-Green-light-mode};
 }
 
 /* [data-theme='dark'] {

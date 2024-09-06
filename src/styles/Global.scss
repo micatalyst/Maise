@@ -95,7 +95,7 @@ h5 {
   } */
 }
 
-button.forms-button {
+.forms-button {
   font-size: $forms-button-text-size;
   font-weight: $semi-bold;
   padding: 6px 12px;
@@ -110,9 +110,15 @@ button.forms-button {
     color: var(--button-forms-text-hover-color);
   }
 
-  /* &:focus {
-    //border: 2px solid $notice-Yellow;
-  } */
+  &.invalid {
+    border-color: var(--invalid-button-forms-border-color);
+    background-color: var(--invalid-button-forms-bg-color);
+
+    &:hover {
+      background-color: var(--invalid-button-forms-bg-color);
+      color: var(--button-forms-text-color);
+    }
+  }
 }
 
 /* .main {

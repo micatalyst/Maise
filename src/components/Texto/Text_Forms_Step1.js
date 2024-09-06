@@ -1,7 +1,12 @@
 import "@/styles/components/Forms_Step1.scss";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretDown, faFileArrowUp } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCaretDown,
+  faCheck,
+  faFileArrowUp,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import { faFileLines } from "@fortawesome/free-regular-svg-icons";
 
 import React, { useState, useEffect } from "react";
@@ -11,15 +16,47 @@ export default function Text_Forms_Step1({
   formData,
   setFormData,
   handleNextStep,
+  nextStep,
+  setNextStep,
+  file,
+  setFile,
 }) {
-  const [file, setFile] = useState(null);
+  //const [file, setFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState("");
   const [error, setError] = useState("");
 
+  const [inputTitleValid, setInputTitleValid] = useState(false);
+  const [inputContent_CategoryValid, setInputContent_CategoryValid] =
+    useState(false);
+  const [inputLanguageValid, setInputLanguageValid] = useState(false);
+  const [inputDescriptionValid, setInputDescriptionValid] = useState(false);
+  const [inputFileValid, setInputFileValid] = useState(false);
+
   useEffect(() => {
-    console.log(file);
-    console.log(previewUrl);
-  }, [file, previewUrl]);
+    formData.title ? setInputTitleValid(true) : setInputTitleValid(false);
+    formData.content_category
+      ? setInputContent_CategoryValid(true)
+      : setInputContent_CategoryValid(false);
+    formData.language
+      ? setInputLanguageValid(true)
+      : setInputLanguageValid(false);
+    formData.description
+      ? setInputDescriptionValid(true)
+      : setInputDescriptionValid(false);
+    file ? setInputFileValid(true) : setInputFileValid(false);
+
+    if (
+      formData.title &&
+      formData.content_category &&
+      formData.language &&
+      formData.description &&
+      file
+    ) {
+      setNextStep(true);
+    } else {
+      setNextStep(false);
+    }
+  }, [formData, setNextStep, file]);
 
   const handlePreview = () => {
     if (previewUrl) {
@@ -81,9 +118,12 @@ export default function Text_Forms_Step1({
               <select
                 id="content_category"
                 value={formData.content_category}
-                onChange={(e) =>
-                  setFormData({ ...formData, content_category: e.target.value })
-                }
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    content_category: e.target.value,
+                  });
+                }}
                 required
               >
                 <option value="" disabled>
@@ -103,9 +143,9 @@ export default function Text_Forms_Step1({
               <select
                 id="language"
                 value={formData.language}
-                onChange={(e) =>
-                  setFormData({ ...formData, language: e.target.value })
-                }
+                onChange={(e) => {
+                  setFormData({ ...formData, language: e.target.value });
+                }}
                 required
               >
                 <option value="" disabled>
@@ -123,9 +163,9 @@ export default function Text_Forms_Step1({
             id="description"
             placeholder="Nome do Conteúdo..."
             value={formData.description}
-            onChange={(e) =>
-              setFormData({ ...formData, description: e.target.value })
-            }
+            onChange={(e) => {
+              setFormData({ ...formData, description: e.target.value });
+            }}
             required
           />
         </div>
@@ -194,14 +234,55 @@ export default function Text_Forms_Step1({
           </div>
         )}
       </div>
-      <div className="forms-step1-navigation-bar">
-        <div>
-          <p>Campos obrigatórios para continuar:</p>
-          <span>Nome</span>
+      <div className="forms-step1-bottom-bar">
+        <div className="forms-step1-input-feedback">
+          <p>Preencha todos os campos:</p>
+          <div className="forms-step1-input-feedback-container">
+            <div className={inputTitleValid ? "valid" : ""}>
+              {inputTitleValid ? (
+                <FontAwesomeIcon icon={faCheck} />
+              ) : (
+                <FontAwesomeIcon icon={faXmark} />
+              )}
+              <span>Nome</span>
+            </div>
+            <div className={inputContent_CategoryValid ? "valid" : ""}>
+              {inputContent_CategoryValid ? (
+                <FontAwesomeIcon icon={faCheck} />
+              ) : (
+                <FontAwesomeIcon icon={faXmark} />
+              )}
+              <span>Conteúdo</span>
+            </div>
+            <div className={inputLanguageValid ? "valid" : ""}>
+              {inputLanguageValid ? (
+                <FontAwesomeIcon icon={faCheck} />
+              ) : (
+                <FontAwesomeIcon icon={faXmark} />
+              )}
+              <span>Idioma</span>
+            </div>
+            <div className={inputDescriptionValid ? "valid" : ""}>
+              {inputDescriptionValid ? (
+                <FontAwesomeIcon icon={faCheck} />
+              ) : (
+                <FontAwesomeIcon icon={faXmark} />
+              )}
+              <span>Descrição</span>
+            </div>
+            <div className={inputFileValid ? "valid" : ""}>
+              {inputFileValid ? (
+                <FontAwesomeIcon icon={faCheck} />
+              ) : (
+                <FontAwesomeIcon icon={faXmark} />
+              )}
+              <span>Conteúdo original</span>
+            </div>
+          </div>
         </div>
         <div>
           <button
-            className="forms-button"
+            className={nextStep ? "forms-button" : "forms-button invalid"}
             type="button"
             onClick={handleNextStep}
           >
