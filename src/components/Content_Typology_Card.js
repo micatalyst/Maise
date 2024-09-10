@@ -85,7 +85,8 @@ export default function Content_Typology_Card(props) {
         return (
           <Image
             src="/images/type_Text.png"
-            layout="responsive"
+            //layout="responsive"
+            priority={true}
             alt="livro aberto"
             width={1252}
             height={804}
@@ -95,7 +96,8 @@ export default function Content_Typology_Card(props) {
         return (
           <Image
             src="/images/type_Image.png"
-            layout="responsive"
+            //layout="responsive"
+            priority={true}
             alt="livro aberto"
             width={1252}
             height={804}
@@ -105,7 +107,8 @@ export default function Content_Typology_Card(props) {
         return (
           <Image
             src="/images/type_Audio.png"
-            layout="responsive"
+            //layout="responsive"
+            priority={true}
             alt="livro aberto"
             width={1252}
             height={804}
@@ -115,7 +118,8 @@ export default function Content_Typology_Card(props) {
         return (
           <Image
             src="/images/type_Video.png"
-            layout="responsive"
+            //layout="responsive"
+            priority={true}
             alt="livro aberto"
             width={1252}
             height={804}

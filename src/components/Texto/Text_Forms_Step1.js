@@ -37,7 +37,7 @@ export default function Text_Forms_Step1({
     formData.content_category
       ? setInputContent_CategoryValid(true)
       : setInputContent_CategoryValid(false);
-    formData.language
+    formData.original_content_language
       ? setInputLanguageValid(true)
       : setInputLanguageValid(false);
     formData.description
@@ -137,14 +137,17 @@ export default function Text_Forms_Step1({
             </div>
           </div>
           <div>
-            <label htmlFor="language">Idioma</label>
+            <label htmlFor="original_content_language">Idioma</label>
             <div className="forms-select">
               <FontAwesomeIcon icon={faCaretDown} />
               <select
-                id="language"
-                value={formData.language}
+                id="original_content_language"
+                value={formData.original_content_language}
                 onChange={(e) => {
-                  setFormData({ ...formData, language: e.target.value });
+                  setFormData({
+                    ...formData,
+                    original_content_language: e.target.value,
+                  });
                 }}
                 required
               >

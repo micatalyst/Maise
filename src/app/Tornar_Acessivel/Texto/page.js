@@ -13,7 +13,8 @@ export default function Texto() {
     title: "",
     description: "",
     content_category: "",
-    language: "",
+    original_content_language: "",
+    created_content_language: "",
     Content_Upload: "",
   });
 
@@ -28,8 +29,9 @@ export default function Texto() {
   };
 
   const handleSubmit = async (e) => {
-    /* e.preventDefault();
-    const response = await fetch('/api/submitForm', {
+    e.preventDefault(); // Este código é importante para evitar que o utilizador envie o formulário sem querer ao precionar "enter" enquanto prencher algum input dentro do forms.
+
+    /* const response = await fetch('/api/submitForm', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -48,7 +50,7 @@ export default function Texto() {
     <main className="main">
       <h1>Conteúdo de Texto</h1>
       <form onSubmit={handleSubmit}>
-        {step === 1 && (
+        {step === 2 && (
           <Text_Forms_Step1
             formData={formData}
             setFormData={setFormData}
@@ -59,7 +61,7 @@ export default function Texto() {
             setFile={setTempFile}
           />
         )}
-        {step === 2 && (
+        {step === 1 && ( // trocar os numeros dos steps novamente (apenas os troquei para facilitar a edição do step 2)
           <Text_Forms_Step2
             formData={formData}
             setFormData={setFormData}

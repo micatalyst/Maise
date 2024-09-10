@@ -1,0 +1,183 @@
+@import "../Variables.scss";
+
+.forms-step2 {
+  display: grid;
+  grid-template-rows: max-content 1fr max-content;
+  height: 100%;
+
+  label {
+    display: block;
+    margin-bottom: 10px;
+
+    font-size: $forms-label-text-size;
+    font-weight: bold;
+  }
+
+  select {
+    //cursor: pointer;
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    border-radius: $border-radius-5;
+    border: 1px solid var(--input-border-color);
+    //outline: none;
+    width: 258px;
+    padding: $input-padding;
+
+    background-color: var(--input-bg-color);
+    font-size: $body-text-2;
+
+    color: var(--base-text-color);
+
+    &:invalid {
+      color: var(--placeholders-text-color);
+    }
+
+    &:focus {
+      border: 1px solid $transparent;
+    }
+  }
+
+  .input-add-sections-container {
+    display: grid;
+    grid-template-columns: max-content;
+    align-items: center;
+    position: relative;
+
+    width: max-content;
+
+    margin-bottom: 30px;
+
+    input {
+      border-radius: $border-radius-5;
+      border: 0;
+      //outline: none;
+      width: 318px;
+      padding: $input-padding;
+
+      background-color: var(--input-bg-color);
+      font-size: $body-text-2;
+
+      color: var(--base-text-color);
+
+      &::placeholder {
+        color: var(--placeholders-text-color);
+      }
+    }
+
+    button {
+      display: flex;
+      place-items: center;
+
+      border: 0;
+      border-radius: $border-radius-2;
+      font-weight: $bold;
+      font-size: $nav-font-size;
+
+      background-color: $transparent;
+      position: absolute;
+      right: 0;
+
+      padding: 13.3px;
+
+      svg {
+        color: var(--icons-1-color);
+        height: 20px;
+        stroke: var(--icons-1-color);
+        stroke-width: 10;
+      }
+    }
+  }
+
+  .no-sections-container {
+    display: grid;
+    grid-template-rows: 1fr;
+    place-items: center;
+
+    background-color: var(--forms-container-bg);
+
+    p.no-section-placeholder {
+      font-size: $no-content-placeholder-text-size;
+      color: var(--placeholder-container-text-color);
+      text-align: center;
+
+      span {
+        font-weight: $bold;
+      }
+    }
+  }
+
+  .content-creation-container {
+    display: grid;
+    grid-template-columns: max-content 1fr max-content;
+
+    background-color: var(--forms-container-bg);
+
+    height: 100%;
+
+    .content-creation-side-bar {
+      display: grid;
+      grid-template-rows: 1fr max-content;
+
+      border-right: 2px solid var(--content-creating-limit-border-color);
+
+      height: 100%;
+      overflow: hidden;
+
+      .sections-container {
+        overflow: hidden;
+        scroll-behavior: auto;
+
+        width: calc(258px + 30px + 30px);
+
+        max-height: 100%;
+        overflow: hidden;
+      }
+
+      .language-container {
+        padding: 20px 30px 30px;
+        border-top: 2px solid var(--content-creating-limit-border-color);
+
+        .forms-select {
+          position: relative;
+
+          svg {
+            position: absolute;
+            height: auto;
+            width: 18px;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--icons-1-color);
+            pointer-events: none;
+          }
+        }
+      }
+    }
+  }
+
+  .forms-step2-bottom-bar {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 20px;
+
+    margin-top: 20px;
+
+    .forms-step2-back-button {
+      padding: 20px 30px;
+      background-color: var(--forms-container-bg);
+    }
+
+    .forms-step2-input-feedback-submit-container {
+      display: grid;
+      grid-template-columns: 1fr max-content;
+      align-items: center;
+
+      background-color: var(--forms-container-bg);
+
+      padding: 20px 30px;
+    }
+  }
+}

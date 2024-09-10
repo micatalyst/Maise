@@ -18,7 +18,8 @@ export default function Content_Typology_General_Card(props) {
       <div className="type-image-container">
         <Image
           src="/images/all_Types.png"
-          layout="responsive"
+          //layout="responsive"
+          priority={true}
           alt="Representação de todas as possibilidades de tipos de conteúdos"
           width={1252}
           height={804}

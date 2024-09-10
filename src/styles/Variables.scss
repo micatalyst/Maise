@@ -25,6 +25,7 @@ $notice-Yellow: #f3b21b; // Dark_Gray (9.08) //
 $positive-Green-dark-mode: #86cc3f; // Dark_Gray (8.70) //
 $positive-Green-light-mode: #1c810e; // White (5.00)
 $informative-Blue: #1167d3; // White (5.38) | Dark_Gray (3.17) // Será usado como cor substituta do Ciano_Studying por ser bem mais agradável e acessível.
+$informative-Blue-20: #d0e1f5; // Dark_Gray (12.80)
 
 :root {
   --bg-color: #{$light-blue};
@@ -84,6 +85,13 @@ $informative-Blue: #1167d3; // White (5.38) | Dark_Gray (3.17) // Será usado co
 
   --forms-step1-feedback-bar-color: #{$gray-2};
   --forms-step1-valid-feedback-bar-color: #{$positive-Green-light-mode};
+
+  --placeholder-container-text-color: #{$gray-1};
+
+  --content-creating-limit-border-color: #{$light-gray};
+
+  --section-select-bg-color: #{$informative-Blue-20};
+  --section-select-border-color: #{$informative-Blue};
 }
 
 /* [data-theme='dark'] {
@@ -104,6 +112,8 @@ $content-cards-padding: 15px;
 $content-typology-pre-info-margin: 0 0 40px;
 $content-typology-cards-padding: 30px;
 
+$main-min-height: calc(100svh - #{nth($header-padding, 1)} - 48px);
+
 $content-typology-card-min-height: calc(
   100svh - #{nth($header-padding, 1)} - 48px - #{nth($main-padding, 1)} - #{nth(
       $main-padding,
@@ -112,6 +122,13 @@ $content-typology-card-min-height: calc(
 );
 
 $content-typology-general-card-min-height: calc(
+  100svh - #{nth($header-padding, 1)} - 48px - #{nth($main-padding, 1)} - #{nth(
+      $main-padding,
+      3
+    )} - 37px - 2px - #{nth($tab-container-margin, 3)}
+);
+
+$text-forms-step2-main-min-height: calc(
   100svh - #{nth($header-padding, 1)} - 48px - #{nth($main-padding, 1)} - #{nth(
       $main-padding,
       3
@@ -180,6 +197,10 @@ $forms-label-text-size: 18px;
 $forms-input-file-p: 22px;
 
 $dropzone-file-type-text-size: 57px;
+
+$no-content-placeholder-text-size: 57px;
+
+$section-title-text-size: 18px;
 
 // MediaQueries
 

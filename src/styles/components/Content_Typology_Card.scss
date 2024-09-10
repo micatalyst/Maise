@@ -6,8 +6,8 @@
 
   background-color: var(--cards-bg);
   width: $typology-cards-width;
-  // min-height: 100%;
   min-height: $content-typology-card-min-height;
+  height: 100%;
 
   padding: $content-typology-cards-padding;
 

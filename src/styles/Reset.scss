@@ -51,7 +51,8 @@ select:focus-visible {
   outline-offset: 0;
 }
 
-button {
+button,
+select {
   cursor: pointer;
   text-decoration: none;
 }

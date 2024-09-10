@@ -73,7 +73,7 @@ export default function Toolbar({ onFilterType, onSearch, onTabUpdate }) {
     <button
       type="button"
       onMouseDown={handleSearchButton} // Troquei o onClic event pelo "onMouseDown" para prevenir que ao carregar no botão, este perde-se o seu focus provocando a funcionalidade do botão sem focus / de limpeza
-      aria-label="botão de pesquisa de conteúdos"
+      aria-label="Botão de pesquisa de conteúdos"
     >
       <FontAwesomeIcon icon={faMagnifyingGlass} />
     </button>
@@ -83,7 +83,7 @@ export default function Toolbar({ onFilterType, onSearch, onTabUpdate }) {
     <button
       type="button"
       onMouseDown={handleClearSearchButton}
-      aria-label="botão de limpeza da pesquisa dos conteúdos"
+      aria-label="Botão de limpeza da pesquisa dos conteúdos"
     >
       <FontAwesomeIcon icon={faXmark} />
     </button>
@@ -94,7 +94,7 @@ export default function Toolbar({ onFilterType, onSearch, onTabUpdate }) {
       <div className="search">
         <input
           type="text"
-          placeholder="Pesquise por documentos e/ou autores"
+          placeholder="Pesquise por documentos e/ou autores..."
           value={searchValue}
           aria-label="Campo de pesquisa de conteúdos"
           aria-keyshortcuts="Enter" // ponderar em fazer um sistema que realmente distribui automaticamente os aria-keyshortcuts (em caso da existência de keyshortcuts).
