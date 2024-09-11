@@ -23,7 +23,6 @@ body {
   grid-template-columns: 1fr; // Estas 2 grids (columns & rows) para garantir que eu possa expandir qualquer grid com (1fr) para o tamanho da página
   grid-template-rows: max-content;
   min-height: $main-min-height;
-  
 }
 
 h1 {
