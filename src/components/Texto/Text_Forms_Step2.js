@@ -12,10 +12,8 @@ export default function Text_Forms_Step2({
   setFormData,
   handlePreviousStep,
 }) {
-  const [sections, setSections] = useState([]);
-  const [addSectionValue, setAddSectionValue] = useState("");
-
-  const [activeSection, setActiveSection] = useState(""); // Secção que está ativa
+  const [addSectionValue, setAddSectionValue] = useState(""); // valor do input de criação de sections
+  const [activeSection, setActiveSection] = useState(""); // Section que está ativa
 
   const handleInputChange = (event) => {
     setAddSectionValue(event.target.value);
@@ -25,21 +23,43 @@ export default function Text_Forms_Step2({
     // Função para adicionar secções (pelo teclado)
     if (event.key === "Enter") {
       event.preventDefault();
-      setSections((prevArray) => [...prevArray, addSectionValue]);
-      setAddSectionValue("");
+      if (addSectionValue) {
+        // Garante que existe um nome para section (previne a criação de sections sem nome)
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          sections: [
+            ...prevFormData.sections,
+            {
+              sectionTitle: addSectionValue,
+            },
+          ],
+        }));
+        setAddSectionValue("");
+      }
     }
   };
 
   const handleAddSection = () => {
     // Função para adicionar secções (pelo botão)
-    setSections((prevArray) => [...prevArray, addSectionValue]);
-    setAddSectionValue("");
+    if (addSectionValue) {
+      // Garante que existe um nome para section (previne a criação de sections sem nome)
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        sections: [
+          ...prevFormData.sections,
+          {
+            sectionTitle: addSectionValue,
+          },
+        ],
+      }));
+      setAddSectionValue("");
+    }
   };
 
   useEffect(() => {
     console.log(addSectionValue);
-    console.log(sections);
-  }, [addSectionValue, sections]);
+    console.log(formData.sections);
+  }, [addSectionValue, formData.sections]);
 
   const noSectionsDisplay = (
     <div className="no-sections-container">
@@ -56,11 +76,11 @@ export default function Text_Forms_Step2({
     <div className="content-creation-container">
       <div className="content-creation-side-bar">
         <div className="sections-container">
-          {sections.map((item, index) => (
+          {formData.sections.map((item, index) => (
             <Text_Section
               id={index}
               key={index}
-              title={item}
+              title={item.sectionTitle}
               activeSection={activeSection}
               setActiveSection={setActiveSection}
             />
@@ -104,6 +124,8 @@ export default function Text_Forms_Step2({
           aria-keyshortcuts="Enter"
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
+          maxLength="70"
+          //readOnly (Usar isto para garantir que o conteudo não seja editavel mas apenas meramente visualizavel)
         />
         <button
           type="button"
@@ -113,7 +135,9 @@ export default function Text_Forms_Step2({
           <FontAwesomeIcon icon={faPlus} />
         </button>
       </div>
-      {sections.length > 0 ? contentCriationDisplay : noSectionsDisplay}
+      {formData.sections.length > 0
+        ? contentCriationDisplay
+        : noSectionsDisplay}
       <div className="forms-step2-bottom-bar">
         <div className="forms-step2-back-button">
           <button

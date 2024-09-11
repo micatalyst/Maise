@@ -103,7 +103,7 @@ export default function Text_Forms_Step1({
               id="title"
               type="text"
               placeholder="Título do Conteúdo..."
-              maxLength="60"
+              maxLength="80"
               value={formData.title}
               onChange={(e) => {
                 setFormData({ ...formData, title: e.target.value });

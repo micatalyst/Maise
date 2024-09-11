@@ -98,6 +98,9 @@
 
     background-color: var(--forms-container-bg);
 
+    height: 100%;
+    max-height: $text-forms-step2-main-min-height;
+
     p.no-section-placeholder {
       font-size: $no-content-placeholder-text-size;
       color: var(--placeholder-container-text-color);
@@ -116,29 +119,39 @@
     background-color: var(--forms-container-bg);
 
     height: 100%;
+    max-height: $text-forms-step2-main-min-height;
 
     .content-creation-side-bar {
       display: grid;
       grid-template-rows: 1fr max-content;
 
-      border-right: 2px solid var(--content-creating-limit-border-color);
+      //border-right: 2px solid var(--content-creating-limit-border-color);
 
-      height: 100%;
-      overflow: hidden;
+      width: calc(258px + 30px + 30px);
 
       .sections-container {
-        overflow: hidden;
-        scroll-behavior: auto;
+        overflow: scroll;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+        max-height: $text-forms-step2-sections-container-min-height;
 
-        width: calc(258px + 30px + 30px);
+        &::-webkit-scrollbar {
+          width: 5px;
+        }
 
-        max-height: 100%;
-        overflow: hidden;
+        &::-webkit-scrollbar-track {
+          background-color: var(--content-scrollbar-bg-color);
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background-color: var(--content-scrollbar-color);
+        }
       }
 
       .language-container {
         padding: 20px 30px 30px;
-        border-top: 2px solid var(--content-creating-limit-border-color);
+        border-top: 5px solid var(--content-creating-limit-border-color);
+        border-right: 5px solid var(--content-scrollbar-bg-color);
 
         .forms-select {
           position: relative;

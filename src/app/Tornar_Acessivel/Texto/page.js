@@ -15,7 +15,8 @@ export default function Texto() {
     content_category: "",
     original_content_language: "",
     created_content_language: "",
-    Content_Upload: "",
+    original_content_uploaded: "",
+    sections: [],
   });
 
   const handleNextStep = () => {

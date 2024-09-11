@@ -31,6 +31,9 @@ $informative-Blue-20: #d0e1f5; // Dark_Gray (12.80)
   --bg-color: #{$light-blue};
   --base-text-color: #{$dark-gray};
 
+  --content-scrollbar-bg-color: #{$light-gray};
+  --content-scrollbar-color: #{$informative-Blue};
+
   --level-1-content-bg: #{$gray-3};
   --level-2-content-bg: #{$gray-2};
   --level-3-content-bg: #{$gray-1};
@@ -115,24 +118,23 @@ $content-typology-cards-padding: 30px;
 $main-min-height: calc(100svh - #{nth($header-padding, 1)} - 48px);
 
 $content-typology-card-min-height: calc(
-  100svh - #{nth($header-padding, 1)} - 48px - #{nth($main-padding, 1)} - #{nth(
-      $main-padding,
-      3
-    )} - 48px - #{nth($content-typology-pre-info-margin, 3)}
+  #{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 48px -
+    #{nth($content-typology-pre-info-margin, 3)}
 );
 
 $content-typology-general-card-min-height: calc(
-  100svh - #{nth($header-padding, 1)} - 48px - #{nth($main-padding, 1)} - #{nth(
-      $main-padding,
-      3
-    )} - 37px - 2px - #{nth($tab-container-margin, 3)}
+  #{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 37px -
+    2px - #{nth($tab-container-margin, 3)}
 );
 
 $text-forms-step2-main-min-height: calc(
-  100svh - #{nth($header-padding, 1)} - 48px - #{nth($main-padding, 1)} - #{nth(
-      $main-padding,
-      3
-    )} - 37px - 2px - #{nth($tab-container-margin, 3)}
+  #{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 42px -
+    40px - 46.5px - 30px - 89px - 20px
+);
+
+$text-forms-step2-sections-container-min-height: calc(
+  #{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 42px -
+    40px - 46.5px - 30px - 89px - 20px - 137.5px - 3px
 );
 
 $forms-step1-padding: 30px 40px;
@@ -200,7 +202,7 @@ $dropzone-file-type-text-size: 57px;
 
 $no-content-placeholder-text-size: 57px;
 
-$section-title-text-size: 18px;
+$section-title-text-size: 16px;
 
 // MediaQueries
 

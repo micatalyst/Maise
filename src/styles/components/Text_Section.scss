@@ -4,58 +4,50 @@ button.btn-section {
   background: none;
   border: none;
   width: 100%;
-
-  &.selected {
-    border-left: 3px solid var(--section-select-border-color);
-  }
 }
 
 .text-section {
   display: grid;
   grid-template-columns: 1fr max-content;
+  align-items: center;
+
+  padding: 15px 30px;
+
+  border-bottom: 1px solid var(--content-creating-limit-border-color);
 
   &.selected {
+    border-left: 3px solid var(--section-select-border-color);
     background-color: var(--section-select-bg-color);
+    padding-left: 27px;
   }
 
   .text-section-title {
-    position: relative;
-    padding: 20px 30px;
+    display: grid;
+    grid-template-columns: max-content max-content;
+    gap: 5px;
 
-    &.selected {
-      padding-left: 27px;
-    }
+    align-items: center;
 
     p {
+      position: relative;
       font-size: $section-title-text-size;
       font-weight: $bold;
 
       text-align: left;
-
-      position: relative;
     }
 
-    p.selected {
-      &::before {
-        content: "";
-        position: absolute;
-        bottom: -5px;
-        left: 0;
-        width: 37px;
-        height: 3px;
-        background-color: var(--base-text-color);
-      }
-    }
-
-    svg {
-      position: absolute;
-      height: auto;
-      width: 18px;
-      right: 30px;
-      top: 50%;
-      transform: translateY(-50%);
+    svg.selected {
+      height: 20px;
+      width: auto;
       color: var(--icons-1-color);
       pointer-events: none;
     }
+  }
+
+  svg {
+    height: 26px;
+    width: auto;
+    color: var(--icons-1-color);
+    pointer-events: none;
   }
 }

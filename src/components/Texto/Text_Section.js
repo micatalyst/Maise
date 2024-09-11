@@ -1,7 +1,7 @@
 import "@/styles/components/Text_Section.scss";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGripLines } from "@fortawesome/free-solid-svg-icons";
+import { faAngleRight, faGripLines } from "@fortawesome/free-solid-svg-icons";
 
 import { useState } from "react";
 
@@ -14,7 +14,7 @@ export default function Content_Card({
   return (
     <button
       type="button"
-      className={id === activeSection ? "btn-section selected" : "btn-section"}
+      className="btn-section"
       aria-pressed={id === activeSection}
       onClick={() => {
         setActiveSection(id);
@@ -25,16 +25,15 @@ export default function Content_Card({
           id === activeSection ? "text-section selected" : "text-section"
         }
       >
-        <div
-          className={
-            id === activeSection
-              ? "text-section-title selected"
-              : "text-section-title"
-          }
-        >
-          <p className={id === activeSection ? "selected" : ""}>{title}</p>
-          <FontAwesomeIcon icon={faGripLines} />
+        <div className="text-section-title">
+          {id === activeSection ? (
+            <FontAwesomeIcon className="selected" icon={faAngleRight} />
+          ) : (
+            ""
+          )}
+          <p>{title}</p>
         </div>
+        <FontAwesomeIcon icon={faGripLines} />
       </div>
     </button>
   );
