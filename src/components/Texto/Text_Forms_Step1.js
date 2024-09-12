@@ -48,7 +48,7 @@ export default function Text_Forms_Step1({
     if (
       formData.title &&
       formData.content_category &&
-      formData.language &&
+      formData.original_content_language &&
       formData.description &&
       file
     ) {
@@ -101,6 +101,7 @@ export default function Text_Forms_Step1({
             <label htmlFor="title">Título</label>
             <input
               id="title"
+              name="title"
               type="text"
               placeholder="Título do Conteúdo..."
               maxLength="80"
@@ -117,6 +118,7 @@ export default function Text_Forms_Step1({
               <FontAwesomeIcon icon={faCaretDown} />
               <select
                 id="content_category"
+                name="content_category"
                 value={formData.content_category}
                 onChange={(e) => {
                   setFormData({
@@ -142,6 +144,7 @@ export default function Text_Forms_Step1({
               <FontAwesomeIcon icon={faCaretDown} />
               <select
                 id="original_content_language"
+                name="original_content_language"
                 value={formData.original_content_language}
                 onChange={(e) => {
                   setFormData({
@@ -164,6 +167,7 @@ export default function Text_Forms_Step1({
           <label htmlFor="description">Descrição</label>
           <textarea
             id="description"
+            name="description"
             placeholder="Nome do Conteúdo..."
             value={formData.description}
             onChange={(e) => {
@@ -235,7 +239,9 @@ export default function Text_Forms_Step1({
               })}
             >
               {/* Estou a colocar o tabIndex para grantir que seja navegavel por teclado */}
-              <input {...getInputProps({ id: "fileImport" })} />
+              <input
+                {...getInputProps({ id: "fileImport", name: "fileImport" })}
+              />
               <div className="dropzone-info">
                 <FontAwesomeIcon icon={faFileArrowUp} />
                 <p>Arrasta e larga</p>

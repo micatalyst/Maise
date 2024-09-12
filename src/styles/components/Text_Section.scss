@@ -15,6 +15,8 @@ button.btn-section {
 
   border-bottom: 1px solid var(--content-creating-limit-border-color);
 
+  background-color: var(--section-bg-color);
+
   &.selected {
     border-left: 3px solid var(--section-select-border-color);
     background-color: var(--section-select-bg-color);

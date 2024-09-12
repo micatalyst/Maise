@@ -3,38 +3,54 @@ import "@/styles/components/Text_Section.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight, faGripLines } from "@fortawesome/free-solid-svg-icons";
 
-import { useState } from "react";
+import { Reorder, useDragControls } from "framer-motion";
 
 export default function Content_Card({
+  item,
   id,
   title,
   activeSection,
-  setActiveSection,
+  handleSectionActivation,
+  handleDragStart,
+  handleDragEnd,
 }) {
+  const dragControls = useDragControls();
+
   return (
-    <button
-      type="button"
-      className="btn-section"
-      aria-pressed={id === activeSection}
-      onClick={() => {
-        setActiveSection(id);
-      }}
+    <Reorder.Item
+      value={item}
+      id={item}
+      dragListener={false}
+      dragControls={dragControls}
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
     >
-      <div
-        className={
-          id === activeSection ? "text-section selected" : "text-section"
-        }
+      <button
+        type="button"
+        className="btn-section"
+        aria-pressed={id === activeSection}
+        onClick={() => {
+          handleSectionActivation(id); // Garante que sempre que uma secção é selecionada, esta fique guardada para poder saber sempre a secção atual ativa
+        }}
       >
-        <div className="text-section-title">
-          {id === activeSection ? (
-            <FontAwesomeIcon className="selected" icon={faAngleRight} />
-          ) : (
-            ""
-          )}
-          <p>{title}</p>
+        <div
+          className={
+            id === activeSection ? "text-section selected" : "text-section"
+          }
+        >
+          <div className="text-section-title">
+            {id === activeSection ? (
+              <FontAwesomeIcon className="selected" icon={faAngleRight} />
+            ) : (
+              ""
+            )}
+            <p>{title}</p>
+          </div>
+          <div onPointerDown={(event) => dragControls.start(event)}>
+            <FontAwesomeIcon icon={faGripLines} />
+          </div>
         </div>
-        <FontAwesomeIcon icon={faGripLines} />
-      </div>
-    </button>
+      </button>
+    </Reorder.Item>
   );
 }

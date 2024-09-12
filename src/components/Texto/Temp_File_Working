@@ -1,3 +1,5 @@
+// Text From Step 2
+
 import "@/styles/components/Forms_Text_Step2.scss";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,8 +20,6 @@ export default function Text_Forms_Step2({
   const [activeSection, setActiveSection] = useState(); // Section que está ativa
   const [sectionId, setSectionId] = useState(0); // Id da section
   const [firstSectionActivation, setFirstSectionActivation] = useState(true);
-
-  const [isDragging, setIsDragging] = useState(false);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -106,17 +106,7 @@ export default function Text_Forms_Step2({
   // Handle onClick / ativação da section
 
   const handleSectionActivation = (id) => {
-    if (!isDragging) {
-      setActiveSection(id); // Só executa o clique se não estiver a ser arrastado
-    }
-  };
-
-  const handleDragStart = () => {
-    setIsDragging(true);
-  };
-
-  const handleDragEnd = () => {
-    setIsDragging(false);
+    setActiveSection(id);
   };
 
   // reordenação das sections atuais
@@ -172,16 +162,14 @@ export default function Text_Forms_Step2({
             //className="sections-container"
           >
             {formData.sections.map((item) => (
-              <Text_Section
-                key={item.id}
-                item={item}
-                id={item.id}
-                title={item.sectionTitle}
-                activeSection={activeSection}
-                handleSectionActivation={handleSectionActivation}
-                handleDragStart={handleDragStart}
-                handleDragEnd={handleDragEnd}
-              />
+              <Reorder.Item key={item.id} value={item}>
+                <Text_Section
+                  id={item.id}
+                  title={item.sectionTitle}
+                  activeSection={activeSection}
+                  handleSectionActivation={handleSectionActivation}
+                />
+              </Reorder.Item>
             ))}
           </Reorder.Group>
         </motion.div>
@@ -265,3 +253,45 @@ export default function Text_Forms_Step2({
     </div>
   );
 }
+
+// Text Section
+
+import "@/styles/components/Text_Section.scss";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleRight, faGripLines } from "@fortawesome/free-solid-svg-icons";
+
+export default function Content_Card({
+  id,
+  title,
+  activeSection,
+  handleSectionActivation,
+}) {
+  return (
+    <button
+      type="button"
+      className="btn-section"
+      aria-pressed={id === activeSection}
+      onMouseDown={() => {
+        handleSectionActivation(id); // Garante que sempre que uma secção é selecionada, esta fique guardada para poder saber sempre a secção atual ativa
+      }}
+    >
+      <div
+        className={
+          id === activeSection ? "text-section selected" : "text-section"
+        }
+      >
+        <div className="text-section-title">
+          {id === activeSection ? (
+            <FontAwesomeIcon className="selected" icon={faAngleRight} />
+          ) : (
+            ""
+          )}
+          <p>{title}</p>
+        </div>
+        <FontAwesomeIcon icon={faGripLines} />
+      </div>
+    </button>
+  );
+}
+
