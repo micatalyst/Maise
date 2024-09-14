@@ -61,11 +61,11 @@ export default function Text_Forms_Step2({
   useEffect(() => {
     // UseEffect responsavel por tratar de juntar toda a informação relativa á section ativada (para que esta possa ser chamada na página)
     setActiveSectionIndex(
-      formData.sections.findIndex((item) => item.id === activeSection)
+      formData.sections.findIndex((item) => item.id === activeSection),
     );
 
     setActiveSectionInfo(
-      formData.sections.find((item) => item.id === activeSection)
+      formData.sections.find((item) => item.id === activeSection),
     );
     //
   }, [activeSection, formData.sections]);

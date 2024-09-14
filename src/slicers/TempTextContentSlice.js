@@ -39,7 +39,7 @@ const TempTextContentSlice = createSlice({
     updateSection: (state, action) => {
       const { id, updatedSection } = action.payload;
       const sectionIndex = state.sections.findIndex(
-        (section) => section.id === id
+        (section) => section.id === id,
       );
       if (sectionIndex !== -1) {
         state.sections[sectionIndex] = {
