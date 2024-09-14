@@ -1,7 +1,13 @@
 import "@/styles/components/Forms_Text_Step2.scss";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlus,
+  faCaretDown,
+  faFilePen,
+  faTrashCan,
+} from "@fortawesome/free-solid-svg-icons";
+import { faFileLines } from "@fortawesome/free-regular-svg-icons";
 
 import { useState, useEffect } from "react";
 import { Reorder, motion } from "framer-motion";
@@ -13,15 +19,23 @@ export default function Text_Forms_Step2({
   formData,
   setFormData,
   handlePreviousStep,
+  file,
+  previewUrl,
 }) {
   const [addSectionValue, setAddSectionValue] = useState(""); // valor do input de criação de sections
-  const [activeSection, setActiveSection] = useState(); // Section que está ativa
-  const [sectionId, setSectionId] = useState(0); // Id da section
+  const [activeSectionIndex, setActiveSectionIndex] = useState(""); // Index da section atual
+  const [activeSection, setActiveSection] = useState(); // Id da section que está ativa
+  const [activeSectionInfo, setActiveSectionInfo] = useState({
+    id: null,
+    sectionTitle: "",
+  }); // Toda a informação da Section que está ativa
+  const [sectionId, setSectionId] = useState(0); // Serve para atribuir um id à section quando esta é criada
   const [firstSectionActivation, setFirstSectionActivation] = useState(true);
 
   const [isDragging, setIsDragging] = useState(false);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState("");
 
   useEffect(() => {
     // Garante que a primeira section criada fica logo pré-selecionada
@@ -30,7 +44,7 @@ export default function Text_Forms_Step2({
       setFirstSectionActivation(false);
     }
 
-    console.log(formData.sections);
+    console.log(sectionId);
 
     // Colocar isto numa especie de handler de apagar uma section e não aqui no useEffect
     // garante que quando as sections são todas apagadas e depois novamente criadas a primeira vai novamente ficar pré-selecionada
@@ -42,11 +56,38 @@ export default function Text_Forms_Step2({
 
     // Garante que se a section selecionada for apagada outra fica logo selecionada
     /* if () {} */
-  }, [firstSectionActivation, sectionId, formData.sections]);
+  }, [sectionId]);
+
+  useEffect(() => {
+    // UseEffect responsavel por tratar de juntar toda a informação relativa á section ativada (para que esta possa ser chamada na página)
+    setActiveSectionIndex(
+      formData.sections.findIndex((item) => item.id === activeSection)
+    );
+
+    setActiveSectionInfo(
+      formData.sections.find((item) => item.id === activeSection)
+    );
+    //
+  }, [activeSection, formData.sections]);
+
+  useEffect(() => {
+    console.log(activeSectionInfo);
+  }, [activeSectionInfo]);
+
+  // handlePreview abre um separador com o documento original aberto
+
+  const handlePreview = () => {
+    if (previewUrl) {
+      window.open(previewUrl, "_blank"); // Abre o ficheiro num novo separador
+    } else {
+      // trigger de feedback a dizer que o documento não foi carregado
+    }
+  };
 
   // Modal
 
-  const openModal = () => {
+  const openModal = (modal) => {
+    setModalType(modal);
     setIsModalOpen(true);
   };
 
@@ -62,8 +103,8 @@ export default function Text_Forms_Step2({
 
   // Adição de novas sections
 
+  // Função para adicionar sections (pelo teclado)
   const handleKeyDown = (event) => {
-    // Função para adicionar sections (pelo teclado)
     if (event.key === "Enter") {
       event.preventDefault();
       if (addSectionValue) {
@@ -84,8 +125,8 @@ export default function Text_Forms_Step2({
     }
   };
 
+  // Função para adicionar sections (pelo botão)
   const handleAddSection = () => {
-    // Função para adicionar sections (pelo botão)
     if (addSectionValue) {
       // Garante que existe um nome para section (previne a criação de sections sem nome)
       setFormData((prevFormData) => ({
@@ -103,7 +144,7 @@ export default function Text_Forms_Step2({
     }
   };
 
-  // Handle onClick / ativação da section
+  // Handle onClick para ativação da section
 
   const handleSectionActivation = (id) => {
     if (!isDragging) {
@@ -128,27 +169,7 @@ export default function Text_Forms_Step2({
     }));
   };
 
-  // -----------
-
-  /* const handleSectionActivation = (event) => {
-    if (isDragging) {
-      event.preventDefault(); // Opcional: Impede o clique se arrastando
-      return;
-    } else {
-    }
-  }; */
-
-  /* const handleDragStart = () => {
-    setIsDragging(true);
-  };
-
-  const handleDragEnd = () => {
-    setIsDragging(false);
-  }; */
-
-  // -----------
-
-  // Componente quando não há sections
+  // Componente quando (não) há sections
 
   const noSectionsDisplay = (
     <div className="no-sections-container">
@@ -161,9 +182,11 @@ export default function Text_Forms_Step2({
     </div>
   );
 
+  // Componente quando há sections
+
   const contentCriationDisplay = (
     <div className="content-creation-container">
-      <div className="content-creation-side-bar">
+      <div className="content-creation-left-side-bar">
         <motion.div className="sections-container" layoutScroll>
           <Reorder.Group
             axis="y"
@@ -210,9 +233,69 @@ export default function Text_Forms_Step2({
           </div>
         </div>
       </div>
-      <div>
-        <button onClick={openModal}>Abrir Modal</button>
-        <Modal isOpen={isModalOpen} closeModal={closeModal} />
+      <div className="content-creation-work-space">
+        <div className="content-creation-top-bar">
+          <h2>{activeSectionInfo ? activeSectionInfo.sectionTitle : ""}</h2>
+          <button
+            className="primary-button icon"
+            type="button"
+            onClick={() => {
+              openModal("updateSection");
+            }}
+          >
+            <FontAwesomeIcon icon={faFilePen} />
+            Editar titulo
+          </button>
+          <button
+            className="negative-button icon"
+            type="button"
+            onClick={() => {
+              openModal("DeleteSection");
+            }}
+          >
+            <FontAwesomeIcon icon={faTrashCan} />
+            Apagar secção
+          </button>
+        </div>
+
+        <Modal
+          isOpen={isModalOpen}
+          closeModal={closeModal}
+          modal={modalType}
+          activeSectionIndex={activeSectionIndex}
+          formData={formData}
+          setFormData={setFormData}
+        />
+      </div>
+      <div className="content-creation-right-side-bar">
+        <div className="file-icon">
+          <FontAwesomeIcon icon={faFileLines} />
+        </div>
+        <button
+          className="primary-button"
+          type="button"
+          onClick={handlePreview}
+        >
+          Ver documento original
+        </button>
+        <div className="file-side-info">
+          <div>
+            <span>Nome</span>
+            <p>{file ? file.name : "noFile"}</p>
+          </div>
+          <div>
+            <span>Tamanho</span>
+            <p>{file ? (file.size / 1024 / 1024).toFixed(2) : "noFile"} MB</p>
+          </div>
+          <div>
+            <span>Última modificação</span>
+            <p>
+              {file
+                ? new Date(file.lastModified).toLocaleDateString()
+                : "noFile"}
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -229,11 +312,10 @@ export default function Text_Forms_Step2({
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
           maxLength="70"
-          //readOnly (Usar isto para garantir que o conteudo não seja editavel mas apenas meramente visualizavel)
         />
         <button
           type="button"
-          onClick={handleAddSection} // Troquei o onClic event pelo "onMouseDown" para prevenir que ao carregar no botão, este perde-se o seu focus provocando a funcionalidade do botão sem focus / de limpeza
+          onClick={handleAddSection}
           aria-label="Botão para a adição de secções"
         >
           <FontAwesomeIcon icon={faPlus} />

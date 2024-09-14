@@ -3,7 +3,7 @@ import "@/styles/components/Text_Section.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight, faGripLines } from "@fortawesome/free-solid-svg-icons";
 
-import { Reorder, useDragControls } from "framer-motion";
+import { Reorder, useDragControls, useMotionValue } from "framer-motion";
 
 export default function Content_Card({
   item,
@@ -15,6 +15,7 @@ export default function Content_Card({
   handleDragEnd,
 }) {
   const dragControls = useDragControls();
+  const y = useMotionValue(0);
 
   return (
     <Reorder.Item
@@ -24,6 +25,7 @@ export default function Content_Card({
       dragControls={dragControls}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
+      style={{ position: "relative", y }}
     >
       <button
         type="button"

@@ -20,9 +20,10 @@ export default function Text_Forms_Step1({
   setNextStep,
   file,
   setFile,
+  previewUrl,
+  setPreviewUrl,
 }) {
   //const [file, setFile] = useState(null);
-  const [previewUrl, setPreviewUrl] = useState("");
   const [error, setError] = useState("");
 
   const [inputTitleValid, setInputTitleValid] = useState(false);
@@ -58,9 +59,13 @@ export default function Text_Forms_Step1({
     }
   }, [formData, setNextStep, file]);
 
+  // handlePreview abre um separador com o documento original aberto
+
   const handlePreview = () => {
     if (previewUrl) {
       window.open(previewUrl, "_blank"); // Abre o ficheiro num novo separador
+    } else {
+      // trigger de feedback a dizer que o documento não foi carregado
     }
   };
 
@@ -200,16 +205,23 @@ export default function Text_Forms_Step1({
                 <div className="file-side-info">
                   <div>
                     <span>Nome</span>
-                    <p>{file.name}</p>
+                    <p>{file ? file.name : "noFile"}</p>
                   </div>
                   <div className="file-side-info-row">
                     <div>
                       <span>Tamanho</span>
-                      <p> {(file.size / 1024 / 1024).toFixed(2)} MB </p>
+                      <p>
+                        {file ? (file.size / 1024 / 1024).toFixed(2) : "noFile"}
+                        MB
+                      </p>
                     </div>
                     <div>
                       <span>Última modificação</span>
-                      <p>{new Date(file.lastModified).toLocaleDateString()}</p>
+                      <p>
+                        {file
+                          ? new Date(file.lastModified).toLocaleDateString()
+                          : "noFile"}
+                      </p>
                     </div>
                   </div>
                   <button

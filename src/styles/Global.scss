@@ -66,15 +66,19 @@ h5 {
   background-color: var(--button-primary-bg-color);
   color: var(--button-primary-text-color);
   width: max-content;
+  height: max-content;
 
   &:hover {
     background-color: var(--button-primary-bg-hover-color);
     color: var(--button-primary-text-hover-color);
   }
 
-  /* &:focus {
-    //border: 1px solid $notice-Yellow;
-  } */
+  &.icon {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    align-items: center;
+    gap: 5px;
+  }
 }
 
 .negative-button {
@@ -85,15 +89,19 @@ h5 {
   background-color: var(--button-negative-bg-color);
   color: var(--button-negative-text-color);
   width: max-content;
+  height: max-content;
 
   &:hover {
     background-color: var(--button-negative-bg-hover-color);
     color: var(--button-negative-text-hover-color);
   }
 
-  /* &:focus {
-    //border: 1px solid $notice-Yellow;
-  } */
+  &.icon {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    align-items: center;
+    gap: 5px;
+  }
 }
 
 .forms-button {

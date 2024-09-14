@@ -9,6 +9,7 @@ export default function Texto() {
   const [step, setStep] = useState(1);
   const [nextStep, setNextStep] = useState(false);
   const [tempFile, setTempFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState("");
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -60,6 +61,8 @@ export default function Texto() {
             nextStep={nextStep}
             file={tempFile}
             setFile={setTempFile}
+            previewUrl={previewUrl}
+            setPreviewUrl={setPreviewUrl}
           />
         )}
         {step === 1 && ( // trocar os numeros dos steps novamente (apenas os troquei para facilitar a edição do step 2)
@@ -67,6 +70,8 @@ export default function Texto() {
             formData={formData}
             setFormData={setFormData}
             handlePreviousStep={handlePreviousStep}
+            file={tempFile}
+            previewUrl={previewUrl}
           />
         )}
       </form>
