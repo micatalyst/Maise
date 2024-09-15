@@ -30,7 +30,7 @@ export default function Text_Forms_Step2({
   original_content_PreviewUrl,
 }) {
   const created_content_language = useSelector(
-    (state) => state.TempTextContentSlice.created_content_language
+    (state) => state.TempTextContentSlice.created_content_language,
   );
 
   const sections = useSelector((state) => state.TempTextContentSlice.sections);
@@ -245,7 +245,7 @@ export default function Text_Forms_Step2({
             <p>
               {original_content_file
                 ? new Date(
-                    original_content_file.lastModified
+                    original_content_file.lastModified,
                   ).toLocaleDateString()
                 : "noFile"}
             </p>

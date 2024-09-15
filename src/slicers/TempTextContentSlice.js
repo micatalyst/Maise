@@ -43,7 +43,7 @@ const TempTextContentSlice = createSlice({
     updateSectionTitle: (state, action) => {
       const { id, title } = action.payload;
       const sectionIndex = state.sections.findIndex(
-        (section) => section.id === id
+        (section) => section.id === id,
       );
       if (sectionIndex !== -1) {
         state.sections[sectionIndex] = {
@@ -78,7 +78,7 @@ const TempTextContentSlice = createSlice({
   },
   selectors: {
     selectActiveSection: (
-      state // devolve um objeto com a info da secção selecionada, a partir do ID guardado no estado
+      state, // devolve um objeto com a info da secção selecionada, a partir do ID guardado no estado
     ) =>
       state.activeSectionId !== undefined &&
       state.sections.find((section) => section.id === state.activeSectionId),

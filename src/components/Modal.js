@@ -39,7 +39,7 @@ export default function Modal({ isOpen, closeModal, modal }) {
       updateSectionTitle({
         id: activeSection.id,
         title: sectionOnChangeInputValue,
-      })
+      }),
     );
     handleClose();
   };

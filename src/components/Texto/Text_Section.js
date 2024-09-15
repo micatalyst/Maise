@@ -20,7 +20,7 @@ export default function Content_Card({
   const dispatch = useDispatch();
 
   const activeSectionId = useSelector(
-    (state) => state.TempTextContentSlice.activeSectionId
+    (state) => state.TempTextContentSlice.activeSectionId,
   );
 
   return (
@@ -57,7 +57,10 @@ export default function Content_Card({
             )}
             <p>{item.title}</p>
           </div>
-          <div className="drag-icon" onPointerDown={(event) => dragControls.start(event)}>
+          <div
+            className="drag-icon"
+            onPointerDown={(event) => dragControls.start(event)}
+          >
             <FontAwesomeIcon icon={faGripLines} />
           </div>
         </div>
