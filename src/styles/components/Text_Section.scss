@@ -45,11 +45,15 @@ button.btn-section {
       pointer-events: none;
     }
   }
+  div.drag-icon {
+    display: grid;
+    align-items: center;
 
-  svg {
-    height: 26px;
-    width: auto;
-    color: var(--section-drag-color);
-    pointer-events: none;
+    svg {
+      height: 26px;
+      width: auto;
+      color: var(--section-drag-color);
+      pointer-events: none;
+    }
   }
 }

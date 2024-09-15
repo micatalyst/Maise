@@ -10,27 +10,38 @@ import {
 import { faFileLines } from "@fortawesome/free-regular-svg-icons";
 
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  setCreatedContentLanguage,
+  setActiveSectionId,
+  addSection,
+  setReorderedSections,
+  selectActiveSection,
+} from "@/slicers/TempTextContentSlice";
+
 import { Reorder, motion } from "framer-motion";
 
 import Text_Section from "@/components/Texto/Text_Section";
 import Modal from "@/components/Modal";
 
 export default function Text_Forms_Step2({
-  formData,
-  setFormData,
   handlePreviousStep,
-  file,
-  previewUrl,
+  original_content_file,
+  original_content_PreviewUrl,
 }) {
-  const [addSectionValue, setAddSectionValue] = useState(""); // valor do input de criação de sections
-  const [activeSectionIndex, setActiveSectionIndex] = useState(""); // Index da section atual
-  const [activeSection, setActiveSection] = useState(); // Id da section que está ativa
-  const [activeSectionInfo, setActiveSectionInfo] = useState({
-    id: null,
-    sectionTitle: "",
-  }); // Toda a informação da Section que está ativa
-  const [sectionId, setSectionId] = useState(0); // Serve para atribuir um id à section quando esta é criada
-  const [firstSectionActivation, setFirstSectionActivation] = useState(true);
+  const created_content_language = useSelector(
+    (state) => state.TempTextContentSlice.created_content_language
+  );
+
+  const sections = useSelector((state) => state.TempTextContentSlice.sections);
+  const activeSection = useSelector(selectActiveSection);
+
+  const dispatch = useDispatch();
+
+  const [sectionOnChangeInputValue, setSectionOnChangeInputValue] =
+    useState(""); // value do input de criação de sections
+  const [sectionId, setSectionId] = useState(0); // Para atribuir um id à section quando é criada
+  //const [activeSection, setActiveSection] = useState(); // Id da section que está ativa
 
   const [isDragging, setIsDragging] = useState(false);
 
@@ -38,47 +49,16 @@ export default function Text_Forms_Step2({
   const [modalType, setModalType] = useState("");
 
   useEffect(() => {
-    // Garante que a primeira section criada fica logo pré-selecionada
-    if (firstSectionActivation) {
-      setActiveSection(sectionId);
-      setFirstSectionActivation(false);
+    if (sections.length === 1) {
+      dispatch(setActiveSectionId(sections[0].id));
     }
-
-    console.log(sectionId);
-
-    // Colocar isto numa especie de handler de apagar uma section e não aqui no useEffect
-    // garante que quando as sections são todas apagadas e depois novamente criadas a primeira vai novamente ficar pré-selecionada
-
-    /* if (!firstSectionActivation && formData.sections.length < 1) {
-      setFirstSectionActivation(true);
-      setSectionId(0)
-    } */
-
-    // Garante que se a section selecionada for apagada outra fica logo selecionada
-    /* if () {} */
-  }, [sectionId]);
-
-  useEffect(() => {
-    // UseEffect responsavel por tratar de juntar toda a informação relativa á section ativada (para que esta possa ser chamada na página)
-    setActiveSectionIndex(
-      formData.sections.findIndex((item) => item.id === activeSection),
-    );
-
-    setActiveSectionInfo(
-      formData.sections.find((item) => item.id === activeSection),
-    );
-    //
-  }, [activeSection, formData.sections]);
-
-  useEffect(() => {
-    console.log(activeSectionInfo);
-  }, [activeSectionInfo]);
+  }, [sections]);
 
   // handlePreview abre um separador com o documento original aberto
 
   const handlePreview = () => {
-    if (previewUrl) {
-      window.open(previewUrl, "_blank"); // Abre o ficheiro num novo separador
+    if (original_content_PreviewUrl) {
+      window.open(original_content_PreviewUrl, "_blank"); // Abre o ficheiro num novo separador
     } else {
       // trigger de feedback a dizer que o documento não foi carregado
     }
@@ -98,7 +78,7 @@ export default function Text_Forms_Step2({
   // Section Input
 
   const handleInputChange = (event) => {
-    setAddSectionValue(event.target.value);
+    setSectionOnChangeInputValue(event.target.value);
   };
 
   // Adição de novas sections
@@ -107,48 +87,26 @@ export default function Text_Forms_Step2({
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      if (addSectionValue) {
-        // Garante que existe um nome para section (previne a criação de sections sem nome)
-        setFormData((prevFormData) => ({
-          ...prevFormData,
-          sections: [
-            ...prevFormData.sections,
-            {
-              id: sectionId,
-              sectionTitle: addSectionValue,
-            },
-          ],
-        }));
-        setAddSectionValue("");
-        setSectionId((prevId) => prevId + 1);
-      }
+      handleAddSection();
     }
   };
 
   // Função para adicionar sections (pelo botão)
   const handleAddSection = () => {
-    if (addSectionValue) {
+    if (sectionOnChangeInputValue) {
       // Garante que existe um nome para section (previne a criação de sections sem nome)
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        sections: [
-          ...prevFormData.sections,
-          {
-            id: sectionId,
-            sectionTitle: addSectionValue,
-          },
-        ],
-      }));
-      setAddSectionValue("");
+      dispatch(addSection({ id: sectionId, title: sectionOnChangeInputValue }));
+
+      setSectionOnChangeInputValue("");
       setSectionId((prevId) => prevId + 1);
     }
   };
 
-  // Handle onClick para ativação da section
+  // Handle onClick para ativação da section (se esta não estiver a ser arrastada)
 
   const handleSectionActivation = (id) => {
     if (!isDragging) {
-      setActiveSection(id); // Só executa o clique se não estiver a ser arrastado
+      dispatch(setActiveSectionId(id)); // Só executa o clique se não estiver a ser arrastado
     }
   };
 
@@ -160,13 +118,10 @@ export default function Text_Forms_Step2({
     setIsDragging(false);
   };
 
-  // reordenação das sections atuais
+  // Reordenação das sections
 
-  const handleReorder = (newSections) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      sections: newSections, // Atualiza o array de sections com a nova ordem
-    }));
+  const handleReorder = (reorderedSections) => {
+    dispatch(setReorderedSections(reorderedSections));
   };
 
   // Componente quando (não) há sections
@@ -190,17 +145,14 @@ export default function Text_Forms_Step2({
         <motion.div className="sections-container" layoutScroll>
           <Reorder.Group
             axis="y"
-            values={formData.sections}
+            values={sections}
             onReorder={handleReorder}
             //className="sections-container"
           >
-            {formData.sections.map((item) => (
+            {sections.map((item) => (
               <Text_Section
                 key={item.id}
                 item={item}
-                id={item.id}
-                title={item.sectionTitle}
-                activeSection={activeSection}
                 handleSectionActivation={handleSectionActivation}
                 handleDragStart={handleDragStart}
                 handleDragEnd={handleDragEnd}
@@ -215,13 +167,10 @@ export default function Text_Forms_Step2({
             <select
               id="created_content_language"
               name="created_content_language"
-              value={formData.created_content_language}
-              onChange={(e) => {
-                setFormData({
-                  ...formData,
-                  created_content_language: e.target.value,
-                });
-              }}
+              value={created_content_language}
+              onChange={(e) =>
+                dispatch(setCreatedContentLanguage(e.target.value))
+              }
               //required
             >
               <option value="" disabled>
@@ -235,37 +184,34 @@ export default function Text_Forms_Step2({
       </div>
       <div className="content-creation-work-space">
         <div className="content-creation-top-bar">
-          <h2>{activeSectionInfo ? activeSectionInfo.sectionTitle : ""}</h2>
-          <button
-            className="primary-button icon"
-            type="button"
-            onClick={() => {
-              openModal("updateSection");
-            }}
-          >
-            <FontAwesomeIcon icon={faFilePen} />
-            Editar titulo
-          </button>
-          <button
-            className="negative-button icon"
-            type="button"
-            onClick={() => {
-              openModal("DeleteSection");
-            }}
-          >
-            <FontAwesomeIcon icon={faTrashCan} />
-            Apagar secção
-          </button>
+          {activeSection && (
+            <>
+              <h2>{activeSection.title}</h2>
+              <button
+                className="primary-button icon"
+                type="button"
+                onClick={() => {
+                  openModal("updateSection");
+                }}
+              >
+                <FontAwesomeIcon icon={faFilePen} />
+                Editar titulo
+              </button>
+              <button
+                className="negative-button icon"
+                type="button"
+                onClick={() => {
+                  openModal("DeleteSection");
+                }}
+              >
+                <FontAwesomeIcon icon={faTrashCan} />
+                Apagar secção
+              </button>
+            </>
+          )}
         </div>
-
-        <Modal
-          isOpen={isModalOpen}
-          closeModal={closeModal}
-          modal={modalType}
-          activeSectionIndex={activeSectionIndex}
-          formData={formData}
-          setFormData={setFormData}
-        />
+        {/* <div>{activeSection.description}</div> */}
+        <Modal isOpen={isModalOpen} closeModal={closeModal} modal={modalType} />
       </div>
       <div className="content-creation-right-side-bar">
         <div className="file-icon">
@@ -281,17 +227,26 @@ export default function Text_Forms_Step2({
         <div className="file-side-info">
           <div>
             <span>Nome</span>
-            <p>{file ? file.name : "noFile"}</p>
+            <p>
+              {original_content_file ? original_content_file.name : "noFile"}
+            </p>
           </div>
           <div>
             <span>Tamanho</span>
-            <p>{file ? (file.size / 1024 / 1024).toFixed(2) : "noFile"} MB</p>
+            <p>
+              {original_content_file
+                ? (original_content_file.size / 1024 / 1024).toFixed(2)
+                : "noFile"}{" "}
+              MB
+            </p>
           </div>
           <div>
             <span>Última modificação</span>
             <p>
-              {file
-                ? new Date(file.lastModified).toLocaleDateString()
+              {original_content_file
+                ? new Date(
+                    original_content_file.lastModified
+                  ).toLocaleDateString()
                 : "noFile"}
             </p>
           </div>
@@ -306,7 +261,7 @@ export default function Text_Forms_Step2({
         <input
           type="text"
           placeholder="Adicionar secções..."
-          value={addSectionValue}
+          value={sectionOnChangeInputValue}
           aria-label="Campo de inserção de novas secções"
           aria-keyshortcuts="Enter"
           onChange={handleInputChange}
@@ -321,9 +276,7 @@ export default function Text_Forms_Step2({
           <FontAwesomeIcon icon={faPlus} />
         </button>
       </div>
-      {formData.sections.length > 0
-        ? contentCriationDisplay
-        : noSectionsDisplay}
+      {sections.length > 0 ? contentCriationDisplay : noSectionsDisplay}
       <div className="forms-step2-bottom-bar">
         <div className="forms-step2-back-button">
           <button

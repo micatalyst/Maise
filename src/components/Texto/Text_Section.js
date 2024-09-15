@@ -5,17 +5,23 @@ import { faAngleRight, faGripLines } from "@fortawesome/free-solid-svg-icons";
 
 import { Reorder, useDragControls, useMotionValue } from "framer-motion";
 
+import { useDispatch, useSelector } from "react-redux";
+import { setActiveSectionId } from "@/slicers/TempTextContentSlice";
+
 export default function Content_Card({
   item,
-  id,
-  title,
-  activeSection,
   handleSectionActivation,
   handleDragStart,
   handleDragEnd,
 }) {
   const dragControls = useDragControls();
   const y = useMotionValue(0);
+
+  const dispatch = useDispatch();
+
+  const activeSectionId = useSelector(
+    (state) => state.TempTextContentSlice.activeSectionId
+  );
 
   return (
     <Reorder.Item
@@ -30,25 +36,28 @@ export default function Content_Card({
       <button
         type="button"
         className="btn-section"
-        aria-pressed={id === activeSection}
+        aria-pressed={item.id === activeSectionId}
         onClick={() => {
-          handleSectionActivation(id); // Garante que sempre que uma secção é selecionada, esta fique guardada para poder saber sempre a secção atual ativa
+          handleSectionActivation(item.id); // Garante que sempre que uma secção é selecionada, esta fique guardada para poder saber sempre a secção atual ativa
+          dispatch(setActiveSectionId(item.id));
         }}
       >
         <div
           className={
-            id === activeSection ? "text-section selected" : "text-section"
+            item.id === activeSectionId
+              ? "text-section selected"
+              : "text-section"
           }
         >
           <div className="text-section-title">
-            {id === activeSection ? (
+            {item.id === activeSectionId ? (
               <FontAwesomeIcon className="selected" icon={faAngleRight} />
             ) : (
               ""
             )}
-            <p>{title}</p>
+            <p>{item.title}</p>
           </div>
-          <div onPointerDown={(event) => dragControls.start(event)}>
+          <div className="drag-icon" onPointerDown={(event) => dragControls.start(event)}>
             <FontAwesomeIcon icon={faGripLines} />
           </div>
         </div>

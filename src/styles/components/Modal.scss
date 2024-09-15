@@ -1,0 +1,8 @@
+@import "../Variables.scss";
+
+dialog {
+  position: absolute;
+  left: 50%;
+  top: 15%;
+  transform: translateX(-50%);
+}

@@ -9,21 +9,41 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faFileLines } from "@fortawesome/free-regular-svg-icons";
 
-import React, { useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
+import React, { useState, useEffect } from "react";
+
+import { useSelector, useDispatch } from "react-redux";
+import {
+  setTitle,
+  setOriginalContentCategory,
+  setOriginalContentLanguage,
+  setDescription,
+} from "@/slicers/TempTextContentSlice";
 
 export default function Text_Forms_Step1({
-  formData,
-  setFormData,
   handleNextStep,
   nextStep,
   setNextStep,
-  file,
-  setFile,
-  previewUrl,
-  setPreviewUrl,
+  original_content_file,
+  setOriginal_content_file,
+  original_content_PreviewUrl,
+  setOriginal_content_PreviewUrl,
 }) {
-  //const [file, setFile] = useState(null);
+  const title = useSelector((state) => state.TempTextContentSlice.title || "");
+  const original_content_category = useSelector(
+    (state) => state.TempTextContentSlice.original_content_category || ""
+  );
+  const original_content_language = useSelector(
+    (state) => state.TempTextContentSlice.original_content_language || ""
+  );
+  const description = useSelector(
+    (state) => state.TempTextContentSlice.description
+  );
+
+  const dispatch = useDispatch();
+
+  const maxSize = 5 * 1024 * 1024; // 5 MB
+
   const [error, setError] = useState("");
 
   const [inputTitleValid, setInputTitleValid] = useState(false);
@@ -34,47 +54,52 @@ export default function Text_Forms_Step1({
   const [inputFileValid, setInputFileValid] = useState(false);
 
   useEffect(() => {
-    formData.title ? setInputTitleValid(true) : setInputTitleValid(false);
-    formData.content_category
+    title ? setInputTitleValid(true) : setInputTitleValid(false);
+    original_content_category
       ? setInputContent_CategoryValid(true)
       : setInputContent_CategoryValid(false);
-    formData.original_content_language
+    original_content_language
       ? setInputLanguageValid(true)
       : setInputLanguageValid(false);
-    formData.description
+    description
       ? setInputDescriptionValid(true)
       : setInputDescriptionValid(false);
-    file ? setInputFileValid(true) : setInputFileValid(false);
+    original_content_file ? setInputFileValid(true) : setInputFileValid(false);
 
     if (
-      formData.title &&
-      formData.content_category &&
-      formData.original_content_language &&
-      formData.description &&
-      file
+      title &&
+      original_content_category &&
+      original_content_language &&
+      description &&
+      original_content_file
     ) {
       setNextStep(true);
     } else {
       setNextStep(false);
     }
-  }, [formData, setNextStep, file]);
+  }, [
+    title,
+    original_content_category,
+    original_content_language,
+    description,
+    original_content_file,
+    setNextStep,
+  ]);
 
   // handlePreview abre um separador com o documento original aberto
 
   const handlePreview = () => {
-    if (previewUrl) {
-      window.open(previewUrl, "_blank"); // Abre o ficheiro num novo separador
+    if (original_content_PreviewUrl) {
+      window.open(original_content_PreviewUrl, "_blank"); // Abre o ficheiro num novo separador
     } else {
       // trigger de feedback a dizer que o documento não foi carregado
     }
   };
 
   const handleRemoveFile = () => {
-    setFile(null);
-    setPreviewUrl("");
+    setOriginal_content_file("");
+    setOriginal_content_PreviewUrl("");
   };
-
-  const maxSize = 5 * 1024 * 1024; // 5 MB
 
   const onDrop = (acceptedFiles, rejectedFiles) => {
     // Verifica se o arquivo foi aceito
@@ -85,8 +110,8 @@ export default function Text_Forms_Step1({
     }
 
     // Se o arquivo foi aceito
-    setFile(acceptedFiles[0]);
-    setPreviewUrl(URL.createObjectURL(acceptedFiles[0]));
+    setOriginal_content_file(acceptedFiles[0]);
+    setOriginal_content_PreviewUrl(URL.createObjectURL(acceptedFiles[0]));
     setError("");
   };
 
@@ -110,10 +135,8 @@ export default function Text_Forms_Step1({
               type="text"
               placeholder="Título do Conteúdo..."
               maxLength="80"
-              value={formData.title}
-              onChange={(e) => {
-                setFormData({ ...formData, title: e.target.value });
-              }}
+              value={title}
+              onChange={(e) => dispatch(setTitle(e.target.value))}
               required
             />
           </div>
@@ -124,13 +147,10 @@ export default function Text_Forms_Step1({
               <select
                 id="content_category"
                 name="content_category"
-                value={formData.content_category}
-                onChange={(e) => {
-                  setFormData({
-                    ...formData,
-                    content_category: e.target.value,
-                  });
-                }}
+                value={original_content_category}
+                onChange={(e) =>
+                  dispatch(setOriginalContentCategory(e.target.value))
+                }
                 required
               >
                 <option value="" disabled>
@@ -150,13 +170,10 @@ export default function Text_Forms_Step1({
               <select
                 id="original_content_language"
                 name="original_content_language"
-                value={formData.original_content_language}
-                onChange={(e) => {
-                  setFormData({
-                    ...formData,
-                    original_content_language: e.target.value,
-                  });
-                }}
+                value={original_content_language}
+                onChange={(e) =>
+                  dispatch(setOriginalContentLanguage(e.target.value))
+                }
                 required
               >
                 <option value="" disabled>
@@ -174,14 +191,12 @@ export default function Text_Forms_Step1({
             id="description"
             name="description"
             placeholder="Nome do Conteúdo..."
-            value={formData.description}
-            onChange={(e) => {
-              setFormData({ ...formData, description: e.target.value });
-            }}
+            value={description}
+            onChange={(e) => dispatch(setDescription(e.target.value))}
             required
           />
         </div>
-        {file ? (
+        {original_content_file ? (
           <div className="forms-input-file" aria-live="assertive">
             <label>Conteúdo original</label>
             <div
@@ -205,21 +220,31 @@ export default function Text_Forms_Step1({
                 <div className="file-side-info">
                   <div>
                     <span>Nome</span>
-                    <p>{file ? file.name : "noFile"}</p>
+                    <p>
+                      {original_content_file
+                        ? original_content_file.name
+                        : "noFile"}
+                    </p>
                   </div>
                   <div className="file-side-info-row">
                     <div>
                       <span>Tamanho</span>
                       <p>
-                        {file ? (file.size / 1024 / 1024).toFixed(2) : "noFile"}
+                        {original_content_file
+                          ? (original_content_file.size / 1024 / 1024).toFixed(
+                              2
+                            )
+                          : "noFile"}
                         MB
                       </p>
                     </div>
                     <div>
                       <span>Última modificação</span>
                       <p>
-                        {file
-                          ? new Date(file.lastModified).toLocaleDateString()
+                        {original_content_file
+                          ? new Date(
+                              original_content_file.lastModified
+                            ).toLocaleDateString()
                           : "noFile"}
                       </p>
                     </div>

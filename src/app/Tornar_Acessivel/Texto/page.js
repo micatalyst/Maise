@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setTextFormsReset } from "@/slicers/TempTextContentSlice";
 
 import Text_Forms_Step1 from "@/components/Texto/Text_Forms_Step1";
 import Text_Forms_Step2 from "@/components/Texto/Text_Forms_Step2";
@@ -8,17 +10,15 @@ import Text_Forms_Step2 from "@/components/Texto/Text_Forms_Step2";
 export default function Texto() {
   const [step, setStep] = useState(1);
   const [nextStep, setNextStep] = useState(false);
-  const [tempFile, setTempFile] = useState(null);
-  const [previewUrl, setPreviewUrl] = useState("");
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    content_category: "",
-    original_content_language: "",
-    created_content_language: "",
-    original_content_uploaded: "",
-    sections: [],
-  });
+  const [original_content_file, setOriginal_content_file] = useState(null);
+  const [original_content_PreviewUrl, setOriginal_content_PreviewUrl] =
+    useState("");
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    // serve para garantir que o dispatch não corre mais vezes quando a página dá render (o upload do file / renderização do componente com as info do file)
+    dispatch(setTextFormsReset());
+  }, []);
 
   const handleNextStep = () => {
     if (nextStep) {
@@ -52,26 +52,22 @@ export default function Texto() {
     <main className="main">
       <h1>Conteúdo de Texto</h1>
       <form onSubmit={handleSubmit}>
-        {step === 2 && (
+        {step === 1 && (
           <Text_Forms_Step1
-            formData={formData}
-            setFormData={setFormData}
             handleNextStep={handleNextStep}
             setNextStep={setNextStep}
             nextStep={nextStep}
-            file={tempFile}
-            setFile={setTempFile}
-            previewUrl={previewUrl}
-            setPreviewUrl={setPreviewUrl}
+            original_content_file={original_content_file}
+            setOriginal_content_file={setOriginal_content_file}
+            original_content_PreviewUrl={original_content_PreviewUrl}
+            setOriginal_content_PreviewUrl={setOriginal_content_PreviewUrl}
           />
         )}
-        {step === 1 && ( // trocar os numeros dos steps novamente (apenas os troquei para facilitar a edição do step 2)
+        {step === 2 && ( // trocar os numeros dos steps novamente (apenas os troquei para facilitar a edição do step 2)
           <Text_Forms_Step2
-            formData={formData}
-            setFormData={setFormData}
             handlePreviousStep={handlePreviousStep}
-            file={tempFile}
-            previewUrl={previewUrl}
+            original_content_file={original_content_file}
+            original_content_PreviewUrl={original_content_PreviewUrl}
           />
         )}
       </form>
