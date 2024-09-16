@@ -4,9 +4,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlus,
   faCaretDown,
+  faFileArrowUp,
   faFilePen,
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
+
 import { faFileLines } from "@fortawesome/free-regular-svg-icons";
 
 import { useState, useEffect } from "react";
@@ -20,27 +22,38 @@ import {
 } from "@/slicers/TempTextContentSlice";
 
 import { Reorder, motion } from "framer-motion";
+import { useDropzone } from "react-dropzone";
 
 import Text_Section from "@/components/Texto/Text_Section";
-import Modal from "@/components/Modal";
+import Modal_Text_forms from "@/components/Texto/Modal_Text_forms";
+import Audio_Visualiser from "@/components/Texto/Audio_Visualiser";
+import StepValidationFeedback from "./StepValidationFeedback";
 
 export default function Text_Forms_Step2({
   handlePreviousStep,
+  handleSubmit,
   original_content_file,
   original_content_PreviewUrl,
+  accessibleAudioFiles,
+  setAccessibleAudioFiles,
 }) {
   const created_content_language = useSelector(
-    (state) => state.TempTextContentSlice.created_content_language,
+    (state) => state.TempTextContentSlice.created_content_language
   );
 
   const sections = useSelector((state) => state.TempTextContentSlice.sections);
+  const activeSectionId = useSelector(
+    (state) => state.TempTextContentSlice.activeSectionId
+  );
   const activeSection = useSelector(selectActiveSection);
 
   const dispatch = useDispatch();
 
+  const maxSize = 50 * 1024 * 1024; // 50 MB
+  const [error, setError] = useState("");
+
   const [sectionOnChangeInputValue, setSectionOnChangeInputValue] =
     useState(""); // value do input de criação de sections
-  const [sectionId, setSectionId] = useState(0); // Para atribuir um id à section quando é criada
   //const [activeSection, setActiveSection] = useState(); // Id da section que está ativa
 
   const [isDragging, setIsDragging] = useState(false);
@@ -50,9 +63,49 @@ export default function Text_Forms_Step2({
 
   useEffect(() => {
     if (sections.length === 1) {
+      // Não havia sections antes, seleccionar a primeira (primeira vez ou depois de apagar todas)
       dispatch(setActiveSectionId(sections[0].id));
     }
   }, [sections]);
+
+  const [stepValidations, setStepValidations] = useState([]);
+  const [allStepValidationsValid, setAllStepValidationsValid] = useState(false);
+  useEffect(() => {
+    // Verificar se os nomes das secçoes sao unicos
+    // 1) Criar um Set (chaves unicas) a partir do array de nomes
+    // 2) Criar um array desse set
+    // 3) Se os tamanhos (das sections e dos nomes unicos) forem iguais, entao os nomes sao unicos
+    const allSectionsHaveUniqueNames = Boolean(
+      sections.length > 0 &&
+        Array.from(new Set(sections.map((s) => s.title))).length ===
+          sections.length
+    );
+
+    setStepValidations([
+      {
+        title: "Adicionar pelo menos uma secção",
+        isValid: sections.length > 0, // usar > 0 em vez de so ver se tem length, para o isValid ser false em vez de 0 (que e falsy na mesma, mas nao e' boolean)
+      },
+      {
+        title: "Idioma do conteúdo criado",
+        isValid: sections.length > 0 && Boolean(created_content_language),
+      },
+      {
+        title: "Secções devem ter nomes únicos",
+        isValid: allSectionsHaveUniqueNames,
+      },
+      {
+        title: "Cada secção deve ter um áudio",
+        isValid:
+          sections.length > 0 &&
+          accessibleAudioFiles.length === sections.length,
+      },
+    ]);
+  }, [sections, created_content_language, accessibleAudioFiles]);
+
+  useEffect(() => {
+    setAllStepValidationsValid(stepValidations.every((step) => step.isValid));
+  }, [stepValidations]);
 
   // handlePreview abre um separador com o documento original aberto
 
@@ -95,10 +148,14 @@ export default function Text_Forms_Step2({
   const handleAddSection = () => {
     if (sectionOnChangeInputValue) {
       // Garante que existe um nome para section (previne a criação de sections sem nome)
-      dispatch(addSection({ id: sectionId, title: sectionOnChangeInputValue }));
+      dispatch(
+        addSection({
+          id: sections.length ? sections[sections.length - 1].id + 1 : 0,
+          title: sectionOnChangeInputValue,
+        })
+      );
 
       setSectionOnChangeInputValue("");
-      setSectionId((prevId) => prevId + 1);
     }
   };
 
@@ -123,6 +180,38 @@ export default function Text_Forms_Step2({
   const handleReorder = (reorderedSections) => {
     dispatch(setReorderedSections(reorderedSections));
   };
+
+  // Carregamento da vertente mais acessivel (Áudio)
+
+  const onDrop = (acceptedFiles, rejectedFiles) => {
+    // Verifica se o arquivo foi aceite
+    if (rejectedFiles.length > 0) {
+      const errorMessage = rejectedFiles[0].errors[0].message;
+      setError(errorMessage);
+      return;
+    }
+
+    // Se o arquivo foi aceite
+
+    setAccessibleAudioFiles((prevFiles) => [
+      ...prevFiles,
+      {
+        id: activeSectionId,
+        audioFile: acceptedFiles[0],
+        audioFilePreviewUrl: URL.createObjectURL(acceptedFiles[0]),
+      },
+    ]);
+    setError("");
+  };
+
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    accept: {
+      "audio/mpeg": [".mp3"],
+      "audio/wav": [".wav"],
+    },
+    maxSize: maxSize,
+  });
 
   // Componente quando (não) há sections
 
@@ -171,7 +260,6 @@ export default function Text_Forms_Step2({
               onChange={(e) =>
                 dispatch(setCreatedContentLanguage(e.target.value))
               }
-              //required
             >
               <option value="" disabled>
                 Idioma do conteúdo criado...
@@ -210,8 +298,56 @@ export default function Text_Forms_Step2({
             </>
           )}
         </div>
+        <div className="content-creation-upload">
+          {accessibleAudioFiles.find((file) => file.id === activeSectionId) ? (
+            <Audio_Visualiser
+              accessibleAudioFiles={accessibleAudioFiles}
+              activeSectionId={activeSectionId}
+            />
+          ) : (
+            <div
+              {...getRootProps({
+                className: "dropzone",
+                tabIndex: 0,
+                "aria-labelledby": "dropzone-label",
+              })}
+            >
+              <div className="Centralisation">
+                <input
+                  {...getInputProps({ id: "fileImport", name: "fileImport" })}
+                />
+                <div className="dropzone-info">
+                  <FontAwesomeIcon icon={faFileArrowUp} />
+                  <p>Arrasta e larga</p>
+                  <span>ou</span>
+                  <button className="primary-button" type="button">
+                    Procura no PC
+                  </button>
+                </div>
+                <div className="dropzone-file-type">
+                  <span>Ficheiros (até: {maxSize / 1024 / 1024} MB)</span>
+                  <p>MP3 / WAV</p>
+                  {/* <p>
+                {accessibleAudioFiles.find(
+                  (file) => file.id === activeSectionId
+                )
+                  ? "Guardou o áudio"
+                  : "Nenhum áudio salvo"}
+              </p> */}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
         {/* <div>{activeSection.description}</div> */}
-        <Modal isOpen={isModalOpen} closeModal={closeModal} modal={modalType} />
+        <Modal_Text_forms
+          isOpen={isModalOpen}
+          closeModal={closeModal}
+          modal={modalType}
+          setAccessibleAudioFiles={setAccessibleAudioFiles}
+          accessibleAudioFiles={accessibleAudioFiles}
+          activeSectionId={activeSectionId}
+        />
       </div>
       <div className="content-creation-right-side-bar">
         <div className="file-icon">
@@ -236,7 +372,7 @@ export default function Text_Forms_Step2({
             <p>
               {original_content_file
                 ? (original_content_file.size / 1024 / 1024).toFixed(2)
-                : "noFile"}{" "}
+                : "noFile"}
               MB
             </p>
           </div>
@@ -245,7 +381,7 @@ export default function Text_Forms_Step2({
             <p>
               {original_content_file
                 ? new Date(
-                    original_content_file.lastModified,
+                    original_content_file.lastModified
                   ).toLocaleDateString()
                 : "noFile"}
             </p>
@@ -288,9 +424,26 @@ export default function Text_Forms_Step2({
           </button>
         </div>
         <div className="forms-step2-input-feedback-submit-container">
-          <div> Requisitos obrigatórios para finalizar: </div>
+          <div className="forms-step1-bottom-bar">
+            <StepValidationFeedback
+              title={"Requisitos obrigatórios para finalizar:"}
+              validation={stepValidations}
+            />
+          </div>
           <div>
-            <button className="forms-button" type="submit">
+            <button
+              className={
+                allStepValidationsValid
+                  ? "forms-button"
+                  : "forms-button invalid"
+              }
+              type="button"
+              onClick={(e) => {
+                allStepValidationsValid && handleSubmit(e);
+              }}
+              disabled={!allStepValidationsValid}
+              aria-disabled={allStepValidationsValid ? false : true}
+            >
               {/* Fazer a logica para que esteja "disabled" no botão enquanto ainda faltar preencher alguma coisa. Isto ajudará*/}
               Submit
             </button>

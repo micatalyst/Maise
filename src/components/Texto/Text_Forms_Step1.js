@@ -20,10 +20,10 @@ import {
   setDescription,
 } from "@/slicers/TempTextContentSlice";
 
+import StepValidationFeedback from "./StepValidationFeedback";
+
 export default function Text_Forms_Step1({
   handleNextStep,
-  nextStep,
-  setNextStep,
   original_content_file,
   setOriginal_content_file,
   original_content_PreviewUrl,
@@ -31,60 +31,56 @@ export default function Text_Forms_Step1({
 }) {
   const title = useSelector((state) => state.TempTextContentSlice.title || "");
   const original_content_category = useSelector(
-    (state) => state.TempTextContentSlice.original_content_category || "",
+    (state) => state.TempTextContentSlice.original_content_category || ""
   );
   const original_content_language = useSelector(
-    (state) => state.TempTextContentSlice.original_content_language || "",
+    (state) => state.TempTextContentSlice.original_content_language || ""
   );
   const description = useSelector(
-    (state) => state.TempTextContentSlice.description,
+    (state) => state.TempTextContentSlice.description
   );
 
   const dispatch = useDispatch();
 
   const maxSize = 5 * 1024 * 1024; // 5 MB
-
   const [error, setError] = useState("");
 
-  const [inputTitleValid, setInputTitleValid] = useState(false);
-  const [inputContent_CategoryValid, setInputContent_CategoryValid] =
-    useState(false);
-  const [inputLanguageValid, setInputLanguageValid] = useState(false);
-  const [inputDescriptionValid, setInputDescriptionValid] = useState(false);
-  const [inputFileValid, setInputFileValid] = useState(false);
-
+  const [stepValidations, setStepValidations] = useState([]);
+  const [allStepValidationsValid, setAllStepValidationsValid] = useState(false);
   useEffect(() => {
-    title ? setInputTitleValid(true) : setInputTitleValid(false);
-    original_content_category
-      ? setInputContent_CategoryValid(true)
-      : setInputContent_CategoryValid(false);
-    original_content_language
-      ? setInputLanguageValid(true)
-      : setInputLanguageValid(false);
-    description
-      ? setInputDescriptionValid(true)
-      : setInputDescriptionValid(false);
-    original_content_file ? setInputFileValid(true) : setInputFileValid(false);
-
-    if (
-      title &&
-      original_content_category &&
-      original_content_language &&
-      description &&
-      original_content_file
-    ) {
-      setNextStep(true);
-    } else {
-      setNextStep(false);
-    }
+    setStepValidations([
+      {
+        title: "Nome",
+        isValid: Boolean(title),
+      },
+      {
+        title: "Conteúdo",
+        isValid: Boolean(original_content_category),
+      },
+      {
+        title: "Idioma",
+        isValid: Boolean(original_content_language),
+      },
+      {
+        title: "Descrição",
+        isValid: Boolean(description),
+      },
+      {
+        title: "Conteúdo original",
+        isValid: Boolean(original_content_file),
+      },
+    ]);
   }, [
     title,
     original_content_category,
     original_content_language,
     description,
     original_content_file,
-    setNextStep,
   ]);
+
+  useEffect(() => {
+    setAllStepValidationsValid(stepValidations.every((step) => step.isValid));
+  }, [stepValidations]);
 
   // handlePreview abre um separador com o documento original aberto
 
@@ -204,7 +200,6 @@ export default function Text_Forms_Step1({
               aria-label="Acabaste de carregar aqui um documento"
               tabIndex="0"
             >
-              {/* Aqui em cima, acrescentei um "aria-live" para notificar os leitores de ecrâ (de forma "amigável" / sem interromper outras mensagens) que este conteudo atualizou */}
               <div className="file-uploded-zone">
                 <div className="file-side-bar">
                   <FontAwesomeIcon icon={faFileLines} />
@@ -232,7 +227,7 @@ export default function Text_Forms_Step1({
                       <p>
                         {original_content_file
                           ? (original_content_file.size / 1024 / 1024).toFixed(
-                              2,
+                              2
                             )
                           : "noFile"}
                         MB
@@ -243,7 +238,7 @@ export default function Text_Forms_Step1({
                       <p>
                         {original_content_file
                           ? new Date(
-                              original_content_file.lastModified,
+                              original_content_file.lastModified
                             ).toLocaleDateString()
                           : "noFile"}
                       </p>
@@ -266,7 +261,6 @@ export default function Text_Forms_Step1({
             aria-live="assertive"
             aria-label="procura o documento, que pretendes carregar, presente no teu PC"
           >
-            {/* Aqui em cima, acrescentei um "aria-live" para notificar os leitores de ecrâ (de forma "amigável" / sem interromper outras mensagens) que este conteudo atualizou */}
             <label htmlFor="fileImport">Conteúdo original</label>
             <div
               {...getRootProps({
@@ -296,57 +290,20 @@ export default function Text_Forms_Step1({
         )}
       </div>
       <div className="forms-step1-bottom-bar">
-        <div className="forms-step1-input-feedback">
-          <p>Preencha todos os campos:</p>
-          <div className="forms-step1-input-feedback-container">
-            <div className={inputTitleValid ? "valid" : ""}>
-              {inputTitleValid ? (
-                <FontAwesomeIcon icon={faCheck} />
-              ) : (
-                <FontAwesomeIcon icon={faXmark} />
-              )}
-              <span>Nome</span>
-            </div>
-            <div className={inputContent_CategoryValid ? "valid" : ""}>
-              {inputContent_CategoryValid ? (
-                <FontAwesomeIcon icon={faCheck} />
-              ) : (
-                <FontAwesomeIcon icon={faXmark} />
-              )}
-              <span>Conteúdo</span>
-            </div>
-            <div className={inputLanguageValid ? "valid" : ""}>
-              {inputLanguageValid ? (
-                <FontAwesomeIcon icon={faCheck} />
-              ) : (
-                <FontAwesomeIcon icon={faXmark} />
-              )}
-              <span>Idioma</span>
-            </div>
-            <div className={inputDescriptionValid ? "valid" : ""}>
-              {inputDescriptionValid ? (
-                <FontAwesomeIcon icon={faCheck} />
-              ) : (
-                <FontAwesomeIcon icon={faXmark} />
-              )}
-              <span>Descrição</span>
-            </div>
-            <div className={inputFileValid ? "valid" : ""}>
-              {inputFileValid ? (
-                <FontAwesomeIcon icon={faCheck} />
-              ) : (
-                <FontAwesomeIcon icon={faXmark} />
-              )}
-              <span>Conteúdo original</span>
-            </div>
-          </div>
-        </div>
+        <StepValidationFeedback
+          title={"Preencha todos os campos:"}
+          validation={stepValidations}
+        />
         <div>
           <button
-            className={nextStep ? "forms-button" : "forms-button invalid"}
+            className={
+              allStepValidationsValid ? "forms-button" : "forms-button invalid"
+            }
             type="button"
-            onClick={handleNextStep}
-            aria-disabled={nextStep ? false : true}
+            onClick={() => {
+              allStepValidationsValid && handleNextStep();
+            }}
+            aria-disabled={allStepValidationsValid ? false : true}
           >
             Continuar
           </button>

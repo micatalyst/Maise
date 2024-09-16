@@ -71,12 +71,14 @@ $informative-Blue-20: #d0e1f5; // Dark_Gray (12.80)
   --button-primary-text-color: #{$dark-gray};
   --button-primary-bg-hover-color: #{$informative-Blue};
   --button-primary-text-hover-color: #{$white};
+  --modal-primary-border-color: #{$informative-Blue};
 
   --button-negative-border-color: #{$negative-Red};
   --button-negative-bg-color: #{$white};
   --button-negative-text-color: #{$dark-gray};
   --button-negative-bg-hover-color: #{$negative-Red};
   --button-negative-text-hover-color: #{$white};
+  --modal-negative-border-color: #{$negative-Red};
 
   --button-forms-border-color: #{$positive-Green-light-mode};
   --button-forms-bg-color: #{$white};
@@ -140,6 +142,7 @@ $text-forms-step2-sections-container-min-height: calc(
 );
 
 $forms-step1-padding: 30px 40px;
+$modal-padding: 30px;
 
 // Border
 

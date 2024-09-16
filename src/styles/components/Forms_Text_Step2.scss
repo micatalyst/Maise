@@ -173,14 +173,110 @@
       display: grid;
       grid-template-rows: max-content 1fr;
 
-      padding: 30px;
-
       .content-creation-top-bar {
         display: grid;
         grid-template-columns: 1fr max-content max-content;
 
+        padding: 30px;
+        border-bottom: 5px solid var(--content-creating-limit-border-color);
+
+        h2 {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+
+          line-clamp: 2;
+
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width: 70ch;
+
+          margin: 0;
+          align-self: center;
+        }
+
         button:first-of-type {
           margin-right: 30px;
+          margin-left: 30px;
+        }
+      }
+
+      .content-creation-upload {
+        padding: 30px;
+
+        .dropzone {
+          display: grid;
+          grid-template-columns: 1fr;
+
+          place-items: center;
+
+          width: 100%;
+          height: 100%;
+
+          &:focus {
+            outline: 2px solid $notice-Yellow;
+            outline-offset: 0;
+            //border: 1px solid $transparent;
+          }
+
+          .Centralisation {
+            display: grid;
+            grid-template-columns: max-content 1fr;
+
+            align-items: center;
+
+            width: 600px;
+
+            .dropzone-info {
+              // pointer-events: none;
+
+              display: grid;
+              grid-template-rows: repeat(4, max-content);
+
+              justify-items: center;
+
+              border-right: 1px solid var(--input-border-color);
+              width: 226px;
+
+              svg {
+                width: 65px;
+                height: auto;
+
+                margin-bottom: 15px;
+              }
+
+              p {
+                font-size: $forms-input-file-p;
+                font-weight: $bold;
+                color: var(--base-text-color);
+
+                margin-bottom: 2px;
+              }
+
+              span {
+                margin-bottom: 10px;
+              }
+            }
+
+            .dropzone-file-type {
+              display: grid;
+              grid-template-rows: repeat(2, max-content);
+
+              justify-items: center;
+
+              span {
+                font-size: $body-text-1;
+                font-weight: $medium;
+              }
+
+              p {
+                font-size: $dropzone-file-type-text-size;
+                font-weight: $bold;
+                color: var(--input-file-type-color);
+                margin-top: -10px;
+              }
+            }
+          }
         }
       }
     }
@@ -205,7 +301,7 @@
         width: 100%;
 
         svg {
-          width: 80px;
+          max-width: 72px;
           height: auto;
         }
       }
@@ -234,7 +330,7 @@
 
           overflow: hidden;
           text-overflow: ellipsis;
-          max-width: 32ch;
+          max-width: 20ch;
         }
 
         p {

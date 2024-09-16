@@ -3,6 +3,63 @@
 dialog {
   position: absolute;
   left: 50%;
-  top: 15%;
-  transform: translateX(-50%);
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  overflow: hidden;
+
+  padding: $modal-padding;
+  width: 420px;
+
+  /* display: grid;
+  grid-template-columns: max-content; */
+
+  input {
+    width: 100%;
+  }
+
+  .btn-placement {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    gap: 20px;
+
+    justify-content: end;
+
+    margin-top: 20px;
+  }
+
+  &.primary {
+    border: 3px solid var(--modal-primary-border-color);
+  }
+
+  &.negative {
+    border: 3px solid var(--modal-negative-border-color);
+
+    p {
+      margin-bottom: 10px;
+    }
+
+    .section-name {
+      display: grid;
+      grid-template-columns: max-content max-content;
+      gap: 5px;
+
+      align-items: center;
+
+      p {
+        margin: 0;
+        font-weight: $bold;
+
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+
+        line-clamp: 1;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 35ch;
+      }
+    }
+  }
 }

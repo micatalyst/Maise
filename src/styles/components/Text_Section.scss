@@ -36,6 +36,20 @@ button.btn-section {
       font-weight: $bold;
 
       text-align: left;
+
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+
+      line-clamp: 1;
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 22ch;
+    }
+
+    p.selected {
+      max-width: 20ch;
     }
 
     svg.selected {

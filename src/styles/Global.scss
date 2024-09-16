@@ -73,6 +73,11 @@ h5 {
     color: var(--button-primary-text-hover-color);
   }
 
+  &.pressed-look {
+    background-color: var(--button-primary-bg-hover-color);
+    color: var(--button-primary-text-hover-color);
+  }
+
   &.icon {
     display: grid;
     grid-template-columns: max-content max-content;
@@ -92,6 +97,11 @@ h5 {
   height: max-content;
 
   &:hover {
+    background-color: var(--button-negative-bg-hover-color);
+    color: var(--button-negative-text-hover-color);
+  }
+
+  &.pressed-look {
     background-color: var(--button-negative-bg-hover-color);
     color: var(--button-negative-text-hover-color);
   }

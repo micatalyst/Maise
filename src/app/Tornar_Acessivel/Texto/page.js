@@ -9,10 +9,11 @@ import Text_Forms_Step2 from "@/components/Texto/Text_Forms_Step2";
 
 export default function Texto() {
   const [step, setStep] = useState(1);
-  const [nextStep, setNextStep] = useState(false);
   const [original_content_file, setOriginal_content_file] = useState(null);
   const [original_content_PreviewUrl, setOriginal_content_PreviewUrl] =
     useState("");
+
+  const [accessibleAudioFiles, setAccessibleAudioFiles] = useState([]);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -21,9 +22,7 @@ export default function Texto() {
   }, []);
 
   const handleNextStep = () => {
-    if (nextStep) {
-      setStep(step + 1);
-    }
+    setStep(step + 1);
   };
 
   const handlePreviousStep = () => {
@@ -32,6 +31,8 @@ export default function Texto() {
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // Este código é importante para evitar que o utilizador envie o formulário sem querer ao precionar "enter" enquanto prencher algum input dentro do forms.
+
+    alert("Submit Demo");
 
     /* const response = await fetch('/api/submitForm', {
       method: 'POST',
@@ -51,12 +52,10 @@ export default function Texto() {
   return (
     <main className="main">
       <h1>Conteúdo de Texto</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => e.preventDefault()}>
         {step === 1 && (
           <Text_Forms_Step1
             handleNextStep={handleNextStep}
-            setNextStep={setNextStep}
-            nextStep={nextStep}
             original_content_file={original_content_file}
             setOriginal_content_file={setOriginal_content_file}
             original_content_PreviewUrl={original_content_PreviewUrl}
@@ -66,8 +65,11 @@ export default function Texto() {
         {step === 2 && ( // trocar os numeros dos steps novamente (apenas os troquei para facilitar a edição do step 2)
           <Text_Forms_Step2
             handlePreviousStep={handlePreviousStep}
+            handleSubmit={handleSubmit}
             original_content_file={original_content_file}
             original_content_PreviewUrl={original_content_PreviewUrl}
+            accessibleAudioFiles={accessibleAudioFiles}
+            setAccessibleAudioFiles={setAccessibleAudioFiles}
           />
         )}
       </form>
