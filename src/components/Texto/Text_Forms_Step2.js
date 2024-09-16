@@ -38,12 +38,12 @@ export default function Text_Forms_Step2({
   setAccessibleAudioFiles,
 }) {
   const created_content_language = useSelector(
-    (state) => state.TempTextContentSlice.created_content_language
+    (state) => state.TempTextContentSlice.created_content_language,
   );
 
   const sections = useSelector((state) => state.TempTextContentSlice.sections);
   const activeSectionId = useSelector(
-    (state) => state.TempTextContentSlice.activeSectionId
+    (state) => state.TempTextContentSlice.activeSectionId,
   );
   const activeSection = useSelector(selectActiveSection);
 
@@ -78,7 +78,7 @@ export default function Text_Forms_Step2({
     const allSectionsHaveUniqueNames = Boolean(
       sections.length > 0 &&
         Array.from(new Set(sections.map((s) => s.title))).length ===
-          sections.length
+          sections.length,
     );
 
     setStepValidations([
@@ -152,7 +152,7 @@ export default function Text_Forms_Step2({
         addSection({
           id: sections.length ? sections[sections.length - 1].id + 1 : 0,
           title: sectionOnChangeInputValue,
-        })
+        }),
       );
 
       setSectionOnChangeInputValue("");
@@ -381,7 +381,7 @@ export default function Text_Forms_Step2({
             <p>
               {original_content_file
                 ? new Date(
-                    original_content_file.lastModified
+                    original_content_file.lastModified,
                   ).toLocaleDateString()
                 : "noFile"}
             </p>

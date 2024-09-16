@@ -20,7 +20,7 @@ export default function Content_Card({
   const dispatch = useDispatch();
 
   const activeSectionId = useSelector(
-    (state) => state.TempTextContentSlice.activeSectionId
+    (state) => state.TempTextContentSlice.activeSectionId,
   );
 
   return (

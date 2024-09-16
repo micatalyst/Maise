@@ -31,13 +31,13 @@ export default function Text_Forms_Step1({
 }) {
   const title = useSelector((state) => state.TempTextContentSlice.title || "");
   const original_content_category = useSelector(
-    (state) => state.TempTextContentSlice.original_content_category || ""
+    (state) => state.TempTextContentSlice.original_content_category || "",
   );
   const original_content_language = useSelector(
-    (state) => state.TempTextContentSlice.original_content_language || ""
+    (state) => state.TempTextContentSlice.original_content_language || "",
   );
   const description = useSelector(
-    (state) => state.TempTextContentSlice.description
+    (state) => state.TempTextContentSlice.description,
   );
 
   const dispatch = useDispatch();
@@ -227,7 +227,7 @@ export default function Text_Forms_Step1({
                       <p>
                         {original_content_file
                           ? (original_content_file.size / 1024 / 1024).toFixed(
-                              2
+                              2,
                             )
                           : "noFile"}
                         MB
@@ -238,7 +238,7 @@ export default function Text_Forms_Step1({
                       <p>
                         {original_content_file
                           ? new Date(
-                              original_content_file.lastModified
+                              original_content_file.lastModified,
                             ).toLocaleDateString()
                           : "noFile"}
                       </p>

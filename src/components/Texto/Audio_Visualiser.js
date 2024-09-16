@@ -73,7 +73,7 @@ export default function Audio_Visualiser({
       null,
       null,
       null,
-      wavesurfer.getDuration()
+      wavesurfer.getDuration(),
     )
       .toTimeString()
       .match(/\d{2}:\d{2}:\d{2}/)[0];

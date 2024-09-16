@@ -56,7 +56,7 @@ export default function Modal_Text_forms({
         updateSectionTitle({
           id: activeSection.id,
           title: sectionOnChangeInputValue,
-        })
+        }),
       );
       handleClose();
     }
@@ -68,7 +68,7 @@ export default function Modal_Text_forms({
 
     //Apaga o objeto do conteudo mais acessivel do array de todos os objetos onde este foi inserido
     setAccessibleAudioFiles(
-      accessibleAudioFiles.filter((file) => file.id !== activeSectionId)
+      accessibleAudioFiles.filter((file) => file.id !== activeSectionId),
     );
     handleClose();
   };
