@@ -1,0 +1,62 @@
+@import '../Variables.scss';
+
+.forms-step-feedback-bar {
+  display: grid;
+  grid-template-columns: 1fr max-content;
+  gap: 30px;
+
+  justify-items: space-between;
+  align-items: center;
+
+  background-color: var(--forms-container-bg);
+
+  &.with-padding {
+    padding: 20px 30px;
+  }
+
+  .forms-step-input-feedback {
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+    gap: 40px;
+
+    align-items: center;
+
+    p {
+      font-weight: $medium;
+    }
+
+    .forms-step-input-feedback-container {
+      display: grid;
+      grid-template-columns: repeat(5, max-content);
+      gap: 10px;
+
+      div {
+        border-left: 1px solid var(--forms-step1-feedback-bar-color);
+        padding-left: 10px;
+
+        svg {
+          margin-right: 6px;
+          color: var(--forms-step1-feedback-bar-color);
+          width: 12px;
+        }
+
+        span {
+          color: var(--forms-step1-feedback-bar-color);
+          font-weight: $medium;
+        }
+
+        &.valid {
+          span,
+          svg {
+            color: var(--forms-step1-valid-feedback-bar-color);
+          }
+        }
+      }
+
+      div:first-of-type {
+        border: 0;
+        padding: 0;
+      }
+    }
+  }
+}

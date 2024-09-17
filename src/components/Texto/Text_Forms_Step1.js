@@ -253,23 +253,21 @@ export default function Text_Forms_Step1({ handleNextStep, original_content_file
           </div>
         )}
       </div>
-      <div className="forms-step1-bottom-bar">
+      <div className="forms-step-feedback-bar">
         <StepValidationFeedback
           title={'Preencha todos os campos:'}
           validation={stepValidations}
         />
-        <div>
-          <button
-            className={allStepValidationsValid ? 'forms-button' : 'forms-button invalid'}
-            type="button"
-            onClick={() => {
-              allStepValidationsValid && handleNextStep();
-            }}
-            aria-disabled={allStepValidationsValid ? false : true}
-          >
-            Continuar
-          </button>
-        </div>
+        <button
+          className={allStepValidationsValid ? 'forms-button' : 'forms-button invalid'}
+          type="button"
+          onClick={() => {
+            allStepValidationsValid && handleNextStep();
+          }}
+          aria-disabled={allStepValidationsValid ? false : true}
+        >
+          Continuar
+        </button>
       </div>
     </div>
   );

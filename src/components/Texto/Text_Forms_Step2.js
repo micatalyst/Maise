@@ -452,29 +452,27 @@ export default function Text_Forms_Step2({ handlePreviousStep, handleSubmit, ori
             Voltar
           </button>
         </div>
-        <div className="forms-step2-input-feedback-submit-container">
-          <div className="forms-step1-bottom-bar">
-            <StepValidationFeedback
-              title={'Requisitos obrigatórios para finalizar:'}
-              validation={stepValidations}
-            />
-          </div>
-          <div>
-            <button
-              className={allStepValidationsValid ? 'forms-button' : 'forms-button invalid'}
-              type="button"
-              onClick={(e) => {
-                allStepValidationsValid && handleSubmit(e);
-              }}
-              disabled={!allStepValidationsValid}
-              aria-disabled={allStepValidationsValid ? false : true}
-            >
-              {/* Fazer a logica para que esteja "disabled" no botão enquanto ainda faltar preencher alguma coisa. Isto ajudará*/}
-              Submit
-            </button>
-          </div>
+        {/* <div className="forms-step-input-feedback-container"> */}
+        <div className="forms-step-feedback-bar with-padding">
+          <StepValidationFeedback
+            title={'Requisitos obrigatórios para finalizar:'}
+            validation={stepValidations}
+          />
+          <button
+            className={allStepValidationsValid ? 'forms-button' : 'forms-button invalid'}
+            type="button"
+            onClick={(e) => {
+              allStepValidationsValid && handleSubmit(e);
+            }}
+            disabled={!allStepValidationsValid}
+            aria-disabled={allStepValidationsValid ? false : true}
+          >
+            {/* Fazer a logica para que esteja "disabled" no botão enquanto ainda faltar preencher alguma coisa. Isto ajudará*/}
+            Submit
+          </button>
         </div>
       </div>
+      {/* </div> */}
     </div>
   );
 }

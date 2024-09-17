@@ -172,6 +172,7 @@
     .content-creation-work-space {
       display: grid;
       grid-template-rows: max-content 1fr;
+      grid-template-columns: 1fr;
 
       .content-creation-top-bar {
         display: grid;
@@ -189,7 +190,8 @@
 
           overflow: hidden;
           text-overflow: ellipsis;
-          max-width: 70ch;
+          width: 100%;
+          //max-width: 70ch;
 
           margin: 0;
           align-self: center;
@@ -202,6 +204,9 @@
       }
 
       .content-creation-upload {
+        display: grid;
+        grid-template-columns: 1fr;
+
         padding: 30px;
 
         height: $text-forms-step2-work-space-max-height;
@@ -356,14 +361,12 @@
       background-color: var(--forms-container-bg);
     }
 
-    .forms-step2-input-feedback-submit-container {
-      display: grid;
-      grid-template-columns: 1fr max-content;
-      align-items: center;
+    // .forms-step-input-feedback-container {
+    //   align-items: center;
 
-      background-color: var(--forms-container-bg);
+    //   background-color: var(--forms-container-bg);
 
-      padding: 20px 30px;
-    }
+    //   padding: 20px 30px;
+    // }
   }
 }

@@ -38,58 +38,6 @@
   }
 }
 
-.forms-step1-bottom-bar {
-  display: grid;
-  grid-template-columns: 1fr max-content;
-
-  justify-items: space-between;
-  align-items: center;
-
-  .forms-step1-input-feedback {
-    display: grid;
-    grid-template-columns: repeat(2, max-content);
-
-    p {
-      margin-right: 40px;
-      font-weight: $medium;
-    }
-
-    .forms-step1-input-feedback-container {
-      display: grid;
-      grid-template-columns: repeat(6, max-content);
-      gap: 10px;
-
-      div {
-        border-left: 1px solid var(--forms-step1-feedback-bar-color);
-        padding-left: 10px;
-
-        svg {
-          margin-right: 6px;
-          color: var(--forms-step1-feedback-bar-color);
-          width: 12px;
-        }
-
-        span {
-          color: var(--forms-step1-feedback-bar-color);
-          font-weight: $medium;
-        }
-
-        &.valid {
-          span,
-          svg {
-            color: var(--forms-step1-valid-feedback-bar-color);
-          }
-        }
-      }
-
-      div:first-of-type {
-        border: 0;
-        padding: 0;
-      }
-    }
-  }
-}
-
 label {
   display: block;
   margin-bottom: 10px;
