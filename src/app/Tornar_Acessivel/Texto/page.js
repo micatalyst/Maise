@@ -15,6 +15,7 @@ export default function Texto() {
   const [accessibleAudioFiles, setAccessibleAudioFiles] = useState([]);
 
   const dispatch = useDispatch();
+
   useEffect(() => {
     // serve para garantir que o dispatch não corre mais vezes quando a página dá render (o upload do file / renderização do componente com as info do file)
     dispatch(setTextFormsReset());
@@ -52,7 +53,7 @@ export default function Texto() {
     <main className="main">
       <h1>Conteúdo de Texto</h1>
       <form onSubmit={(e) => e.preventDefault()}>
-        {step === 2 && (
+        {step === 1 && (
           <Text_Forms_Step1
             handleNextStep={handleNextStep}
             original_content_file={original_content_file}
@@ -61,7 +62,7 @@ export default function Texto() {
             setOriginal_content_PreviewUrl={setOriginal_content_PreviewUrl}
           />
         )}
-        {step === 1 && ( // trocar os numeros dos steps novamente (apenas os troquei para facilitar a edição do step 2)
+        {step === 2 && ( // trocar os numeros dos steps novamente (apenas os troquei para facilitar a edição do step 2)
           <Text_Forms_Step2
             handlePreviousStep={handlePreviousStep}
             handleSubmit={handleSubmit}

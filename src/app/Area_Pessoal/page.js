@@ -6,12 +6,19 @@ import Content_Cards_Container from '@/components/Content_Cards_Container';
 
 import Content_Typology_General_Card from '@/components/Content_Typology_General_Card';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { useState, useEffect } from 'react';
 
+import { fetchContent } from '@/slicers/dataSlice';
+
 export default function Area_Pessoal() {
-  const Data = useSelector((state) => state.dataSlice.data); // Chamada da informação da "API" para mostrar o conteúdo
+  const { data, loading } = useSelector((state) => state.dataSlice); // Chamada da informação da "API" para mostrar o conteúdo
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchContent());
+  }, []);
 
   const [filterLevel2, setFilterLevel2] = useState(false);
   const [finalData, setFinalData] = useState([]);
@@ -51,9 +58,9 @@ export default function Area_Pessoal() {
     let filteredDataLayer0, filteredDataLayer1, filteredDataLayer2;
 
     if (filterTab === 'Documentos pessoais') {
-      filteredDataLayer0 = Data.filter((item) => item.num_mecan === 100402);
+      filteredDataLayer0 = data.filter((item) => item.num_mecan === 100402);
     } else if (filterTab === 'Guardados') {
-      filteredDataLayer0 = Data.filter((item) => item.saved);
+      filteredDataLayer0 = data.filter((item) => item.saved);
     }
 
     if (filterType === 'Tudo') {
@@ -76,7 +83,7 @@ export default function Area_Pessoal() {
     } else {
       setFinalData(filteredDataLayer1);
     }
-  }, [filterTab, filterType, searchParam, Data, filterLevel2]);
+  }, [filterTab, filterType, searchParam, data, filterLevel2]);
 
   return (
     <main className="main">
