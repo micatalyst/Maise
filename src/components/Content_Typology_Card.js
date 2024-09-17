@@ -1,42 +1,41 @@
-"use client";
+'use client';
 
-import "@/styles/components/Content_Typology_Card.scss";
-import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import React, { useState } from "react";
+import '@/styles/components/Content_Typology_Card.scss';
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import React, { useState } from 'react';
 
 export default function Content_Typology_Card(props) {
   const pathname = usePathname();
 
   const typeDescription = (type) => {
     switch (type) {
-      case "Texto":
+      case 'Texto':
         return (
           <p className="content-typology-info">
             Complementa os teus <span>textos</span> (visuais) com alternativas
             <span> sonoras</span>.
           </p>
         );
-      case "Imagem":
+      case 'Imagem':
         return (
           <p className="content-typology-info">
             Complementa as tuas <span>imagens</span> (visuais) com alternativas
             <span> sonoras</span>.
           </p>
         );
-      case "Áudio":
+      case 'Áudio':
         return (
           <p className="content-typology-info">
             Complementa os teus <span>áudios</span> (sonoros) com alternativas
             <span> escritas</span>.
           </p>
         );
-      case "Vídeo":
+      case 'Vídeo':
         return (
           <p className="content-typology-info">
-            Complementa os teus <span>vídeos</span> (audiovisuais) com
-            alternativas
+            Complementa os teus <span>vídeos</span> (audiovisuais) com alternativas
             <span> sonoras</span> e <span> escritas</span>.
           </p>
         );
@@ -45,7 +44,7 @@ export default function Content_Typology_Card(props) {
 
   const typeExamples = (type) => {
     switch (type) {
-      case "Texto":
+      case 'Texto':
         return (
           <div className="type-examples-container">
             <span>Livros</span>
@@ -53,14 +52,14 @@ export default function Content_Typology_Card(props) {
             <span>Documentos Académicos</span>
           </div>
         );
-      case "Imagem":
+      case 'Imagem':
         return (
           <div className="type-examples-container">
             <span>Palestras</span>
             <span>Apresentações</span>
           </div>
         );
-      case "Áudio":
+      case 'Áudio':
         return (
           <div className="type-examples-container">
             <span>Fotografias</span>
@@ -68,7 +67,7 @@ export default function Content_Typology_Card(props) {
             <span>Cartazes</span>
           </div>
         );
-      case "Vídeo":
+      case 'Vídeo':
         return (
           <div className="type-examples-container">
             <span>Palestras</span>
@@ -81,7 +80,7 @@ export default function Content_Typology_Card(props) {
 
   const typeImages = (type) => {
     switch (type) {
-      case "Texto":
+      case 'Texto':
         return (
           <Image
             src="/images/type_Text.png"
@@ -92,7 +91,7 @@ export default function Content_Typology_Card(props) {
             height={804}
           />
         );
-      case "Imagem":
+      case 'Imagem':
         return (
           <Image
             src="/images/type_Image.png"
@@ -103,7 +102,7 @@ export default function Content_Typology_Card(props) {
             height={804}
           />
         );
-      case "Áudio":
+      case 'Áudio':
         return (
           <Image
             src="/images/type_Audio.png"
@@ -114,7 +113,7 @@ export default function Content_Typology_Card(props) {
             height={804}
           />
         );
-      case "Vídeo":
+      case 'Vídeo':
         return (
           <Image
             src="/images/type_Video.png"
@@ -130,19 +129,19 @@ export default function Content_Typology_Card(props) {
 
   const typelink = (type) => {
     switch (type) {
-      case "Texto":
-        return "Texto";
-      case "Imagem":
-        return "Imagem";
-      case "Áudio":
-        return "Audio";
-      case "Vídeo":
-        return "Video";
+      case 'Texto':
+        return 'Texto';
+      case 'Imagem':
+        return 'Imagem';
+      case 'Áudio':
+        return 'Audio';
+      case 'Vídeo':
+        return 'Video';
     }
   };
 
   return (
-    <Link href={pathname + "/" + typelink(props.type)}>
+    <Link href={pathname + '/' + typelink(props.type)}>
       <div className="content-typology-card">
         <h2>{props.type}</h2>
         {typeDescription(props.type)}

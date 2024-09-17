@@ -1,82 +1,54 @@
-import "@/styles/components/Forms_Step1.scss";
+import '@/styles/components/Forms_Step1.scss';
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCaretDown,
-  faCheck,
-  faFileArrowUp,
-  faXmark,
-} from "@fortawesome/free-solid-svg-icons";
-import { faFileLines } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretDown, faCheck, faFileArrowUp, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faFileLines } from '@fortawesome/free-regular-svg-icons';
 
-import { useDropzone } from "react-dropzone";
-import React, { useState, useEffect } from "react";
+import { useDropzone } from 'react-dropzone';
+import React, { useState, useEffect } from 'react';
 
-import { useSelector, useDispatch } from "react-redux";
-import {
-  setTitle,
-  setOriginalContentCategory,
-  setOriginalContentLanguage,
-  setDescription,
-} from "@/slicers/TempTextContentSlice";
+import { useSelector, useDispatch } from 'react-redux';
+import { setTitle, setOriginalContentCategory, setOriginalContentLanguage, setDescription } from '@/slicers/TempTextContentSlice';
 
-import StepValidationFeedback from "./StepValidationFeedback";
+import StepValidationFeedback from './StepValidationFeedback';
 
-export default function Text_Forms_Step1({
-  handleNextStep,
-  original_content_file,
-  setOriginal_content_file,
-  original_content_PreviewUrl,
-  setOriginal_content_PreviewUrl,
-}) {
-  const title = useSelector((state) => state.TempTextContentSlice.title || "");
-  const original_content_category = useSelector(
-    (state) => state.TempTextContentSlice.original_content_category || "",
-  );
-  const original_content_language = useSelector(
-    (state) => state.TempTextContentSlice.original_content_language || "",
-  );
-  const description = useSelector(
-    (state) => state.TempTextContentSlice.description,
-  );
+export default function Text_Forms_Step1({ handleNextStep, original_content_file, setOriginal_content_file, original_content_PreviewUrl, setOriginal_content_PreviewUrl }) {
+  const title = useSelector((state) => state.TempTextContentSlice.title || '');
+  const original_content_category = useSelector((state) => state.TempTextContentSlice.original_content_category || '');
+  const original_content_language = useSelector((state) => state.TempTextContentSlice.original_content_language || '');
+  const description = useSelector((state) => state.TempTextContentSlice.description);
 
   const dispatch = useDispatch();
 
   const maxSize = 5 * 1024 * 1024; // 5 MB
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   const [stepValidations, setStepValidations] = useState([]);
   const [allStepValidationsValid, setAllStepValidationsValid] = useState(false);
   useEffect(() => {
     setStepValidations([
       {
-        title: "Nome",
+        title: 'Nome',
         isValid: Boolean(title),
       },
       {
-        title: "Conteúdo",
+        title: 'Conteúdo',
         isValid: Boolean(original_content_category),
       },
       {
-        title: "Idioma",
+        title: 'Idioma',
         isValid: Boolean(original_content_language),
       },
       {
-        title: "Descrição",
+        title: 'Descrição',
         isValid: Boolean(description),
       },
       {
-        title: "Conteúdo original",
+        title: 'Conteúdo original',
         isValid: Boolean(original_content_file),
       },
     ]);
-  }, [
-    title,
-    original_content_category,
-    original_content_language,
-    description,
-    original_content_file,
-  ]);
+  }, [title, original_content_category, original_content_language, description, original_content_file]);
 
   useEffect(() => {
     setAllStepValidationsValid(stepValidations.every((step) => step.isValid));
@@ -86,15 +58,15 @@ export default function Text_Forms_Step1({
 
   const handlePreview = () => {
     if (original_content_PreviewUrl) {
-      window.open(original_content_PreviewUrl, "_blank"); // Abre o ficheiro num novo separador
+      window.open(original_content_PreviewUrl, '_blank'); // Abre o ficheiro num novo separador
     } else {
       // trigger de feedback a dizer que o documento não foi carregado
     }
   };
 
   const handleRemoveFile = () => {
-    setOriginal_content_file("");
-    setOriginal_content_PreviewUrl("");
+    setOriginal_content_file('');
+    setOriginal_content_PreviewUrl('');
   };
 
   const onDrop = (acceptedFiles, rejectedFiles) => {
@@ -108,13 +80,13 @@ export default function Text_Forms_Step1({
     // Se o arquivo foi aceito
     setOriginal_content_file(acceptedFiles[0]);
     setOriginal_content_PreviewUrl(URL.createObjectURL(acceptedFiles[0]));
-    setError("");
+    setError('');
   };
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: {
-      "application/pdf": [".pdf"],
+      'application/pdf': ['.pdf'],
     },
     maxSize: maxSize,
   });
@@ -144,12 +116,13 @@ export default function Text_Forms_Step1({
                 id="content_category"
                 name="content_category"
                 value={original_content_category}
-                onChange={(e) =>
-                  dispatch(setOriginalContentCategory(e.target.value))
-                }
+                onChange={(e) => dispatch(setOriginalContentCategory(e.target.value))}
                 required
               >
-                <option value="" disabled>
+                <option
+                  value=""
+                  disabled
+                >
                   Especifica o Conteúdo...
                 </option>
                 <option value="Poster">Poster</option>
@@ -167,12 +140,13 @@ export default function Text_Forms_Step1({
                 id="original_content_language"
                 name="original_content_language"
                 value={original_content_language}
-                onChange={(e) =>
-                  dispatch(setOriginalContentLanguage(e.target.value))
-                }
+                onChange={(e) => dispatch(setOriginalContentLanguage(e.target.value))}
                 required
               >
-                <option value="" disabled>
+                <option
+                  value=""
+                  disabled
+                >
                   Idioma do conteúdo original...
                 </option>
                 <option value="Português">Português</option>
@@ -193,7 +167,10 @@ export default function Text_Forms_Step1({
           />
         </div>
         {original_content_file ? (
-          <div className="forms-input-file" aria-live="assertive">
+          <div
+            className="forms-input-file"
+            aria-live="assertive"
+          >
             <label>Conteúdo original</label>
             <div
               className="file-uploded-container"
@@ -215,33 +192,19 @@ export default function Text_Forms_Step1({
                 <div className="file-side-info">
                   <div>
                     <span>Nome</span>
-                    <p>
-                      {original_content_file
-                        ? original_content_file.name
-                        : "noFile"}
-                    </p>
+                    <p>{original_content_file ? original_content_file.name : 'noFile'}</p>
                   </div>
                   <div className="file-side-info-row">
                     <div>
                       <span>Tamanho</span>
                       <p>
-                        {original_content_file
-                          ? (original_content_file.size / 1024 / 1024).toFixed(
-                              2,
-                            )
-                          : "noFile"}
+                        {original_content_file ? (original_content_file.size / 1024 / 1024).toFixed(2) : 'noFile'}
                         MB
                       </p>
                     </div>
                     <div>
                       <span>Última modificação</span>
-                      <p>
-                        {original_content_file
-                          ? new Date(
-                              original_content_file.lastModified,
-                            ).toLocaleDateString()
-                          : "noFile"}
-                      </p>
+                      <p>{original_content_file ? new Date(original_content_file.lastModified).toLocaleDateString() : 'noFile'}</p>
                     </div>
                   </div>
                   <button
@@ -264,20 +227,21 @@ export default function Text_Forms_Step1({
             <label htmlFor="fileImport">Conteúdo original</label>
             <div
               {...getRootProps({
-                className: "dropzone",
+                className: 'dropzone',
                 tabIndex: 0,
-                "aria-labelledby": "dropzone-label",
+                'aria-labelledby': 'dropzone-label',
               })}
             >
               {/* Estou a colocar o tabIndex para grantir que seja navegavel por teclado */}
-              <input
-                {...getInputProps({ id: "fileImport", name: "fileImport" })}
-              />
+              <input {...getInputProps({ id: 'fileImport', name: 'fileImport' })} />
               <div className="dropzone-info">
                 <FontAwesomeIcon icon={faFileArrowUp} />
                 <p>Arrasta e larga</p>
                 <span>ou</span>
-                <button className="primary-button" type="button">
+                <button
+                  className="primary-button"
+                  type="button"
+                >
                   Procura no PC
                 </button>
               </div>
@@ -291,14 +255,12 @@ export default function Text_Forms_Step1({
       </div>
       <div className="forms-step1-bottom-bar">
         <StepValidationFeedback
-          title={"Preencha todos os campos:"}
+          title={'Preencha todos os campos:'}
           validation={stepValidations}
         />
         <div>
           <button
-            className={
-              allStepValidationsValid ? "forms-button" : "forms-button invalid"
-            }
+            className={allStepValidationsValid ? 'forms-button' : 'forms-button invalid'}
             type="button"
             onClick={() => {
               allStepValidationsValid && handleNextStep();

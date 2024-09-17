@@ -1,11 +1,8 @@
-@import "../Variables.scss";
+@import '../Variables.scss';
 
 .content-cards-container {
   display: grid;
-  grid-template-columns: repeat(
-    auto-fill,
-    minmax($content-cards-width, $content-cards-width)
-  );
+  grid-template-columns: repeat(auto-fill, minmax($content-cards-width, $content-cards-width));
   column-gap: 30px;
   row-gap: 40px;
   justify-content: space-between;

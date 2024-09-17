@@ -1,4 +1,4 @@
-@import "../Variables.scss";
+@import '../Variables.scss';
 
 .content-typology-general-card {
   display: grid;
@@ -17,7 +17,7 @@
     //margin-bottom: 20px;
 
     &::before {
-      content: "";
+      content: '';
       position: absolute;
       bottom: -5px;
       left: 0;

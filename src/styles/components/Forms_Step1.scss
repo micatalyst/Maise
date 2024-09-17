@@ -1,4 +1,4 @@
-@import "../Variables.scss";
+@import '../Variables.scss';
 
 .forms-step1 {
   display: grid;
@@ -118,9 +118,9 @@ input {
     border: 1px solid $transparent;
   }
 
-  &[type="range"] {
+  /* &[type="range"] {
     padding: 0;
-  }
+  } */
 }
 
 select {

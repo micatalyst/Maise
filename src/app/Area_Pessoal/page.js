@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import Horizontal_Tab from "@/components/Horizontal_Tab";
-import Toolbar from "@/components/Toolbar";
-import Content_Cards_Container from "@/components/Content_Cards_Container";
+import Horizontal_Tab from '@/components/Horizontal_Tab';
+import Toolbar from '@/components/Toolbar';
+import Content_Cards_Container from '@/components/Content_Cards_Container';
 
-import Content_Typology_General_Card from "@/components/Content_Typology_General_Card";
+import Content_Typology_General_Card from '@/components/Content_Typology_General_Card';
 
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
 export default function Area_Pessoal() {
   const Data = useSelector((state) => state.dataSlice.data); // Chamada da informação da "API" para mostrar o conteúdo
@@ -16,9 +16,9 @@ export default function Area_Pessoal() {
   const [filterLevel2, setFilterLevel2] = useState(false);
   const [finalData, setFinalData] = useState([]);
 
-  const [filterTab, setFilterTab] = useState("Documentos pessoais");
-  const [filterType, setFilterType] = useState("Tudo");
-  const [searchParam, setSearchParam] = useState("");
+  const [filterTab, setFilterTab] = useState('Documentos pessoais');
+  const [filterType, setFilterType] = useState('Tudo');
+  const [searchParam, setSearchParam] = useState('');
 
   const handleTab = (activeTab) => {
     setFilterTab(activeTab);
@@ -44,26 +44,24 @@ export default function Area_Pessoal() {
   // Tab Update Filters Reset
 
   useEffect(() => {
-    setFilterType("Tudo");
+    setFilterType('Tudo');
   }, [filterTab]);
 
   useEffect(() => {
     let filteredDataLayer0, filteredDataLayer1, filteredDataLayer2;
 
-    if (filterTab === "Documentos pessoais") {
+    if (filterTab === 'Documentos pessoais') {
       filteredDataLayer0 = Data.filter((item) => item.num_mecan === 100402);
-    } else if (filterTab === "Guardados") {
+    } else if (filterTab === 'Guardados') {
       filteredDataLayer0 = Data.filter((item) => item.saved);
     }
 
-    if (filterType === "Tudo") {
+    if (filterType === 'Tudo') {
       filteredDataLayer1 = filteredDataLayer0;
 
       // Depois aqui posso colocar aqui o que acontece quando o array de resultados está vazio ou tratar disso apenas na outra página.
     } else {
-      filteredDataLayer1 = filteredDataLayer0.filter(
-        (item) => item.content_typology === filterType,
-      );
+      filteredDataLayer1 = filteredDataLayer0.filter((item) => item.content_typology === filterType);
 
       // Depois aqui posso colocar aqui o que acontece quando o array de resultados está vazio ou tratar disso apenas na outra página.
     }

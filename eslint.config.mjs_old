@@ -1,0 +1,41 @@
+import antfu from '@antfu/eslint-config';
+
+export default antfu({
+  typescript: false,
+  react: true,
+  stylistic: true,
+  formatters: {
+    css: true,
+    html: true,
+  },
+  rules: {
+    'format/prettier': 'off', // strange rules in style
+    // 'antfu/top-level-function': 'off',
+    'antfu/consistent-chaining': 'off',
+    'perfectionist/sort-imports': 'off',
+    'perfectionist/sort-named-imports': 'off',
+    curly: ['error', 'all'],
+    'node/prefer-global/process': 'off',
+    'style/arrow-parens': ['error', 'always'],
+    'style/function-call-spacing': ['error', 'never'],
+    'style/semi': ['error', 'always'],
+    'style/brace-style': ['error', '1tbs', { allowSingleLine: false }],
+    'style/member-delimiter-style': [
+      'error',
+      {
+        multiline: {
+          delimiter: 'semi',
+          requireLast: true,
+        },
+        singleline: {
+          delimiter: 'semi',
+          requireLast: false,
+        },
+        multilineDetection: 'brackets',
+      },
+    ],
+    'no-console': 'off', // process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'test/prefer-lowercase-title': 'off',
+    // '@typescript-eslint/explicit-function-return-type': 'error', // 2024-08-22: 3046 errors if enabled
+  },
+});

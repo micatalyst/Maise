@@ -1,9 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState: {
-    Name: "Miguel Teixeira",
+    Name: 'Miguel Teixeira',
     Num_Mecan: 100402,
   },
 });

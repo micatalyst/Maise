@@ -1,14 +1,14 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { useDispatch } from "react-redux";
+import { createSlice } from '@reduxjs/toolkit';
+import { useDispatch } from 'react-redux';
 
 const TempTextContentSlice = createSlice({
-  name: "TempTextContentSlice",
+  name: 'TempTextContentSlice',
   initialState: {
-    title: "",
-    original_content_category: "",
-    original_content_language: "",
-    description: "",
-    created_content_language: "",
+    title: '',
+    original_content_category: '',
+    original_content_language: '',
+    description: '',
+    created_content_language: '',
     sections: [],
     activeSectionId: undefined,
   },
@@ -29,11 +29,11 @@ const TempTextContentSlice = createSlice({
       state.created_content_language = action.payload;
     },
     setTextFormsReset: (state) => {
-      state.title = "";
-      state.original_content_category = "";
-      state.original_content_language = "";
-      state.description = "";
-      state.created_content_language = "";
+      state.title = '';
+      state.original_content_category = '';
+      state.original_content_language = '';
+      state.description = '';
+      state.created_content_language = '';
       state.sections = [];
     },
     addSection: (state, action) => {
@@ -42,9 +42,7 @@ const TempTextContentSlice = createSlice({
     },
     updateSectionTitle: (state, action) => {
       const { id, title } = action.payload;
-      const sectionIndex = state.sections.findIndex(
-        (section) => section.id === id,
-      );
+      const sectionIndex = state.sections.findIndex((section) => section.id === id);
       if (sectionIndex !== -1) {
         state.sections[sectionIndex] = {
           ...state.sections[sectionIndex],
@@ -79,25 +77,11 @@ const TempTextContentSlice = createSlice({
   selectors: {
     selectActiveSection: (
       state, // devolve um objeto com a info da secção selecionada, a partir do ID guardado no estado
-    ) =>
-      state.activeSectionId !== undefined &&
-      state.sections.find((section) => section.id === state.activeSectionId),
+    ) => state.activeSectionId !== undefined && state.sections.find((section) => section.id === state.activeSectionId),
   },
 });
 
-export const {
-  setTitle,
-  setOriginalContentCategory,
-  setOriginalContentLanguage,
-  setDescription,
-  setCreatedContentLanguage,
-  setTextFormsReset,
-  addSection,
-  updateSectionTitle,
-  removeSection,
-  setReorderedSections,
-  setActiveSectionId,
-} = TempTextContentSlice.actions;
+export const { setTitle, setOriginalContentCategory, setOriginalContentLanguage, setDescription, setCreatedContentLanguage, setTextFormsReset, addSection, updateSectionTitle, removeSection, setReorderedSections, setActiveSectionId } = TempTextContentSlice.actions;
 
 export const { selectActiveSection } = TempTextContentSlice.selectors;
 

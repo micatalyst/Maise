@@ -1,32 +1,20 @@
-import { useRef, useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  updateSectionTitle,
-  removeSection,
-  selectActiveSection,
-} from "@/slicers/TempTextContentSlice";
+import { useRef, useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateSectionTitle, removeSection, selectActiveSection } from '@/slicers/TempTextContentSlice';
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
-import "@/styles/components/Modal.scss";
+import '@/styles/components/Modal.scss';
 
-export default function Modal_Text_forms({
-  isOpen,
-  closeModal,
-  modal,
-  setAccessibleAudioFiles,
-  accessibleAudioFiles,
-  activeSectionId,
-}) {
+export default function Modal_Text_forms({ isOpen, closeModal, modal, setAccessibleAudioFiles, accessibleAudioFiles, activeSectionId, handleSectionDeleted, handleRemoveSectionAudio }) {
   const dialogRef = useRef(null);
 
   const dispatch = useDispatch();
 
   const activeSection = useSelector(selectActiveSection);
 
-  const [sectionOnChangeInputValue, setSectionOnChangeInputValue] =
-    useState("");
+  const [sectionOnChangeInputValue, setSectionOnChangeInputValue] = useState('');
 
   // Abre o modal se o prop "isOpen" for verdadeiro
   useEffect(() => {
@@ -43,7 +31,7 @@ export default function Modal_Text_forms({
   };
 
   const handleKeyDownOnSectionTitleInput = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       event.preventDefault();
       handleUpdateSection();
     }
@@ -67,14 +55,18 @@ export default function Modal_Text_forms({
     dispatch(removeSection(activeSection.id));
 
     //Apaga o objeto do conteudo mais acessivel do array de todos os objetos onde este foi inserido
-    setAccessibleAudioFiles(
-      accessibleAudioFiles.filter((file) => file.id !== activeSectionId),
-    );
+    setAccessibleAudioFiles(accessibleAudioFiles.filter((file) => file.id !== activeSectionId));
+
+    handleSectionDeleted(activeSectionId);
     handleClose();
   };
 
   const Modal_Update_Section = (
-    <dialog className="primary" ref={dialogRef} onClose={handleClose}>
+    <dialog
+      className="primary"
+      ref={dialogRef}
+      onClose={handleClose}
+    >
       <h2>Atualize o título da secção</h2>
       <input
         type="text"
@@ -96,7 +88,11 @@ export default function Modal_Text_forms({
         >
           Atualizar
         </button>
-        <button className="primary-button" type="button" onClick={handleClose}>
+        <button
+          className="primary-button"
+          type="button"
+          onClick={handleClose}
+        >
           Cancelar
         </button>
       </div>
@@ -104,11 +100,18 @@ export default function Modal_Text_forms({
   );
 
   const Modal_Delete_Section = (
-    <dialog className="negative" ref={dialogRef} onClose={handleClose}>
+    <dialog
+      className="negative"
+      ref={dialogRef}
+      onClose={handleClose}
+    >
       <h2>Apagar a secção</h2>
       <p>Tem a certeza que pretende apagar a secção selecionada?</p>
       <div className="section-name">
-        <FontAwesomeIcon className="selected" icon={faAngleRight} />
+        <FontAwesomeIcon
+          className="selected"
+          icon={faAngleRight}
+        />
         <p>{sectionOnChangeInputValue}</p>
       </div>
       <div className="btn-placement">
@@ -119,16 +122,53 @@ export default function Modal_Text_forms({
         >
           Apagar
         </button>
-        <button className="primary-button" type="button" onClick={handleClose}>
+        <button
+          className="primary-button"
+          type="button"
+          onClick={handleClose}
+        >
           Cancelar
         </button>
       </div>
     </dialog>
   );
 
-  return modal === "updateSection"
-    ? Modal_Update_Section
-    : modal === "DeleteSection"
-      ? Modal_Delete_Section
-      : "";
+  const Modal_Delete_Section_Audio = (
+    <dialog
+      className="negative"
+      ref={dialogRef}
+      onClose={handleClose}
+    >
+      <h2>Apagar o áudio</h2>
+      <p>Tem a certeza que pretende apagar o áudio desta secção?</p>
+      <div className="btn-placement">
+        <button
+          className="negative-button pressed-look"
+          type="button"
+          onClick={() => {
+            handleRemoveSectionAudio();
+            handleClose();
+          }}
+        >
+          Apagar
+        </button>
+        <button
+          className="primary-button"
+          type="button"
+          onClick={handleClose}
+        >
+          Cancelar
+        </button>
+      </div>
+    </dialog>
+  );
+
+  switch (modal) {
+    case 'updateSection':
+      return Modal_Update_Section;
+    case 'deleteSection':
+      return Modal_Delete_Section;
+    case 'deleteSectionAudio':
+      return Modal_Delete_Section_Audio;
+  }
 }

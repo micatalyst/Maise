@@ -1,4 +1,4 @@
-@import "../Variables.scss";
+@import '../Variables.scss';
 
 .content-typology-pre-info {
   .content-typology-pre-info-paragraph {
@@ -16,10 +16,7 @@
 
   .content-typology-card-container {
     display: grid;
-    grid-template-columns: repeat(
-      auto-fill,
-      minmax($typology-cards-width, $typology-cards-width)
-    );
+    grid-template-columns: repeat(auto-fill, minmax($typology-cards-width, $typology-cards-width));
     column-gap: 30px;
     row-gap: 40px;
 

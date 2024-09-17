@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import Toolbar from "@/components/Toolbar";
-import Content_Cards_Container from "@/components/Content_Cards_Container";
+import Toolbar from '@/components/Toolbar';
+import Content_Cards_Container from '@/components/Content_Cards_Container';
 
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
 export default function Arquivo_UA() {
   const Data = useSelector((state) => state.dataSlice.data); // Chamada da informação da "API" para mostrar o conteúdo
@@ -13,8 +13,8 @@ export default function Arquivo_UA() {
   const [filterLevel2, setFilterLevel2] = useState(false);
   const [finalData, setFinalData] = useState([]);
 
-  const [filter, setFilter] = useState("Tudo");
-  const [searchParam, setSearchParam] = useState("");
+  const [filter, setFilter] = useState('Tudo');
+  const [searchParam, setSearchParam] = useState('');
 
   const handleFilter = (type) => {
     setFilter(type);
@@ -36,14 +36,12 @@ export default function Arquivo_UA() {
   useEffect(() => {
     let filteredDataLayer1, filteredDataLayer2;
 
-    if (filter === "Tudo") {
+    if (filter === 'Tudo') {
       filteredDataLayer1 = Data;
 
       // Depois aqui posso colocar aqui o que acontece quando o array de resultados está vazio ou tratar disso apenas na outra página.
     } else {
-      filteredDataLayer1 = Data.filter(
-        (item) => item.content_typology === filter,
-      );
+      filteredDataLayer1 = Data.filter((item) => item.content_typology === filter);
 
       // Depois aqui posso colocar aqui o que acontece quando o array de resultados está vazio ou tratar disso apenas na outra página.
     }
@@ -62,7 +60,10 @@ export default function Arquivo_UA() {
 
   return (
     <main className="main">
-      <Toolbar onFilterType={handleFilter} onSearch={handleSearch} />
+      <Toolbar
+        onFilterType={handleFilter}
+        onSearch={handleSearch}
+      />
       <Content_Cards_Container data={finalData} />
     </main>
   );

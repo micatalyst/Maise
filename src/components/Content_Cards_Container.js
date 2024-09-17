@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import "@/styles/components/Content_Cards_Container.scss";
+import '@/styles/components/Content_Cards_Container.scss';
 
-import Content_Card from "@/components/Content_Card";
+import Content_Card from '@/components/Content_Card';
 
 export default function Content_Cards_Container({ data }) {
   return (

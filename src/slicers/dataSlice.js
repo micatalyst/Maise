@@ -1,8 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
-import Data from "@/Data/Data";
+import { createSlice } from '@reduxjs/toolkit';
+import Data from '@/Data/Data';
 
 const dataSlice = createSlice({
-  name: "data",
+  name: 'data',
   initialState: {
     data: Data,
   },
@@ -14,9 +14,7 @@ const dataSlice = createSlice({
       state.data.push(action.payload);
     },
     updateItem: (state, action) => {
-      const index = state.data.findIndex(
-        (item) => item.id === action.payload.id,
-      );
+      const index = state.data.findIndex((item) => item.id === action.payload.id);
       if (index !== -1) {
         state.data[index] = action.payload;
       }

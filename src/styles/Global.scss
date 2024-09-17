@@ -1,10 +1,10 @@
-@import "Variables";
-@import "Reset";
+@import 'Variables';
+@import 'Reset';
 
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
 
 :root {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-style: normal;
 }
 
@@ -40,16 +40,19 @@ h2 {
 h3 {
   font-weight: $bold;
   font-size: $heading-3;
+  margin-bottom: $heading-3-margin-bottom;
 }
 
 h4 {
   font-weight: $bold;
   font-size: $heading-4;
+  margin-bottom: $heading-4-margin-bottom;
 }
 
 h5 {
   font-weight: $bold;
   font-size: $heading-5;
+  margin-bottom: $heading-5-margin-bottom;
 }
 
 .RightSide-Grid-Container {

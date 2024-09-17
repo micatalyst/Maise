@@ -1,18 +1,21 @@
-import Link from "next/link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCircleHalfStroke,
-  faUniversalAccess,
-} from "@fortawesome/free-solid-svg-icons";
+import Link from 'next/link';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleHalfStroke, faUniversalAccess } from '@fortawesome/free-solid-svg-icons';
 
-import "@/styles/components/Navbar.scss";
+import '@/styles/components/Navbar.scss';
 
 export default function Navbar() {
   return (
-    <nav className="nav" aria-label="Navegação principal">
+    <nav
+      className="nav"
+      aria-label="Navegação principal"
+    >
       <ul>
         <li>
-          <Link href="/" className="active">
+          <Link
+            href="/"
+            className="active"
+          >
             Arquivo UA
           </Link>
         </li>

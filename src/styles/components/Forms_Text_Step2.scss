@@ -1,4 +1,4 @@
-@import "../Variables.scss";
+@import '../Variables.scss';
 
 .forms-step2 {
   display: grid;
@@ -177,15 +177,15 @@
         display: grid;
         grid-template-columns: 1fr max-content max-content;
 
-        padding: 30px;
+        padding: $forms-step2-content-creation-top-bar-padding;
         border-bottom: 5px solid var(--content-creating-limit-border-color);
 
         h2 {
           display: -webkit-box;
-          -webkit-line-clamp: 2;
+          -webkit-line-clamp: 1;
           -webkit-box-orient: vertical;
 
-          line-clamp: 2;
+          line-clamp: 1;
 
           overflow: hidden;
           text-overflow: ellipsis;
@@ -203,6 +203,9 @@
 
       .content-creation-upload {
         padding: 30px;
+
+        height: $text-forms-step2-work-space-max-height;
+        overflow: hidden;
 
         .dropzone {
           display: grid;
@@ -291,7 +294,7 @@
       place-items: center;
 
       width: max-content;
-      padding: 30px;
+      padding: 20px 30px;
 
       .file-icon {
         display: grid;
