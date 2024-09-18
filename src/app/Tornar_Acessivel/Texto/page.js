@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useCallback, useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { setTextFormsReset } from '@/slicers/TempTextContentSlice';
 
 import Text_Forms_Step1 from '@/components/Texto/Text_Forms_Step1';
@@ -13,6 +13,8 @@ export default function Texto() {
   const [original_content_PreviewUrl, setOriginal_content_PreviewUrl] = useState('');
 
   const [accessibleAudioFiles, setAccessibleAudioFiles] = useState([]);
+
+  const tempTextContentSliceData = useSelector((state) => state.TempTextContentSlice);
 
   const dispatch = useDispatch();
 
@@ -29,10 +31,61 @@ export default function Texto() {
     setStep(step - 1);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // Este código é importante para evitar que o utilizador envie o formulário sem querer ao precionar "enter" enquanto prencher algum input dentro do forms.
+  const handleSubmit = useCallback(async (e) => {
+    e && e.preventDefault(); // Este código é importante para evitar que o utilizador envie o formulário sem querer ao precionar "enter" enquanto prencher algum input dentro do forms.
+    console.log(tempTextContentSliceData);
+    console.log(original_content_file);
 
-    alert('Submit Demo');
+    console.log(accessibleAudioFiles);
+
+    try {
+      const formData = new FormData();
+
+      // Filtrar só o que interessa enviar (porque o tempTextContentSliceData tem outras coisas)
+
+      //
+      // Step 1
+      //
+      const fieldsToUploadStep1 = {
+        title: tempTextContentSliceData.title,
+        original_content_category: tempTextContentSliceData.original_content_category,
+        original_content_language: tempTextContentSliceData.original_content_language,
+        description: tempTextContentSliceData.description,
+        title: tempTextContentSliceData.title,
+        content_typology: 'Texto',
+        saved: false,
+      };
+
+      for (const fieldName in fieldsToUploadStep1) {
+        formData.append(fieldName, fieldsToUploadStep1[fieldName]);
+      }
+      formData.append('file', original_content_file);
+
+      //
+      // Step 2
+      //
+      formData.append('created_content_language', tempTextContentSliceData.created_content_language);
+      tempTextContentSliceData.sections.forEach((section, index) => {
+        const sectionAudio = accessibleAudioFiles.find((audio) => audio.id === section.id);
+        formData.append(`sections[${index}].id`, section.id);
+        formData.append(`sections[${index}].title`, section.title);
+        formData.append(`sectionFiles[${index}]`, sectionAudio.audioFile); // send the file on a separate array, to help multer on backend
+      });
+
+      // Debug formData:
+      for (let pair of formData.entries()) {
+        console.log(`    ${pair[0]}: ${pair[1]}`);
+      }
+
+      const url = `${window.location.protocol}//${window.location.hostname}:3001/content`;
+      let res = await fetch(url, {
+        method: 'POST',
+        body: formData,
+      });
+      console.log(res);
+    } catch (e) {
+      console.error('Could not send content:', e);
+    }
 
     /* const response = await fetch('/api/submitForm', {
       method: 'POST',
@@ -47,7 +100,7 @@ export default function Texto() {
     } else {
       alert('Failed to submit form');
     } */
-  };
+  });
 
   return (
     <main className="main">

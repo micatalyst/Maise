@@ -15,6 +15,7 @@ export default function Content_Cards_Container({ data }) {
             title={item.title}
             date={item.publish_date}
             saved={item.saved}
+            sections={item.sections}
           />
         ))}
       </div>
