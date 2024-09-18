@@ -14,7 +14,7 @@ export default function Content_Card(props) {
           <FontAwesomeIcon icon={faFileImage} />
           <span>{props.type}</span>
         </div>
-        {props.saved ? <FontAwesomeIcon icon={faBookmarkSolid} /> : <FontAwesomeIcon icon={faBookmarkRegular} />}
+        <div onClick={props.toggleSaved}>{props.saved ? <FontAwesomeIcon icon={faBookmarkSolid} /> : <FontAwesomeIcon icon={faBookmarkRegular} />}</div>
       </div>
       <div className="content-card-title">
         <h4>{props.title}</h4>

@@ -3,8 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const userSlice = createSlice({
   name: 'user',
   initialState: {
-    Name: 'Miguel Teixeira',
-    Num_Mecan: 100402,
+    name: 'Miguel Teixeira',
+    numMecan: 100402,
   },
 });
 

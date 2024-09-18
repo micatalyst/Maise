@@ -14,6 +14,7 @@ import { fetchContent } from '@/slicers/dataSlice';
 
 export default function Area_Pessoal() {
   const { data, loading } = useSelector((state) => state.dataSlice); // Chamada da informação da "API" para mostrar o conteúdo
+  const { numMecan } = useSelector((state) => state.userSlice);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -58,7 +59,7 @@ export default function Area_Pessoal() {
     let filteredDataLayer0, filteredDataLayer1, filteredDataLayer2;
 
     if (filterTab === 'Documentos pessoais') {
-      filteredDataLayer0 = data.filter((item) => item.num_mecan === 100402);
+      filteredDataLayer0 = data.filter((item) => item.numMecan === numMecan.toString());
     } else if (filterTab === 'Guardados') {
       filteredDataLayer0 = data.filter((item) => item.saved);
     }

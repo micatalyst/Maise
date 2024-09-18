@@ -108,7 +108,7 @@ app.post('/content', getNewSectionId, contentFiles, async (req, res) => {
   //   language: 'Português',
   //   publish_date: '12-06-2024',
   //   author: 'Miguel Teixeira',
-  //   num_mecan: 100402,
+  //   numMecan: 100402,
   //   originalFilePath: `/uploads/${res.locals.newSectionId}/${req.file.filename}`,
   //   saved: false,
   // };
@@ -119,6 +119,8 @@ app.post('/content', getNewSectionId, contentFiles, async (req, res) => {
     id: res.locals.newSectionId,
     originalFilePath: `/uploads/${res.locals.newSectionId}/${originalFilePath}`,
     publish_date: dateFormatter.format(new Date()),
+    saved: false,
+    numMec: Number.parseInt(parsedBody.numMec, 10),
   };
 
   // Add audio files path to each section
@@ -139,6 +141,19 @@ app.post('/content', getNewSectionId, contentFiles, async (req, res) => {
 app.get('/content/:id', (req, res) => {
   const found = db.data.find((item) => item.id.toString() === req.params.id);
   if (found) {
+    res.send(found);
+  } else {
+    res.send('Not found');
+  }
+});
+
+app.put('/content/:id', async (req, res) => {
+  const found = db.data.find((item) => item.id.toString() === req.params.id);
+  if (found) {
+    Object.entries(req.body).forEach(([key, value]) => {
+      found[key] = value;
+    });
+    await db.write(); // write/persist to the file / send to the database
     res.send(found);
   } else {
     res.send('Not found');

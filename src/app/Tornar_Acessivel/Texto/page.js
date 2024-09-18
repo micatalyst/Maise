@@ -15,6 +15,7 @@ export default function Texto() {
   const [accessibleAudioFiles, setAccessibleAudioFiles] = useState([]);
 
   const tempTextContentSliceData = useSelector((state) => state.TempTextContentSlice);
+  const { name, numMecan } = useSelector((state) => state.userSlice);
 
   const dispatch = useDispatch();
 
@@ -53,7 +54,8 @@ export default function Texto() {
         description: tempTextContentSliceData.description,
         title: tempTextContentSliceData.title,
         content_typology: 'Texto',
-        saved: false,
+        numMecan,
+        author: name,
       };
 
       for (const fieldName in fieldsToUploadStep1) {

@@ -37,10 +37,11 @@ const dataSlice = createSlice({
     addItem: (state, action) => {
       state.data.push(action.payload);
     },
-    updateItem: (state, action) => {
-      const index = state.data.findIndex((item) => item.id === action.payload.id);
+    updateItem: (state, { payload }) => {
+      const { id } = payload;
+      const index = state.data.findIndex((item) => item.id === id);
       if (index !== -1) {
-        state.data[index] = action.payload;
+        state.data[index] = payload;
       }
     },
   },
