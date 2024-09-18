@@ -19,7 +19,7 @@ export const fetchContentById = createAsyncThunk('data/fetchContentById', async 
     let data = await res.json();
     return data;
   } catch (e) {
-    console.error('Could not get content:', e);
+    console.error('Could not get content by id:', e);
   }
 });
 
@@ -28,6 +28,7 @@ const dataSlice = createSlice({
   initialState: {
     // data: Data,
     data: [],
+    contentDataId: [],
     loading: false,
   },
   reducers: {
@@ -46,6 +47,7 @@ const dataSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    // Sem estes extraReducers o thunk de cima que faz a chamada à API nem sequer funciona
     builder
       .addCase(fetchContent.pending, (state) => {
         state.loading = true;
@@ -55,6 +57,16 @@ const dataSlice = createSlice({
         state.data = payload;
       })
       .addCase(fetchContent.rejected, (state) => {
+        state.loading = false;
+      })
+      .addCase(fetchContentById.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchContentById.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.contentDataId = payload;
+      })
+      .addCase(fetchContentById.rejected, (state) => {
         state.loading = false;
       });
   },

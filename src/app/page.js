@@ -3,7 +3,6 @@
 import Toolbar from '@/components/Toolbar';
 import Content_Cards_Container from '@/components/Content_Cards_Container';
 
-import { usePathname } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useState, useEffect } from 'react';

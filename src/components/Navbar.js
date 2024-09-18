@@ -14,7 +14,7 @@ export default function Navbar() {
         <li>
           <Link
             href="/"
-            className="active"
+            /* className="active" */
           >
             Arquivo UA
           </Link>

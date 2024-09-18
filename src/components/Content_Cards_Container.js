@@ -46,6 +46,7 @@ export default function Content_Cards_Container({ data }) {
         {data.map((item, index) => (
           <Content_Card
             key={index}
+            id={item.id}
             type={item.content_typology}
             title={item.title}
             date={item.publish_date}

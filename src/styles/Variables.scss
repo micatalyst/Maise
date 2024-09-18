@@ -45,7 +45,7 @@ $informative-Blue-20: #d0e1f5; // Dark_Gray (12.80)
   --input-border-color: #{$gray-1};
   --input-file-type-color: #{$gray-1};
 
-  --captions-text-color: #{$gray-2};
+  /* --captions-text-color: #{$gray-2}; */
   --additional-text-color: #{$gray-2};
 
   --navbar-bg: #{$dark-gray};
@@ -62,6 +62,8 @@ $informative-Blue-20: #d0e1f5; // Dark_Gray (12.80)
   --tab-text-color: #{$dark-gray};
   --tab-border-color: #{$informative-Blue};
   --tab-under-line-color: #{$light-gray};
+
+  --content-card-date-text-color: #{$gray-2};
 
   --content-typology-example-title: #{$dark-gray};
   --content-typology-examples-bg: #{$light-gray};
@@ -125,6 +127,8 @@ $content-typology-pre-info-margin: 0 0 40px;
 $content-typology-cards-padding: 30px;
 
 $main-min-height: calc(100svh - #{nth($header-padding, 1)} - 48px);
+
+$content-showing-description-paragraph-max-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 232px - 40px - 42px - 40px - 27px - 15px - 30px - 30px);
 
 $content-typology-card-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 48px - #{nth($content-typology-pre-info-margin, 3)});
 

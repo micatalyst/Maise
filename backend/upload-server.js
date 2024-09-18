@@ -96,8 +96,8 @@ const getNewSectionId = (req, res, next) => {
 const contentFiles = upload.any(); // accept any file (on any field)
 app.post('/content', getNewSectionId, contentFiles, async (req, res) => {
   const parsedBody = qs.parse(req.body, { allowDots: true });
-  console.log('parsed body', parsedBody);
-  console.log('File uploaded:', req.file && `/uploads/${res.locals.newSectionId}/${req.file.filename}`);
+  //console.log('parsed body', parsedBody);
+  //console.log('File uploaded:', req.file && `/uploads/${res.locals.newSectionId}/${req.file.filename}`);
 
   // const example = {
   //   id: res.locals.newSectionId,

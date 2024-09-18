@@ -8,6 +8,10 @@
   font-style: normal;
 }
 
+a {
+  color: var(--base-text-color);
+}
+
 body {
   -moz-osx-font-smoothing: grayscale;
   //overflow: hidden;
@@ -21,7 +25,7 @@ body {
   padding: $main-padding;
   display: grid;
   grid-template-columns: 1fr; // Estas 2 grids (columns & rows) para garantir que eu possa expandir qualquer grid com (1fr) para o tamanho da página
-  grid-template-rows: max-content;
+  grid-template-rows: 1fr;
   min-height: $main-min-height;
 }
 
@@ -59,6 +63,12 @@ h5 {
   display: grid;
   gap: 10px;
   grid-template-columns: 1fr max-content;
+}
+
+.save-button {
+  padding: 4px 6px;
+  border: none;
+  background-color: $transparent;
 }
 
 .primary-button {
