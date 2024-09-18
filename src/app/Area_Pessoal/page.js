@@ -59,7 +59,7 @@ export default function Area_Pessoal() {
     let filteredDataLayer0, filteredDataLayer1, filteredDataLayer2;
 
     if (filterTab === 'Documentos pessoais') {
-      filteredDataLayer0 = data.filter((item) => item.numMecan === numMecan.toString());
+      filteredDataLayer0 = data.filter((item) => item.numMecan === numMecan /* .toString() */);
     } else if (filterTab === 'Guardados') {
       filteredDataLayer0 = data.filter((item) => item.saved);
     }
