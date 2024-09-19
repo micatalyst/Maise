@@ -1,8 +1,9 @@
-@import './Variables.scss';
+@import '../Variables.scss';
 
 .content-showing-container {
   display: grid;
   grid-template-columns: 684px 1fr;
+  grid-template-rows: 1fr;
   gap: 40px;
 
   .original-content-general-info-container {

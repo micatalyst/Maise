@@ -120,7 +120,7 @@ app.post('/content', getNewSectionId, contentFiles, async (req, res) => {
     originalFilePath: `/uploads/${res.locals.newSectionId}/${originalFilePath}`,
     publish_date: dateFormatter.format(new Date()),
     saved: false,
-    numMec: Number.parseInt(parsedBody.numMec, 10),
+    numMecan: Number.parseInt(parsedBody.numMecan, 10),
   };
 
   // Add audio files path to each section

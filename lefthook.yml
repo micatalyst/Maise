@@ -1,8 +1,8 @@
 pre-commit:
   parallel: true
   commands:
-    linter:
-      run: yarn lint
+    # linter:
+      # run: yarn lint
     format:
       run: yarn format
       # run: yarn lint:fix

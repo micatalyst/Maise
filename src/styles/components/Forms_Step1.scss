@@ -194,6 +194,11 @@ textarea {
         font-weight: $bold;
         color: var(--input-file-type-color);
         margin-top: -10px;
+
+        &.video {
+          font-size: $dropzone-file-type-video-text-size;
+          margin-top: -5px;
+        }
       }
     }
   }
@@ -246,6 +251,10 @@ textarea {
         color: var(--base-text-color);
 
         margin-bottom: 15px;
+
+        &.video {
+          font-size: $forms-input-file-video-p;
+        }
       }
     }
 

@@ -5,12 +5,25 @@ import Content_Cards_Container from '@/components/Content_Cards_Container';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 import { fetchContent } from '@/slicers/dataSlice';
 
+// import { getExampleProduct } from '@/api';
+
 export default function Arquivo_UA() {
   const { data, loading } = useSelector((state) => state.dataSlice); // Chamada da informação da "API" para mostrar o conteúdo
+
+  // const [exampleProduct, setexampleProduct] = useState({
+  //   data: null,
+  //   loading: false,
+  // });
+
+  // const getExampleProductFromApi = useCallback(async () => {
+  //   setexampleProduct((previous) => ({ data: null, loading: true }));
+  //   const quote = await getExampleProduct();
+  //   setexampleProduct((previous) => ({ data: quote, loading: false }));
+  // });
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -67,6 +80,23 @@ export default function Arquivo_UA() {
 
   return (
     <main className="main">
+      {/* <div>
+        <button
+          type="button"
+          onClick={getExampleProductFromApi}
+        >
+          Get Product
+        </button>
+        {exampleProduct.loading
+          ? 'Loading product'
+          : exampleProduct.data && (
+              <div>
+                <div>Product: {exampleProduct.data.title}</div>
+                <div>Price: {exampleProduct.data.price}</div>
+              </div>
+            )}
+      </div> */}
+
       <Toolbar
         onFilterType={handleFilter}
         onSearch={handleSearch}

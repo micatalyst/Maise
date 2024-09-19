@@ -28,7 +28,7 @@ const dataSlice = createSlice({
   initialState: {
     // data: Data,
     data: [],
-    contentDataId: [],
+    currentContent: null,
     loading: false,
   },
   reducers: {
@@ -64,7 +64,8 @@ const dataSlice = createSlice({
       })
       .addCase(fetchContentById.fulfilled, (state, { payload }) => {
         state.loading = false;
-        state.contentDataId = payload;
+        debugger;
+        state.currentContent = payload;
       })
       .addCase(fetchContentById.rejected, (state) => {
         state.loading = false;

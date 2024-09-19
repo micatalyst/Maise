@@ -3,12 +3,14 @@
 import { useCallback, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTextFormsReset } from '@/slicers/TempTextContentSlice';
+import { useRouter } from 'next/navigation';
 
 import Text_Forms_Step1 from '@/components/Texto/Text_Forms_Step1';
 import Text_Forms_Step2 from '@/components/Texto/Text_Forms_Step2';
 
 export default function Texto() {
   const [step, setStep] = useState(1);
+
   const [original_content_file, setOriginal_content_file] = useState(null);
   const [original_content_PreviewUrl, setOriginal_content_PreviewUrl] = useState('');
 
@@ -17,6 +19,7 @@ export default function Texto() {
   const tempTextContentSliceData = useSelector((state) => state.TempTextContentSlice);
   const { name, numMecan } = useSelector((state) => state.userSlice);
 
+  const router = useRouter();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -85,23 +88,10 @@ export default function Texto() {
         body: formData,
       });
       console.log(res);
+      router.push('/');
     } catch (e) {
       console.error('Could not send content:', e);
     }
-
-    /* const response = await fetch('/api/submitForm', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    });
-
-    if (response.ok) {
-      alert('Form submitted successfully!');
-    } else {
-      alert('Failed to submit form');
-    } */
   });
 
   return (

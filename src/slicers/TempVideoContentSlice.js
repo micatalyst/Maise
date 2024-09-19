@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const TempTextContentSlice = createSlice({
-  name: 'TempTextContentSlice',
+const TempVideoContentSlice = createSlice({
+  name: 'TempVideoContentSlice',
   initialState: {
     title: '',
     original_content_category: '',
@@ -27,7 +27,7 @@ const TempTextContentSlice = createSlice({
     setCreatedContentLanguage: (state, action) => {
       state.created_content_language = action.payload;
     },
-    setTextFormsReset: (state) => {
+    setVideoFormsReset: (state) => {
       state.title = '';
       state.original_content_category = '';
       state.original_content_language = '';
@@ -80,8 +80,8 @@ const TempTextContentSlice = createSlice({
   },
 });
 
-export const { setTitle, setOriginalContentCategory, setOriginalContentLanguage, setDescription, setCreatedContentLanguage, setTextFormsReset, addSection, updateSectionTitle, removeSection, setReorderedSections, setActiveSectionId } = TempTextContentSlice.actions;
+export const { setTitle, setOriginalContentCategory, setOriginalContentLanguage, setDescription, setCreatedContentLanguage, setVideoFormsReset, addSection, updateSectionTitle, removeSection, setReorderedSections, setActiveSectionId } = TempVideoContentSlice.actions;
 
-export const { selectActiveSection } = TempTextContentSlice.selectors;
+export const { selectActiveSection } = TempVideoContentSlice.selectors;
 
-export default TempTextContentSlice.reducer;
+export default TempVideoContentSlice.reducer;
