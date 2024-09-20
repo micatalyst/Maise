@@ -8,11 +8,11 @@ import { Reorder, useDragControls, useMotionValue } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { setActiveSectionId } from '@/slicers/TempTextContentSlice';
 
-export default function Content_Card({ item, handleSectionActivation, handleDragStart, handleDragEnd }) {
+export default function Text_Section({ item, handleSectionActivation, handleDragStart, handleDragEnd }) {
   const dragControls = useDragControls();
   const y = useMotionValue(0);
 
-  const dispatch = useDispatch();
+  /* const dispatch = useDispatch(); */
 
   const activeSectionId = useSelector((state) => state.TempTextContentSlice.activeSectionId);
 
@@ -32,7 +32,7 @@ export default function Content_Card({ item, handleSectionActivation, handleDrag
         aria-pressed={item.id === activeSectionId}
         onClick={() => {
           handleSectionActivation(item.id); // Garante que sempre que uma secção é selecionada, esta fique guardada para poder saber sempre a secção atual ativa
-          dispatch(setActiveSectionId(item.id));
+          /* dispatch(setActiveSectionId(item.id)); */
         }}
       >
         <div className={item.id === activeSectionId ? 'text-section selected' : 'text-section'}>

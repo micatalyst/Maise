@@ -6,7 +6,7 @@ import { setImageFormsReset } from '@/slicers/TempImageContentSlice';
 import { useRouter } from 'next/navigation';
 
 import Image_Forms_Step1 from '@/components/Imagem/Image_Forms_Step1';
-/* import Image_Forms_Step2 from '@/components/Imagem/Image_Forms_Step2'; */
+import Image_Forms_Step2 from '@/components/Imagem/Image_Forms_Step2';
 
 export default function Imagem() {
   const [step, setStep] = useState(1);
@@ -14,7 +14,7 @@ export default function Imagem() {
   const [original_content_file, setOriginal_content_file] = useState(null);
   const [original_content_PreviewUrl, setOriginal_content_PreviewUrl] = useState('');
 
-  /* const [accessibleAudioFiles, setAccessibleAudioFiles] = useState([]); */
+  const [accessibleAudioFiles, setAccessibleAudioFiles] = useState([]);
 
   const tempImageContentSliceData = useSelector((state) => state.TempImageContentSlice);
   /* const { name, numMecan } = useSelector((state) => state.userSlice); */
@@ -97,7 +97,7 @@ export default function Imagem() {
     <main className="main">
       <h1>Conteúdo de Imagem</h1>
       <form onSubmit={(e) => e.preventDefault()}>
-        {step === 1 && (
+        {step === 2 && (
           <Image_Forms_Step1
             handleNextStep={handleNextStep}
             original_content_file={original_content_file}
@@ -106,12 +106,11 @@ export default function Imagem() {
             setOriginal_content_PreviewUrl={setOriginal_content_PreviewUrl}
           />
         )}
-        {step === 2 && ( // trocar os numeros dos steps novamente (apenas os troquei para facilitar a edição do step 2)
+        {step === 1 && ( // trocar os numeros dos steps novamente (apenas os troquei para facilitar a edição do step 2)
           <Image_Forms_Step2
             handlePreviousStep={handlePreviousStep}
-            handleSubmit={handleSubmit}
+            /* handleSubmit={handleSubmit} */
             original_content_file={original_content_file}
-            original_content_PreviewUrl={original_content_PreviewUrl}
             accessibleAudioFiles={accessibleAudioFiles}
             setAccessibleAudioFiles={setAccessibleAudioFiles}
           />

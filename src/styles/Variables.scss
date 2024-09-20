@@ -134,15 +134,21 @@ $content-typology-card-min-height: calc(#{$main-min-height} - #{nth($main-paddin
 
 $content-typology-general-card-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 37px - 2px - #{nth($tab-container-margin, 3)});
 
-$text-forms-step2-main-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 42px - 40px - 46.5px - 30px - 89px - 20px);
-
-$text-forms-step2-sections-container-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 42px - 40px - 46.5px - 30px - 89px - 20px - 137.5px - 3px);
-
 $forms-step1-padding: 30px 40px;
 $forms-step2-content-creation-top-bar-padding: 20px 30px;
 $modal-padding: 30px;
 
+$forms-step2-language-container-padding: 20px 30px 30px;
+
+$text-forms-step2-main-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 42px - 40px - 46.5px - 30px - 89px - 20px);
+$image-forms-step2-main-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 42px - 40px - 89px - 20px);
+
 $text-forms-step2-work-space-max-height: calc(#{$text-forms-step2-main-min-height} - #{nth($forms-step2-content-creation-top-bar-padding, 1)} - #{nth($forms-step2-content-creation-top-bar-padding, 1)} - 40.5px - 5px);
+
+$text-forms-step2-sections-container-min-height: calc(
+  #{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 42px - 40px - 46.5px - 30px - 89px - 20px - #{nth($forms-step2-language-container-padding, 1)} - #{nth($forms-step2-language-container-padding, 3)} - 27px - 10px - 48.5px - 5px
+);
+$Image-forms-step2-sections-container-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 42px - 40px - 89px - 20px - #{nth($forms-step2-language-container-padding, 1)} - #{nth($forms-step2-language-container-padding, 3)} - 27px - 10px - 48.5px - 5px);
 
 /* quando for trocar estes valores por valores calculados mesmo para fazer o sizing em rem da pagina, saber que é font-size * line-height */
 

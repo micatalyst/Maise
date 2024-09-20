@@ -10,7 +10,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setTitle, setOriginalContentCategory, setOriginalContentLanguage, setDescription } from '@/slicers/TempAudioContentSlice';
 
-import StepValidationFeedback from './StepValidationFeedback';
+import StepValidationFeedback from '@/components/StepValidationFeedback';
 
 export default function Audio_Forms_Step1({ handleNextStep, original_content_file, setOriginal_content_file, original_content_PreviewUrl, setOriginal_content_PreviewUrl }) {
   const title = useSelector((state) => state.TempAudioContentSlice.title || '');

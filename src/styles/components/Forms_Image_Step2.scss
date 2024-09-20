@@ -1,8 +1,8 @@
 @import '../Variables.scss';
 
-.forms-step2-text {
+.forms-step2-image {
   display: grid;
-  grid-template-rows: max-content 1fr max-content;
+  grid-template-rows: 1fr max-content;
   height: 100%;
 
   label {
@@ -40,86 +40,14 @@
     }
   }
 
-  .input-add-sections-container {
-    display: grid;
-    grid-template-columns: max-content;
-    align-items: center;
-    position: relative;
-
-    width: max-content;
-
-    margin-bottom: 30px;
-
-    input {
-      border-radius: $border-radius-5;
-      border: 0;
-      //outline: none;
-      width: 318px;
-      padding: $input-padding;
-
-      background-color: var(--input-bg-color);
-      font-size: $body-text-2;
-
-      color: var(--base-text-color);
-
-      &::placeholder {
-        color: var(--placeholders-text-color);
-      }
-    }
-
-    button {
-      display: flex;
-      place-items: center;
-
-      border: 0;
-      border-radius: $border-radius-2;
-      font-weight: $bold;
-      font-size: $nav-font-size;
-
-      background-color: $transparent;
-      position: absolute;
-      right: 0;
-
-      padding: 13.3px;
-
-      svg {
-        color: var(--icons-1-color);
-        height: 20px;
-        stroke: var(--icons-1-color);
-        stroke-width: 10;
-      }
-    }
-  }
-
-  .no-sections-container {
-    display: grid;
-    grid-template-rows: 1fr;
-    place-items: center;
-
-    background-color: var(--forms-container-bg);
-
-    //height: 100%;
-    //max-height: $text-forms-step2-main-min-height;
-
-    p.no-section-placeholder {
-      font-size: $no-content-placeholder-text-size;
-      color: var(--placeholder-container-text-color);
-      text-align: center;
-
-      span {
-        font-weight: $bold;
-      }
-    }
-  }
-
   .content-creation-container {
     display: grid;
-    grid-template-columns: max-content 1fr max-content;
+    grid-template-columns: max-content max-content 1fr;
+    grid-template-rows: 1fr;
 
     background-color: var(--forms-container-bg);
 
-    height: 100%;
-    max-height: $text-forms-step2-main-min-height;
+    //max-height: $image-forms-step2-main-min-height;
 
     .content-creation-left-side-bar {
       display: grid;
@@ -133,7 +61,7 @@
         overflow: scroll;
         overflow-x: hidden;
         scroll-behavior: smooth;
-        max-height: $text-forms-step2-sections-container-min-height;
+        max-height: $Image-forms-step2-sections-container-min-height;
 
         &::-webkit-scrollbar {
           width: 5px;
@@ -169,12 +97,16 @@
       }
     }
 
+    .content-creation-description-preview {
+      display: grid;
+    }
+
     .content-creation-work-space {
       display: grid;
-      grid-template-rows: max-content 1fr;
+      grid-template-rows: 1fr;
       grid-template-columns: 1fr;
 
-      .content-creation-top-bar {
+      /* .content-creation-top-bar {
         display: grid;
         grid-template-columns: 1fr max-content max-content;
 
@@ -201,7 +133,7 @@
           margin-right: 30px;
           margin-left: 30px;
         }
-      }
+      } */
 
       .content-creation-upload {
         display: grid;
@@ -209,7 +141,7 @@
 
         padding: 30px;
 
-        height: $text-forms-step2-work-space-max-height;
+        //height: 100%;
         overflow: hidden;
 
         .dropzone {
@@ -285,65 +217,6 @@
               }
             }
           }
-        }
-      }
-    }
-
-    .content-creation-right-side-bar {
-      display: grid;
-      grid-template-rows: 1fr max-content max-content;
-      gap: 20px;
-
-      border-left: 5px solid var(--content-creating-limit-border-color);
-
-      place-items: center;
-
-      width: max-content;
-      padding: 20px 30px;
-
-      .file-icon {
-        display: grid;
-        place-items: center;
-
-        height: 100%;
-        width: 100%;
-
-        svg {
-          max-width: 72px;
-          height: auto;
-        }
-      }
-
-      .file-side-info {
-        display: grid;
-        grid-template-rows: repeat(3, max-content);
-        gap: 20px;
-
-        justify-self: start;
-
-        height: 100%;
-
-        span {
-          font-size: $body-text-1;
-          font-weight: $regular;
-          margin-bottom: 5px;
-        }
-
-        p:first-of-type {
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-
-          line-clamp: 2;
-
-          overflow: hidden;
-          text-overflow: ellipsis;
-          max-width: 20ch;
-        }
-
-        p {
-          font-size: $body-text-1;
-          font-weight: $bold;
         }
       }
     }

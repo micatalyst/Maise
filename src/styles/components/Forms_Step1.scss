@@ -36,6 +36,21 @@
       }
     }
   }
+
+  .forms-step-feedback-bar {
+    display: grid;
+    grid-template-columns: 1fr max-content;
+    gap: 30px;
+
+    justify-items: space-between;
+    align-items: center;
+
+    background-color: var(--forms-container-bg);
+
+    &.with-padding {
+      padding: 20px 30px;
+    }
+  }
 }
 
 label {

@@ -36,7 +36,6 @@ const TempImageContentSlice = createSlice({
       state.sections = [];
     },
     addSection: (state, action) => {
-      //state.sections.push({ ...action.payload, description: "hey" });
       state.sections.push(action.payload);
     },
     updateSectionTitle: (state, action) => {
@@ -66,9 +65,6 @@ const TempImageContentSlice = createSlice({
         state.activeSectionId = state.sections[newSelectedSectionIndex].id;
       }
     },
-    setReorderedSections: (state, action) => {
-      state.sections = action.payload;
-    },
     setActiveSectionId: (state, action) => {
       state.activeSectionId = action.payload;
     },
@@ -80,7 +76,7 @@ const TempImageContentSlice = createSlice({
   },
 });
 
-export const { setTitle, setOriginalContentCategory, setOriginalContentLanguage, setDescription, setCreatedContentLanguage, setImageFormsReset, addSection, updateSectionTitle, removeSection, setReorderedSections, setActiveSectionId } = TempImageContentSlice.actions;
+export const { setTitle, setOriginalContentCategory, setOriginalContentLanguage, setDescription, setCreatedContentLanguage, setImageFormsReset, addSection, updateSectionTitle, removeSection, setActiveSectionId } = TempImageContentSlice.actions;
 
 export const { selectActiveSection } = TempImageContentSlice.selectors;
 
