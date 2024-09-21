@@ -219,6 +219,7 @@ export default function Text_Forms_Step2({ handlePreviousStep, handleSubmit, ori
       'audio/wav': ['.wav'],
     },
     maxSize: maxSize,
+    multiple: false,
   });
 
   // Componente quando (não) há sections

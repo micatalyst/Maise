@@ -77,6 +77,14 @@ export default function Image_Forms_Step1({ handleNextStep, original_content_fil
       return;
     }
 
+    // Usar esta lógica para adicionar temporariamente os ficheiros a um array e depois dar um imediato dispach
+    /* setTeste(
+      acceptedFiles.map((file) => ({
+        file,
+        preview: URL.createObjectURL(file), // Para fazer pré-visualização de imagens, PDFs, etc.
+      })),
+    ); */
+
     // Se o arquivo foi aceito
     setOriginal_content_file(acceptedFiles[0]);
     setOriginal_content_PreviewUrl(URL.createObjectURL(acceptedFiles[0]));

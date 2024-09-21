@@ -146,7 +146,7 @@ export default function Image_Forms_Step2({ handlePreviousStep, handleSubmit, or
       'audio/mpeg': ['.mp3'],
       'audio/wav': ['.wav'],
     },
-    maxSize: maxSize,
+    maxSize: maxSize, // Permite multiplos carregamente de uma só vez
   });
 
   // Componente quando há sections

@@ -89,6 +89,7 @@ export default function Text_Forms_Step1({ handleNextStep, original_content_file
       'application/pdf': ['.pdf'],
     },
     maxSize: maxSize,
+    multiple: false,
   });
 
   return (
