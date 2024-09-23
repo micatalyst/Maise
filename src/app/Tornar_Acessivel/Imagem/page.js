@@ -11,7 +11,7 @@ import Image_Forms_Step2 from '@/components/Imagem/Image_Forms_Step2';
 export default function Imagem() {
   const [step, setStep] = useState(1);
 
-  const [original_content_file, setOriginal_content_file] = useState(null);
+  const [original_content_file, setOriginal_content_file] = useState([]);
   const [original_content_PreviewUrl, setOriginal_content_PreviewUrl] = useState('');
 
   const [accessibleAudioFiles, setAccessibleAudioFiles] = useState([]);
@@ -32,6 +32,11 @@ export default function Imagem() {
 
   const handlePreviousStep = () => {
     setStep(step - 1);
+  };
+
+  const handleRemoveImageFile = (imageIdToDelete) => {
+    setOriginal_content_file((prevFiles) => prevFiles.filter((item) => item.id !== imageIdToDelete));
+    // remover tbm das sections com i dispatch removeSection
   };
 
   /* const handleSubmit = useCallback(async (e) => {
@@ -97,16 +102,17 @@ export default function Imagem() {
     <main className="main">
       <h1>Conteúdo de Imagem</h1>
       <form onSubmit={(e) => e.preventDefault()}>
-        {step === 2 && (
+        {step === 1 && (
           <Image_Forms_Step1
             handleNextStep={handleNextStep}
             original_content_file={original_content_file}
             setOriginal_content_file={setOriginal_content_file}
             original_content_PreviewUrl={original_content_PreviewUrl}
             setOriginal_content_PreviewUrl={setOriginal_content_PreviewUrl}
+            handleRemoveFile={handleRemoveImageFile}
           />
         )}
-        {step === 1 && ( // trocar os numeros dos steps novamente (apenas os troquei para facilitar a edição do step 2)
+        {step === 2 && ( // trocar os numeros dos steps novamente (apenas os troquei para facilitar a edição do step 2)
           <Image_Forms_Step2
             handlePreviousStep={handlePreviousStep}
             /* handleSubmit={handleSubmit} */

@@ -1,0 +1,54 @@
+@import '../Variables.scss';
+
+.uploaded-image-container {
+  display: grid;
+  grid-template-columns: max-content 1fr max-content;
+  gap: 10px;
+
+  align-items: center;
+
+  width: 100%;
+
+  padding: $image-uploaded-container;
+  border: 2px solid var(--image-uploaded-container-border-color);
+  border-radius: $border-radius-5;
+
+  svg {
+    height: 80%;
+    width: auto;
+    color: var(--icons-1-color);
+  }
+
+  .button-delete-image {
+    height: 100%;
+    border: none;
+    background: none;
+    //margin-left: 10px;
+  }
+
+  .image-info {
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+
+    margin-right: 10px;
+
+    p {
+      font-size: $image-uploaded-container-p-text-size;
+      font-weight: $bold;
+
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+
+      line-clamp: 1;
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    span {
+      font-size: $image-uploaded-container-span-text-size;
+      font-weight: $regular;
+    }
+  }
+}

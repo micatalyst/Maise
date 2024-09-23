@@ -172,13 +172,13 @@ export default function Text_Forms_Step1({ handleNextStep, original_content_file
             className="forms-input-file"
             aria-live="assertive"
           >
-            <label>Conteúdo original</label>
+            <label>Conteúdo original (Carrega até um ficheiro PDF)</label>
             <div
-              className="file-uploded-container"
+              className="file-uploaded-container"
               aria-label="Acabaste de carregar aqui um documento"
               tabIndex="0"
             >
-              <div className="file-uploded-zone">
+              <div className="file-uploaded-zone">
                 <div className="file-side-bar">
                   <FontAwesomeIcon icon={faFileLines} />
                   <p>PDF</p>
@@ -225,7 +225,7 @@ export default function Text_Forms_Step1({ handleNextStep, original_content_file
             aria-live="assertive"
             aria-label="procura o documento, que pretendes carregar, presente no teu PC"
           >
-            <label htmlFor="fileImport">Conteúdo original</label>
+            <label htmlFor="fileImport">Conteúdo original (Carrega até um ficheiro PDF)</label>
             <div
               {...getRootProps({
                 className: 'dropzone',

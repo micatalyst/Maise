@@ -32,6 +32,8 @@ export default function Text_Forms_Step2({ handlePreviousStep, handleSubmit, ori
   const [sectionOnChangeInputValue, setSectionOnChangeInputValue] = useState(''); // value do input de criação de sections
   //const [activeSection, setActiveSection] = useState(); // Id da section que está ativa
 
+  const [handleAddSectionId, setHandleAddSectionId] = useState(2);
+
   const [isDragging, setIsDragging] = useState(false);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -157,10 +159,15 @@ export default function Text_Forms_Step2({ handlePreviousStep, handleSubmit, ori
       // Garante que existe um nome para section (previne a criação de sections sem nome)
       dispatch(
         addSection({
-          id: sections.length ? sections[sections.length - 1].id + 1 : 1,
+          id: sections.length ? handleAddSectionId : 1 /* sections.length ? sections[sections.length - 1].id + 1 : 1, */,
           title: sectionOnChangeInputValue,
         }),
       );
+      if (sections.length) {
+        setHandleAddSectionId((previousValue) => previousValue + 1);
+      } else {
+        setHandleAddSectionId(2);
+      }
 
       setSectionOnChangeInputValue('');
     }

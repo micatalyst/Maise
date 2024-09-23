@@ -174,11 +174,11 @@ export default function Audio_Forms_Step1({ handleNextStep, original_content_fil
           >
             <label>Conteúdo original</label>
             <div
-              className="file-uploded-container"
+              className="file-uploaded-container"
               aria-label="Acabaste de carregar aqui um documento"
               tabIndex="0"
             >
-              <div className="file-uploded-zone">
+              <div className="file-uploaded-zone">
                 <div className="file-side-bar">
                   <FontAwesomeIcon icon={faFileLines} />
                   <p>MP3 / WAV</p>

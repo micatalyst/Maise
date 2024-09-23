@@ -11,8 +11,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setTitle, setOriginalContentCategory, setOriginalContentLanguage, setDescription } from '@/slicers/TempImageContentSlice';
 
 import StepValidationFeedback from '@/components/StepValidationFeedback';
+import Image_upload from '@/components/Imagem/Image_upload';
 
-export default function Image_Forms_Step1({ handleNextStep, original_content_file, setOriginal_content_file, original_content_PreviewUrl, setOriginal_content_PreviewUrl }) {
+export default function Image_Forms_Step1({ handleNextStep, original_content_file, setOriginal_content_file, original_content_PreviewUrl, setOriginal_content_PreviewUrl, handleRemoveFile }) {
   const title = useSelector((state) => state.TempImageContentSlice.title || '');
   const original_content_category = useSelector((state) => state.TempImageContentSlice.original_content_category || '');
   const original_content_language = useSelector((state) => state.TempImageContentSlice.original_content_language || '');
@@ -45,7 +46,7 @@ export default function Image_Forms_Step1({ handleNextStep, original_content_fil
       },
       {
         title: 'Conteúdo original',
-        isValid: Boolean(original_content_file),
+        isValid: Boolean(original_content_file.length > 0),
       },
     ]);
   }, [title, original_content_category, original_content_language, description, original_content_file]);
@@ -53,6 +54,10 @@ export default function Image_Forms_Step1({ handleNextStep, original_content_fil
   useEffect(() => {
     setAllStepValidationsValid(stepValidations.every((step) => step.isValid));
   }, [stepValidations]);
+
+  useEffect(() => {
+    console.log(original_content_file, original_content_file.length);
+  }, [original_content_file]);
 
   // handlePreview abre um separador com o documento original aberto
 
@@ -62,11 +67,6 @@ export default function Image_Forms_Step1({ handleNextStep, original_content_fil
     } else {
       // trigger de feedback a dizer que o documento não foi carregado
     }
-  };
-
-  const handleRemoveFile = () => {
-    setOriginal_content_file('');
-    setOriginal_content_PreviewUrl('');
   };
 
   const onDrop = (acceptedFiles, rejectedFiles) => {
@@ -86,15 +86,26 @@ export default function Image_Forms_Step1({ handleNextStep, original_content_fil
     ); */
 
     // Se o arquivo foi aceito
-    setOriginal_content_file(acceptedFiles[0]);
-    setOriginal_content_PreviewUrl(URL.createObjectURL(acceptedFiles[0]));
+
+    const uploadFiles = acceptedFiles.map((file, index) => ({
+      id: index.toString() + Date.now(), // id criado apartir do index + date porque as imagens precisam de um id ao dar upload e denta forma é sempre garantido ids unicos pelo motivo de sempre que novas imagens entram o index volta a 0
+      file,
+      preview: URL.createObjectURL(file),
+    }));
+
+    setOriginal_content_file((prevFiles) => [...prevFiles, ...uploadFiles]);
+    // Adicionar tbm das sections com i dispatch addSection
+
+    //setOriginal_content_file(acceptedFiles[0]);
+    //setOriginal_content_PreviewUrl(URL.createObjectURL(acceptedFiles[0]));
     setError('');
   };
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: {
-      'application/pdf': ['.pdf'],
+      'image/jpeg': ['.jpg'],
+      'image/png': ['.png'],
     },
     maxSize: maxSize,
   });
@@ -174,54 +185,45 @@ export default function Image_Forms_Step1({ handleNextStep, original_content_fil
             required
           />
         </div>
-        {original_content_file ? (
+        {original_content_file.length > 0 ? (
           <div
             className="forms-input-file"
             aria-live="assertive"
+            aria-label="procura o documento, que pretendes carregar, presente no teu PC"
           >
-            <label>Conteúdo original</label>
-            <div
-              className="file-uploded-container"
-              aria-label="Acabaste de carregar aqui um documento"
-              tabIndex="0"
-            >
-              <div className="file-uploded-zone">
-                <div className="file-side-bar">
-                  <FontAwesomeIcon icon={faFileLines} />
-                  <p>PDF</p>
-                  <button
-                    className="negative-button"
-                    type="button"
-                    onClick={handleRemoveFile}
-                  >
-                    Apagar documento
-                  </button>
-                </div>
-                <div className="file-side-info">
-                  <div>
-                    <span>Nome</span>
-                    <p>{original_content_file ? original_content_file.name : 'noFile'}</p>
-                  </div>
-                  <div className="file-side-info-row">
-                    <div>
-                      <span>Tamanho</span>
-                      <p>
-                        {original_content_file ? (original_content_file.size / 1024 / 1024).toFixed(2) : 'noFile'}
-                        MB
-                      </p>
-                    </div>
-                    <div>
-                      <span>Última modificação</span>
-                      <p>{original_content_file ? new Date(original_content_file.lastModified).toLocaleDateString() : 'noFile'}</p>
-                    </div>
-                  </div>
+            <label htmlFor="fileImport">Conteúdo original (Carrega até várias imagens)</label>
+            <div className="images-uploaded-container">
+              <div
+                {...getRootProps({
+                  className: 'images-uploaded-dropzone',
+                  tabIndex: 0,
+                  'aria-labelledby': 'dropzone-label',
+                })}
+              >
+                {/* Estou a colocar o tabIndex para grantir que seja navegavel por teclado */}
+                <input {...getInputProps({ id: 'fileImport', name: 'fileImport' })} />
+                <div className="dropzone-info">
+                  <FontAwesomeIcon icon={faFileArrowUp} />
+                  <p>Arrasta e larga</p>
+                  <span>ou</span>
                   <button
                     className="primary-button"
                     type="button"
-                    onClick={handlePreview}
                   >
-                    Ver documento
+                    Procura no PC
                   </button>
+                </div>
+              </div>
+              <div className="dropzone-file-list">
+                <p className="uploaded-content-header">Ficheiros carregados</p>
+                <div className="uploaded-content-list">
+                  {original_content_file.map((item, index) => (
+                    <Image_upload
+                      key={index}
+                      item={item}
+                      handleRemoveFile={handleRemoveFile}
+                    />
+                  ))}
                 </div>
               </div>
             </div>
@@ -232,7 +234,7 @@ export default function Image_Forms_Step1({ handleNextStep, original_content_fil
             aria-live="assertive"
             aria-label="procura o documento, que pretendes carregar, presente no teu PC"
           >
-            <label htmlFor="fileImport">Conteúdo original</label>
+            <label htmlFor="fileImport">Conteúdo original (Carrega até várias imagens)</label>
             <div
               {...getRootProps({
                 className: 'dropzone',
@@ -255,7 +257,7 @@ export default function Image_Forms_Step1({ handleNextStep, original_content_fil
               </div>
               <div className="dropzone-file-type">
                 <span>Ficheiros (até: {maxSize / 1024 / 1024} MB)</span>
-                <p>PDF</p>
+                <p>PNG / JPEG</p>
               </div>
             </div>
           </div>

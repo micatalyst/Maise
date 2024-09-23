@@ -125,7 +125,7 @@ textarea {
   border: 1px solid var(--input-border-color);
   //outline: none;
   width: 100%;
-  padding: $input-padding;
+  padding: $textarea-padding;
 
   background-color: var(--input-bg-color);
   font-size: $body-text-2;
@@ -144,6 +144,101 @@ textarea {
 .forms-input-file {
   display: grid;
   grid-template-rows: max-content 1fr;
+
+  .images-uploaded-container {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+
+    //align-items: center;
+
+    border-radius: $border-radius-5;
+    border: 1px solid var(--input-border-color);
+
+    width: 600px;
+
+    &:focus {
+      outline: 2px solid $notice-Yellow;
+      outline-offset: 0;
+      border: 1px solid $transparent;
+    }
+
+    .images-uploaded-dropzone {
+      display: grid;
+      align-items: center;
+
+      height: 100%;
+    }
+
+    .dropzone-info {
+      display: grid;
+      grid-template-rows: repeat(4, max-content);
+
+      justify-items: center;
+
+      border-right: 1px solid var(--input-border-color);
+      width: 226px;
+      height: max-content;
+
+      svg {
+        width: 65px;
+        height: auto;
+
+        margin-bottom: 15px;
+      }
+
+      p {
+        font-size: $forms-input-file-p;
+        font-weight: $bold;
+        color: var(--base-text-color);
+
+        margin-bottom: 2px;
+      }
+
+      span {
+        margin-bottom: 10px;
+      }
+    }
+
+    .dropzone-file-list {
+      display: grid;
+      grid-template-rows: repeat(2, max-content);
+      padding: 20px 20px;
+
+      justify-items: center;
+
+      .uploaded-content-header {
+        font-size: $body-text-1;
+        font-weight: $medium;
+        margin-bottom: 20px;
+      }
+
+      .uploaded-content-list {
+        display: grid;
+        grid-template-rows: 1fr;
+        gap: 10px;
+
+        padding-right: 10px;
+
+        width: 100%;
+
+        max-height: 190px;
+        overflow: auto;
+        scroll-behavior: smooth;
+
+        &::-webkit-scrollbar {
+          width: 5px;
+        }
+
+        &::-webkit-scrollbar-track {
+          background-color: var(--content-scrollbar-bg-color);
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background-color: var(--content-scrollbar-color);
+        }
+      }
+    }
+  }
 
   .dropzone {
     display: grid;
@@ -218,7 +313,7 @@ textarea {
     }
   }
 
-  .file-uploded-container {
+  .file-uploaded-container {
     display: grid;
     grid-template-columns: 1fr;
 
@@ -230,7 +325,7 @@ textarea {
     width: 600px;
   }
 
-  .file-uploded-zone {
+  .file-uploaded-zone {
     display: grid;
     grid-template-columns: max-content 1fr;
 

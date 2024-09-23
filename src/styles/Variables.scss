@@ -106,6 +106,8 @@ $informative-Blue-20: #d0e1f5; // Dark_Gray (12.80)
   --audio-controls-buttons-bg-color: #{$dark-gray};
   --audio-controls-buttons-bg-hover-color: #{$gray-3};
   --audio-controls-buttons-svg-color: #{$white};
+
+  --image-uploaded-container-border-color: #{$dark-gray};
 }
 
 /* [data-theme='dark'] {
@@ -120,6 +122,7 @@ $tab-container-margin: 0 0 20px;
 $tab-padding-bottom: 10px;
 $toolbar-margin: 0 0 40px;
 $input-padding: 12px 45px 12px 20px;
+$textarea-padding: 12px 20px;
 $input-forms-padding: 12px 20px;
 $content-cards-container-padding: 0 0 40px;
 $content-cards-padding: 15px;
@@ -150,6 +153,7 @@ $text-forms-step2-sections-container-min-height: calc(
 );
 $Image-forms-step2-sections-container-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 42px - 40px - 89px - 20px - #{nth($forms-step2-language-container-padding, 1)} - #{nth($forms-step2-language-container-padding, 3)} - 27px - 10px - 48.5px - 5px);
 
+$image-uploaded-container: 8px 12px;
 /* quando for trocar estes valores por valores calculados mesmo para fazer o sizing em rem da pagina, saber que é font-size * line-height */
 
 // Border
@@ -218,6 +222,9 @@ $dropzone-file-type-video-text-size: 38px;
 $no-content-placeholder-text-size: 57px;
 
 $section-title-text-size: 16px;
+
+$image-uploaded-container-p-text-size: 14px;
+$image-uploaded-container-span-text-size: 12px;
 
 // MediaQueries
 
