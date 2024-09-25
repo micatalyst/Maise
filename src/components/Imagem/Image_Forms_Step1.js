@@ -8,7 +8,7 @@ import { useDropzone } from 'react-dropzone';
 import React, { useState, useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { setTitle, setOriginalContentCategory, setOriginalContentLanguage, setDescription } from '@/slicers/TempImageContentSlice';
+import { setTitle, setOriginalContentCategory, setOriginalContentLanguage, setDescription, addSection } from '@/slicers/TempImageContentSlice';
 
 import StepValidationFeedback from '@/components/StepValidationFeedback';
 import Image_upload from '@/components/Imagem/Image_upload';
@@ -18,6 +18,8 @@ export default function Image_Forms_Step1({ handleNextStep, original_content_fil
   const original_content_category = useSelector((state) => state.TempImageContentSlice.original_content_category || '');
   const original_content_language = useSelector((state) => state.TempImageContentSlice.original_content_language || '');
   const description = useSelector((state) => state.TempImageContentSlice.description);
+
+  const sections = useSelector((state) => state.TempImageContentSlice.sections);
 
   const dispatch = useDispatch();
 
@@ -56,8 +58,8 @@ export default function Image_Forms_Step1({ handleNextStep, original_content_fil
   }, [stepValidations]);
 
   useEffect(() => {
-    console.log(original_content_file, original_content_file.length);
-  }, [original_content_file]);
+    console.log(sections);
+  }, [sections]);
 
   // handlePreview abre um separador com o documento original aberto
 
@@ -77,27 +79,24 @@ export default function Image_Forms_Step1({ handleNextStep, original_content_fil
       return;
     }
 
-    // Usar esta lógica para adicionar temporariamente os ficheiros a um array e depois dar um imediato dispach
-    /* setTeste(
-      acceptedFiles.map((file) => ({
-        file,
-        preview: URL.createObjectURL(file), // Para fazer pré-visualização de imagens, PDFs, etc.
-      })),
-    ); */
-
     // Se o arquivo foi aceito
 
+    // id criado apartir do index + date porque as imagens precisam de um id ao dar upload e denta forma é sempre garantido ids unicos pelo motivo de sempre que novas imagens entram o index volta a 0
+    const generatedIds = acceptedFiles.map((file, index) => index.toString() + Date.now());
+
     const uploadFiles = acceptedFiles.map((file, index) => ({
-      id: index.toString() + Date.now(), // id criado apartir do index + date porque as imagens precisam de um id ao dar upload e denta forma é sempre garantido ids unicos pelo motivo de sempre que novas imagens entram o index volta a 0
+      id: generatedIds[index],
       file,
+    }));
+
+    const dispatchUploadedFiles = acceptedFiles.map((file, index) => ({
+      id: generatedIds[index],
       preview: URL.createObjectURL(file),
     }));
 
     setOriginal_content_file((prevFiles) => [...prevFiles, ...uploadFiles]);
-    // Adicionar tbm das sections com i dispatch addSection
+    dispatch(addSection(dispatchUploadedFiles));
 
-    //setOriginal_content_file(acceptedFiles[0]);
-    //setOriginal_content_PreviewUrl(URL.createObjectURL(acceptedFiles[0]));
     setError('');
   };
 

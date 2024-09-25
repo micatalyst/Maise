@@ -1,44 +1,69 @@
 import '@/styles/components/Image_Section.scss';
 
+import Image from 'next/image';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight, faGripLines } from '@fortawesome/free-solid-svg-icons';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { setActiveSectionId } from '@/slicers/TempTextContentSlice';
+import { Reorder, useDragControls, useMotionValue } from 'framer-motion';
 
-export default function Image_Section({ item }) {
-  const dispatch = useDispatch();
+import { useSelector } from 'react-redux';
 
-  const activeSectionId = useSelector((state) => state.TempTextContentSlice.activeSectionId);
+export default function Image_Section({ item, handleSectionActivation, handleDragStart, handleDragEnd }) {
+  const dragControls = useDragControls();
+  const y = useMotionValue(0);
+
+  const activeSectionId = useSelector((state) => state.TempImageContentSlice.activeSectionId);
+  const sections = useSelector((state) => state.TempImageContentSlice.sections);
+  const sectionIndex = sections.findIndex((section) => section.id === item.id);
 
   return (
-    <button
-      type="button"
-      className="btn-section"
-      aria-pressed={item.id === activeSectionId}
-      onClick={() => {
-        dispatch(setActiveSectionId(item.id)); // Garante que sempre que uma secção é selecionada, esta fique guardada para poder saber sempre a secção atual ativa
-      }}
+    <Reorder.Item
+      value={item}
+      id={item}
+      dragListener={false}
+      dragControls={dragControls}
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
+      style={{ position: 'relative', y }}
     >
-      <div className={item.id === activeSectionId ? 'text-section selected' : 'text-section'}>
-        <div className="text-section-title">
-          {item.id === activeSectionId ? (
-            <FontAwesomeIcon
-              className="selected"
-              icon={faAngleRight}
+      <button
+        type="button"
+        className="btn-section"
+        aria-pressed={item.id === activeSectionId}
+        onClick={() => {
+          handleSectionActivation(item.id); // Garante que sempre que uma secção é selecionada, esta fique guardada para poder saber sempre a secção atual ativa
+        }}
+      >
+        <div className={item.id === activeSectionId ? 'image-section selected' : 'image-section'}>
+          <div className="image-section-order">
+            {item.id === activeSectionId ? (
+              <FontAwesomeIcon
+                className="selected"
+                icon={faAngleRight}
+              />
+            ) : (
+              ''
+            )}
+            <p className={item.id === activeSectionId ? 'selected' : ''}>{sectionIndex + 1}</p>
+          </div>
+          <div className="image-section-file">
+            <Image
+              src={item.preview}
+              //priority={true}
+              alt=""
+              width={50}
+              height={50}
             />
-          ) : (
-            ''
-          )}
-          <p className={item.id === activeSectionId ? 'selected' : ''}>{item.title}</p>
+          </div>
+          <div
+            className="drag-icon"
+            onPointerDown={(event) => dragControls.start(event)}
+          >
+            <FontAwesomeIcon icon={faGripLines} />
+          </div>
         </div>
-        <div
-          className="drag-icon"
-          onPointerDown={(event) => dragControls.start(event)}
-        >
-          <FontAwesomeIcon icon={faGripLines} />
-        </div>
-      </div>
-    </button>
+      </button>
+    </Reorder.Item>
   );
 }

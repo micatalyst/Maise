@@ -10,7 +10,7 @@ export default function Image_upload({ item, handleRemoveFile }) {
       <FontAwesomeIcon icon={faFileImage} />
       <div className="image-info">
         <p>{item.file.name}</p>
-        <span>{(item.file.size / 1024 / 1024).toFixed(2)}</span>
+        <span>{(item.file.size / 1024 / 1024).toFixed(2)} MB</span>
       </div>
       {/* <button
         className="primary-button"

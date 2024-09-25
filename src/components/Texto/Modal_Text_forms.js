@@ -105,7 +105,7 @@ export default function Modal_Text_forms({ isOpen, closeModal, modal, setAccessi
       ref={dialogRef}
       onClose={handleClose}
     >
-      <h2>Apagar a secção</h2>
+      <h2>Apagar secção</h2>
       <p>Tem a certeza que pretende apagar a secção selecionada?</p>
       <div className="section-name">
         <FontAwesomeIcon

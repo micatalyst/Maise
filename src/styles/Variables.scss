@@ -108,6 +108,9 @@ $informative-Blue-20: #d0e1f5; // Dark_Gray (12.80)
   --audio-controls-buttons-svg-color: #{$white};
 
   --image-uploaded-container-border-color: #{$dark-gray};
+  --image-uploaded-sections-slide-number-bg-color: #{$dark-gray};
+  --image-uploaded-sections-slide-number-text-color: #{$white};
+  --image-uploaded-sections-border-color: #{$dark-gray};
 }
 
 /* [data-theme='dark'] {
@@ -154,6 +157,7 @@ $text-forms-step2-sections-container-min-height: calc(
 $Image-forms-step2-sections-container-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 42px - 40px - 89px - 20px - #{nth($forms-step2-language-container-padding, 1)} - #{nth($forms-step2-language-container-padding, 3)} - 27px - 10px - 48.5px - 5px);
 
 $image-uploaded-container: 8px 12px;
+$image-preview-container: 30px;
 /* quando for trocar estes valores por valores calculados mesmo para fazer o sizing em rem da pagina, saber que é font-size * line-height */
 
 // Border

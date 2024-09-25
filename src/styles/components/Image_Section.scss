@@ -1,1 +1,76 @@
 @import '../Variables.scss';
+
+button.btn-section {
+  background: none;
+  border: none;
+  width: 100%;
+}
+
+.image-section {
+  display: grid;
+  grid-template-columns: 1fr 2fr max-content;
+  gap: 20px;
+
+  align-items: center;
+
+  padding: 15px 30px;
+
+  border-bottom: 1px solid var(--content-creating-limit-border-color);
+
+  background-color: var(--section-bg-color);
+
+  &.selected {
+    border-left: 3px solid var(--section-select-border-color);
+    background-color: var(--section-select-bg-color);
+    padding-left: 27px;
+  }
+
+  img {
+    object-fit: cover;
+    height: 60px;
+    border: 2px solid var(--image-uploaded-sections-border-color);
+    aspect-ratio: 16 / 9;
+  }
+
+  .image-section-order {
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+    gap: 10px;
+
+    align-items: center;
+
+    p {
+      font-size: $section-title-text-size;
+      font-weight: $bold;
+      padding: 4px 12px;
+      border-radius: $border-radius-5;
+      background-color: var(--image-uploaded-sections-slide-number-bg-color);
+      color: var(--image-uploaded-sections-slide-number-text-color);
+      margin-right: 5px;
+    }
+
+    svg.selected {
+      height: 20px;
+      width: auto;
+      color: var(--icons-1-color);
+      pointer-events: none;
+    }
+  }
+
+  .image-section-file {
+    display: grid;
+    justify-items: center;
+  }
+
+  div.drag-icon {
+    display: grid;
+    align-items: center;
+
+    svg {
+      height: 26px;
+      width: auto;
+      color: var(--section-drag-color);
+      pointer-events: none;
+    }
+  }
+}

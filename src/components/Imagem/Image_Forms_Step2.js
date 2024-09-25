@@ -1,5 +1,7 @@
 import '@/styles/components/Forms_Image_Step2.scss';
 
+import Image from 'next/image';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faCaretDown, faFileArrowUp, faFilePen, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
@@ -7,16 +9,17 @@ import { faFileLines } from '@fortawesome/free-regular-svg-icons';
 
 import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCreatedContentLanguage, setActiveSectionId, addSection, selectActiveSection } from '@/slicers/TempImageContentSlice';
+import { setCreatedContentLanguage, setActiveSectionId, setReorderedSections, selectActiveSection, updateSectionDescription } from '@/slicers/TempImageContentSlice';
 
+import { Reorder, motion } from 'framer-motion';
 import { useDropzone } from 'react-dropzone';
 
-import Image_Section from '@/components/Imagem/Image_Section'; // Aba das sections (neste caso são diretamente as imagens e não é preciso guardar um titulo nem alterar o mesmo)
+import Image_Section from '@/components/Imagem/Image_Section';
 import Modal_Image_forms from '@/components/Imagem/Modal_Image_forms';
 import Audio_Visualiser from '@/components/Texto/Audio_Visualiser';
 import StepValidationFeedback from '@/components/StepValidationFeedback';
 
-export default function Image_Forms_Step2({ handlePreviousStep, handleSubmit, original_content_file, accessibleAudioFiles, setAccessibleAudioFiles }) {
+export default function Image_Forms_Step2({ handlePreviousStep, handleSubmit, original_content_file, setOriginal_content_file, accessibleAudioFiles, setAccessibleAudioFiles }) {
   const created_content_language = useSelector((state) => state.TempImageContentSlice.created_content_language);
 
   const sections = useSelector((state) => state.TempImageContentSlice.sections);
@@ -28,15 +31,17 @@ export default function Image_Forms_Step2({ handlePreviousStep, handleSubmit, or
   const maxSize = 50 * 1024 * 1024; // 50 MB
   const [error, setError] = useState('');
 
+  const [isDragging, setIsDragging] = useState(false);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState('');
 
   useEffect(() => {
-    if (sections.length === 1) {
+    if (sections.length > 0) {
       // Não havia sections antes, seleccionar a primeira (primeira vez ou depois de apagar todas)
       dispatch(setActiveSectionId(sections[0].id));
     }
-  }, [sections]);
+  }, []);
 
   // dispatch(
   //   // dispach que atualiza a lista de section (que neste caso tem de ser uma especie de mapping ou não. Mas tem de ser tudo de uma vez porque cada imagem carregada é uma secção)
@@ -49,27 +54,17 @@ export default function Image_Forms_Step2({ handlePreviousStep, handleSubmit, or
   const [stepValidations, setStepValidations] = useState([]);
   const [allStepValidationsValid, setAllStepValidationsValid] = useState(false);
   useEffect(() => {
-    // Verificar se os nomes das secçoes sao unicos.
-    // 1) Criar um Set (chaves unicas) a partir do array de nomes. Um Set armazena apenas valores únicos. Significa que, se houver valores duplicados no array, o Set vai remover os duplicados
-    // 2) Criar um array desse set
-    // 3) Se os tamanhos (das sections e dos nomes unicos) forem iguais, entao os nomes sao unicos
-    const allSectionsHaveUniqueNames = Boolean(sections.length > 0 && Array.from(new Set(sections.map((s) => s.title))).length === sections.length);
-
     setStepValidations([
-      {
-        title: 'Adicionar pelo menos uma secção',
-        isValid: sections.length > 0, // usar > 0 em vez de so ver se tem length, para o isValid ser false em vez de 0 (que e falsy na mesma, mas nao e' boolean)
-      },
       {
         title: 'Idioma do conteúdo criado',
         isValid: sections.length > 0 && Boolean(created_content_language),
       },
       {
-        title: 'Secções devem ter nomes únicos',
-        isValid: allSectionsHaveUniqueNames,
+        title: 'Cada Imagem deve ter uma descrição alternativa',
+        isValid: sections.length > 0 && sections.every((section) => section.description && section.description.trim() !== ''),
       },
       {
-        title: 'Cada secção deve ter um áudio',
+        title: 'Cada Imagem deve ter um áudio',
         isValid: sections.length > 0 && accessibleAudioFiles.length === sections.length,
       },
     ]);
@@ -78,6 +73,10 @@ export default function Image_Forms_Step2({ handlePreviousStep, handleSubmit, or
   useEffect(() => {
     setAllStepValidationsValid(stepValidations.every((step) => step.isValid));
   }, [stepValidations]);
+
+  useEffect(() => {
+    console.log(sections);
+  }, [sections]);
 
   // Save current audio time for each section, to allow switching between them and restore the previous time
   const [sectionsCurrentAudioTime, setSectionsCurrentAudioTime] = useState({});
@@ -96,6 +95,7 @@ export default function Image_Forms_Step2({ handlePreviousStep, handleSubmit, or
   }
 
   function handleSectionDeleted(deletedSectionId) {
+    setOriginal_content_file((prevFiles) => prevFiles.filter((file) => file.id !== activeSectionId));
     // Remove audio time state
     deleteSectionAudioTimestamp(deletedSectionId);
   }
@@ -104,6 +104,16 @@ export default function Image_Forms_Step2({ handlePreviousStep, handleSubmit, or
     setAccessibleAudioFiles((state) => state.filter((file) => file.id !== activeSectionId));
     deleteSectionAudioTimestamp(activeSectionId);
   }
+
+  // handlePreview abre um separador com o documento original aberto
+
+  const handlePreview = () => {
+    if (activeSection && activeSection.preview) {
+      window.open(activeSection.preview, '_blank'); // Abre o ficheiro num novo separador
+    } else {
+      // trigger de feedback a dizer que o documento não foi carregado
+    }
+  };
 
   // Modal
 
@@ -114,6 +124,33 @@ export default function Image_Forms_Step2({ handlePreviousStep, handleSubmit, or
 
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  // Handle onClick para ativação da section (se esta não estiver a ser arrastada)
+
+  const handleSectionActivation = (id) => {
+    if (!isDragging) {
+      dispatch(setActiveSectionId(id)); // Só executa o clique se não estiver a ser arrastado
+    }
+  };
+
+  const handleDragStart = () => {
+    setIsDragging(true);
+  };
+
+  const handleDragEnd = () => {
+    setIsDragging(false);
+  };
+
+  // Reordenação das sections
+
+  const handleReorder = (reorderedSections) => {
+    dispatch(setReorderedSections(reorderedSections));
+  };
+
+  // Atualiza a descrição da imagem
+  const handleUpdateSection = (inputDescription) => {
+    dispatch(updateSectionDescription({ id: activeSectionId, description: inputDescription }));
   };
 
   // Carregamento da vertente mais acessivel (Áudio)
@@ -154,14 +191,28 @@ export default function Image_Forms_Step2({ handlePreviousStep, handleSubmit, or
   const contentCriationDisplay = (
     <div className="content-creation-container">
       <div className="content-creation-left-side-bar">
-        <div className="sections-container">
-          {sections.map((item) => (
-            <Image_Section
-              key={item.id}
-              item={item}
-            />
-          ))}
-        </div>
+        <motion.div
+          className="sections-container"
+          layoutScroll
+        >
+          <Reorder.Group
+            axis="y"
+            values={sections}
+            onReorder={handleReorder}
+            //className="sections-container"
+          >
+            {sections.map((item) => (
+              <Image_Section
+                key={item.id}
+                item={item}
+                original_content_file={original_content_file}
+                handleSectionActivation={handleSectionActivation}
+                handleDragStart={handleDragStart}
+                handleDragEnd={handleDragEnd}
+              />
+            ))}
+          </Reorder.Group>
+        </motion.div>
         <div className="language-container">
           <label htmlFor="created_content_language">Idioma</label>
           <div className="forms-select">
@@ -184,35 +235,55 @@ export default function Image_Forms_Step2({ handlePreviousStep, handleSubmit, or
           </div>
         </div>
       </div>
-      <div className="content-creation-description-preview"></div>
-      <div className="content-creation-work-space">
-        {/* <div className="content-creation-top-bar">
+      <div className="content-creation-image-preview">
+        <div className="image-preview">
+          {activeSection && (
+            <Image
+              src={activeSection.preview}
+              //priority={true}
+              alt=""
+              width={100}
+              height={100}
+            />
+          )}
+        </div>
+        <div className="image-preview-btns">
+          <button
+            className="primary-button"
+            type="button"
+            onClick={handlePreview}
+          >
+            Abrir Imagem
+          </button>
+          <button
+            className="negative-button icon"
+            type="button"
+            onClick={() => {
+              openModal('deleteSection');
+            }}
+          >
+            <FontAwesomeIcon icon={faTrashCan} />
+            Apagar imagem
+          </button>
+        </div>
+        <div className="image-preview-description">
           {activeSection && (
             <>
-              <h2>{activeSection.title}</h2>
-              <button
-                className="primary-button icon"
-                type="button"
-                onClick={() => {
-                  openModal('updateSection');
-                }}
-              >
-                <FontAwesomeIcon icon={faFilePen} />
-                Editar titulo
-              </button>
-              <button
-                className="negative-button icon"
-                type="button"
-                onClick={() => {
-                  openModal('deleteSection');
-                }}
-              >
-                <FontAwesomeIcon icon={faTrashCan} />
-                Apagar secção
-              </button>
+              <label htmlFor="title">Descrição alternativa</label>
+              <input
+                id="title"
+                name="title"
+                type="text"
+                placeholder="Descrição pequena e direta..."
+                maxLength="57"
+                value={activeSection.description ? activeSection.description : ''}
+                onChange={(e) => handleUpdateSection(e.target.value)}
+              />
             </>
           )}
-        </div> */}
+        </div>
+      </div>
+      <div className="content-creation-work-space">
         <div className="content-creation-upload">
           {accessibleAudioFiles.find((file) => file.id === activeSectionId) ? (
             <>
@@ -264,6 +335,7 @@ export default function Image_Forms_Step2({ handlePreviousStep, handleSubmit, or
           activeSectionId={activeSectionId}
           handleSectionDeleted={handleSectionDeleted}
           handleRemoveSectionAudio={handleRemoveSectionAudio}
+          handlePreviousStep={handlePreviousStep}
         />
       </div>
     </div>

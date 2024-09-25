@@ -97,8 +97,36 @@
       }
     }
 
-    .content-creation-description-preview {
+    .content-creation-image-preview {
       display: grid;
+      grid-template-rows: max-content max-content 1fr;
+      gap: 20px;
+
+      padding: $image-preview-container;
+
+      border-right: 5px solid var(--content-creating-limit-border-color);
+
+      .image-preview {
+        img {
+          object-fit: contain;
+          height: 295px;
+          border: 3px solid var(--image-uploaded-sections-border-color);
+          aspect-ratio: 16 / 9;
+        }
+      }
+
+      .image-preview-btns {
+        display: grid;
+        grid-template-columns: 1fr max-content;
+      }
+
+      .image-preview-description {
+        align-self: end;
+
+        input {
+          width: 100%;
+        }
+      }
     }
 
     .content-creation-work-space {

@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setImageFormsReset } from '@/slicers/TempImageContentSlice';
 import { useRouter } from 'next/navigation';
 
+import { removeSection } from '@/slicers/TempImageContentSlice';
+
 import Image_Forms_Step1 from '@/components/Imagem/Image_Forms_Step1';
 import Image_Forms_Step2 from '@/components/Imagem/Image_Forms_Step2';
 
@@ -36,7 +38,8 @@ export default function Imagem() {
 
   const handleRemoveImageFile = (imageIdToDelete) => {
     setOriginal_content_file((prevFiles) => prevFiles.filter((item) => item.id !== imageIdToDelete));
-    // remover tbm das sections com i dispatch removeSection
+    console.log('ID to delete:', imageIdToDelete);
+    dispatch(removeSection(imageIdToDelete));
   };
 
   /* const handleSubmit = useCallback(async (e) => {
@@ -115,8 +118,9 @@ export default function Imagem() {
         {step === 2 && ( // trocar os numeros dos steps novamente (apenas os troquei para facilitar a edição do step 2)
           <Image_Forms_Step2
             handlePreviousStep={handlePreviousStep}
-            /* handleSubmit={handleSubmit} */
+            handleSubmit={handleSubmit}
             original_content_file={original_content_file}
+            setOriginal_content_file={setOriginal_content_file}
             accessibleAudioFiles={accessibleAudioFiles}
             setAccessibleAudioFiles={setAccessibleAudioFiles}
           />
