@@ -14,7 +14,7 @@ import { useDropzone } from 'react-dropzone';
 
 import Text_Section from '@/components/Texto/Text_Section';
 import Modal_Text_forms from '@/components/Texto/Modal_Text_forms';
-import Audio_Visualiser from '@/components/Texto/Audio_Visualiser';
+import Audio_Visualiser from '@/components/Audio_Visualiser';
 import StepValidationFeedback from '@/components/StepValidationFeedback';
 
 export default function Text_Forms_Step2({ handlePreviousStep, handleSubmit, original_content_file, original_content_PreviewUrl, accessibleAudioFiles, setAccessibleAudioFiles }) {
@@ -57,15 +57,15 @@ export default function Text_Forms_Step2({ handlePreviousStep, handleSubmit, ori
 
     setStepValidations([
       {
-        title: 'Adicionar pelo menos uma secção',
-        isValid: sections.length > 0, // usar > 0 em vez de so ver se tem length, para o isValid ser false em vez de 0 (que e falsy na mesma, mas nao e' boolean)
-      },
-      {
         title: 'Idioma do conteúdo criado',
         isValid: sections.length > 0 && Boolean(created_content_language),
       },
       {
-        title: 'Secções devem ter nomes únicos',
+        title: 'Adicionar pelo menos uma secção',
+        isValid: sections.length > 0, // usar > 0 em vez de so ver se tem length, para o isValid ser false em vez de 0 (que e falsy na mesma, mas nao e' boolean)
+      },
+      {
+        title: 'Secções devem ter títulos únicos',
         isValid: allSectionsHaveUniqueNames,
       },
       {
@@ -244,7 +244,7 @@ export default function Text_Forms_Step2({ handlePreviousStep, handleSubmit, ori
 
   // Componente quando há sections
 
-  const contentCriationDisplay = (
+  const contentCreationDisplay = (
     <div className="content-creation-container">
       {/*  */}
       {/*  */}
@@ -449,7 +449,7 @@ export default function Text_Forms_Step2({ handlePreviousStep, handleSubmit, ori
           <FontAwesomeIcon icon={faPlus} />
         </button>
       </div>
-      {sections.length > 0 ? contentCriationDisplay : noSectionsDisplay}
+      {sections.length > 0 ? contentCreationDisplay : noSectionsDisplay}
       <div className="forms-step2-bottom-bar">
         <div className="forms-step2-back-button">
           <button

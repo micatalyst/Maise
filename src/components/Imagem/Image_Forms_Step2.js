@@ -16,7 +16,7 @@ import { useDropzone } from 'react-dropzone';
 
 import Image_Section from '@/components/Imagem/Image_Section';
 import Modal_Image_forms from '@/components/Imagem/Modal_Image_forms';
-import Audio_Visualiser from '@/components/Texto/Audio_Visualiser';
+import Audio_Visualiser from '@/components/Audio_Visualiser';
 import StepValidationFeedback from '@/components/StepValidationFeedback';
 
 export default function Image_Forms_Step2({ handlePreviousStep, handleSubmit, original_content_file, setOriginal_content_file, accessibleAudioFiles, setAccessibleAudioFiles }) {
@@ -188,7 +188,7 @@ export default function Image_Forms_Step2({ handlePreviousStep, handleSubmit, or
 
   // Componente quando há sections
 
-  const contentCriationDisplay = (
+  const contentCreationDisplay = (
     <div className="content-creation-container">
       <div className="content-creation-left-side-bar">
         <motion.div
@@ -343,7 +343,7 @@ export default function Image_Forms_Step2({ handlePreviousStep, handleSubmit, or
 
   return (
     <div className="forms-step2-image">
-      {/* sections.length === 0 &&  */ contentCriationDisplay} {/* para já igualar a zero apra mostrar e poder construir e mais tarde com a logica voltar a meter maior que zero */}
+      {contentCreationDisplay}
       <div className="forms-step2-bottom-bar">
         <div className="forms-step2-back-button">
           <button

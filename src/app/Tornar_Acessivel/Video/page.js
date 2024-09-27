@@ -6,7 +6,7 @@ import { setVideoFormsReset } from '@/slicers/TempVideoContentSlice';
 import { useRouter } from 'next/navigation';
 
 import Video_Forms_Step1 from '@/components/Video/Video_Forms_Step1';
-/* import Video_Forms_Step2 from '@/components/Video/Video_Forms_Step2'; */
+import Video_Forms_Step2 from '@/components/Video/Video_Forms_Step2';
 
 export default function Video() {
   const [step, setStep] = useState(1);
@@ -109,11 +109,11 @@ export default function Video() {
         {step === 2 && ( // trocar os numeros dos steps novamente (apenas os troquei para facilitar a edição do step 2)
           <Video_Forms_Step2
             handlePreviousStep={handlePreviousStep}
-            handleSubmit={handleSubmit}
+            /* handleSubmit={handleSubmit} */
             original_content_file={original_content_file}
             original_content_PreviewUrl={original_content_PreviewUrl}
-            accessibleAudioFiles={accessibleAudioFiles}
-            setAccessibleAudioFiles={setAccessibleAudioFiles}
+            /* accessibleAudioFiles={accessibleAudioFiles}
+            setAccessibleAudioFiles={setAccessibleAudioFiles} */
           />
         )}
       </form>

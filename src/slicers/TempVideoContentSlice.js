@@ -8,8 +8,8 @@ const TempVideoContentSlice = createSlice({
     original_content_language: '',
     description: '',
     created_content_language: '',
-    sections: [],
-    activeSectionId: undefined,
+    videoSubtitles: [],
+    onEditingSubtitleId: undefined,
   },
   reducers: {
     setTitle: (state, action) => {
@@ -33,55 +33,35 @@ const TempVideoContentSlice = createSlice({
       state.original_content_language = '';
       state.description = '';
       state.created_content_language = '';
-      state.sections = [];
+      state.videoSubtitles = [];
     },
-    addSection: (state, action) => {
-      //state.sections.push({ ...action.payload, description: "hey" });
-      state.sections.push(action.payload);
+    addVideoSubtitle: (state, action) => {
+      state.videoSubtitles.push(action.payload);
     },
-    updateSectionTitle: (state, action) => {
-      const { id, title } = action.payload;
-      const sectionIndex = state.sections.findIndex((section) => section.id === id);
-      if (sectionIndex !== -1) {
-        state.sections[sectionIndex] = {
-          ...state.sections[sectionIndex],
-          title,
+    updateVideoSubtitle: (state, action) => {
+      const { id, startTime, endTime, text } = action.payload;
+      const videoSubtitleIndex = state.videoSubtitles.findIndex((videoSubtitles) => videoSubtitles.id === id);
+      if (videoSubtitleIndex !== -1) {
+        state.videoSubtitles[videoSubtitleIndex] = {
+          ...state.videoSubtitles[videoSubtitleIndex],
+          startTime,
+          endTime,
+          text,
         };
       }
     },
-    removeSection: (state, action) => {
+    removeVideoSubtitle: (state, action) => {
       const id = action.payload;
 
-      // Get the index before deleting
-      const index = state.sections.findIndex((section) => section.id === id);
-
       // Remove
-      state.sections = state.sections.filter((section) => section.id !== id);
-
-      // Select previous or next section
-      // if deleting the first one (index 0), select the next (goes to index 0)
-      // if deleting the second (index 1), select the previous (index 0)
-      if (state.sections.length) {
-        const newSelectedSectionIndex = index === 0 ? 0 : index - 1;
-        state.activeSectionId = state.sections[newSelectedSectionIndex].id;
-      }
+      state.videoSubtitles = state.videoSubtitles.filter((section) => section.id !== id);
     },
-    setReorderedSections: (state, action) => {
-      state.sections = action.payload;
+    setOnEditingSubtitleId: (state, action) => {
+      state.onEditingSubtitleId = action.payload;
     },
-    setActiveSectionId: (state, action) => {
-      state.activeSectionId = action.payload;
-    },
-  },
-  selectors: {
-    selectActiveSection: (
-      state, // devolve um objeto com a info da secção selecionada, a partir do ID guardado no estado
-    ) => state.activeSectionId !== undefined && state.sections.find((section) => section.id === state.activeSectionId),
   },
 });
 
-export const { setTitle, setOriginalContentCategory, setOriginalContentLanguage, setDescription, setCreatedContentLanguage, setVideoFormsReset, addSection, updateSectionTitle, removeSection, setReorderedSections, setActiveSectionId } = TempVideoContentSlice.actions;
-
-export const { selectActiveSection } = TempVideoContentSlice.selectors;
+export const { setTitle, setOriginalContentCategory, setOriginalContentLanguage, setDescription, setCreatedContentLanguage, setVideoFormsReset, addVideoSubtitle, updateVideoSubtitle, removeVideoSubtitle, setOnEditingSubtitleId } = TempVideoContentSlice.actions;
 
 export default TempVideoContentSlice.reducer;
