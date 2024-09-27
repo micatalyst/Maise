@@ -42,7 +42,7 @@
     display: grid;
     grid-template-columns: max-content max-content;
 
-    height: 351px;
+    height: $video-size-responsive-height;
 
     /*  video::-webkit-media-controls-start-playback-button {
       display: none !important;
@@ -54,7 +54,7 @@
       background-color: var(--video-bg-color);
     }
 
-    .video-controls-bar {
+    /*  .video-controls-bar {
       display: grid;
       grid-template-rows: repeat(2, max-content);
       gap: 15px;
@@ -105,12 +105,14 @@
 
         //margin-top: 20px;
       }
-    }
+    } */
   }
 
   .content-creation-container {
     display: grid;
     grid-template-columns: max-content 1fr;
+    gap: 30px;
+
     background-color: var(--forms-container-bg);
 
     height: 100%;
@@ -137,9 +139,86 @@
           }
         } */
 
+    .subtitles-workspace {
+      display: grid;
+      grid-template-rows: max-content 1fr;
+      gap: 10px;
+    }
+
     .all-subtitles-display {
       display: grid;
       grid-template-rows: max-content 1fr;
+
+      .language-set-subtitles-creation {
+        display: grid;
+        grid-template-columns: repeat(2, max-content);
+        gap: 20px;
+
+        padding-bottom: 30px;
+
+        button {
+          align-self: end;
+        }
+
+        .language-container {
+          //padding: $forms-step2-language-container-padding;
+
+          .forms-select {
+            position: relative;
+
+            svg {
+              position: absolute;
+              height: auto;
+              width: 18px;
+              right: 14px;
+              top: 50%;
+              transform: translateY(-50%);
+              color: var(--icons-1-color);
+              pointer-events: none;
+            }
+          }
+        }
+      }
+
+      .all-subtitles-table {
+        display: grid;
+        grid-template-rows: max-content 1fr;
+
+        .all-subtitles-table-header {
+          display: grid;
+          grid-template-columns: 150px 1fr;
+          gap: 20px;
+
+          background-color: var(--video-all-subtitles-table-header-bg-color);
+          color: var(--video-all-subtitles-table-header-text-color);
+
+          padding: 8px 20px;
+
+          span {
+            font-size: $body-text-2;
+            font-weight: $bold;
+          }
+        }
+
+        .all-subtitles-table-content {
+          overflow: scroll;
+          overflow-x: hidden;
+          scroll-behavior: smooth;
+          max-height: $video-forms-step2-all-subtitles-table-content-max-height;
+
+          &::-webkit-scrollbar {
+            width: 5px;
+          }
+
+          &::-webkit-scrollbar-track {
+            background-color: var(--content-scrollbar-bg-color);
+          }
+
+          &::-webkit-scrollbar-thumb {
+            background-color: var(--content-scrollbar-color);
+          }
+        }
+      }
 
       p.no-section-placeholder {
         font-size: $no-content-placeholder-text-size;
@@ -150,46 +229,27 @@
           font-weight: $bold;
         }
       }
-
-      .language-container {
-        padding: $forms-step2-language-container-padding;
-        border-top: 5px solid var(--content-creating-limit-border-color);
-
-        .forms-select {
-          position: relative;
-
-          svg {
-            position: absolute;
-            height: auto;
-            width: 18px;
-            right: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--icons-1-color);
-            pointer-events: none;
-          }
-        }
-      }
     }
 
-    .subtitles-creation-display {
+    .subtitle-cues-creation-display {
       display: grid;
       grid-template-rows: max-content 1fr;
+
+      .subtitle-cues-input-creation {
+        display: grid;
+        grid-template-columns: 1fr repeat(2, max-content);
+      }
 
       .subtitles-work-space {
         display: grid;
         grid-template-columns: 1fr max-content;
 
-        .subtitles-section {
+        .subtitles-container {
           display: grid;
           grid-template-rows: 1fr max-content;
-
-          .subtitles-container {
-            display: grid;
-          }
         }
 
-        .subtitles-upload {
+        .subtitles-upload-dropzone {
           display: grid;
         }
       }

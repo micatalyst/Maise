@@ -7,7 +7,7 @@ const TempVideoContentSlice = createSlice({
     original_content_category: '',
     original_content_language: '',
     description: '',
-    created_content_language: '',
+    subtitle_created_language: '',
     videoSubtitles: [],
     onEditingSubtitleId: undefined,
   },
@@ -24,21 +24,21 @@ const TempVideoContentSlice = createSlice({
     setDescription: (state, action) => {
       state.description = action.payload;
     },
-    setCreatedContentLanguage: (state, action) => {
-      state.created_content_language = action.payload;
+    setSubtitleCreatedLanguage: (state, action) => {
+      state.subtitle_created_language = action.payload;
     },
     setVideoFormsReset: (state) => {
       state.title = '';
       state.original_content_category = '';
       state.original_content_language = '';
       state.description = '';
-      state.created_content_language = '';
+      state.subtitle_created_language = '';
       state.videoSubtitles = [];
     },
     addVideoSubtitle: (state, action) => {
       state.videoSubtitles.push(action.payload);
     },
-    updateVideoSubtitle: (state, action) => {
+    updateVideoSubtitleCue: (state, action) => {
       const { id, startTime, endTime, text } = action.payload;
       const videoSubtitleIndex = state.videoSubtitles.findIndex((videoSubtitles) => videoSubtitles.id === id);
       if (videoSubtitleIndex !== -1) {
@@ -62,6 +62,6 @@ const TempVideoContentSlice = createSlice({
   },
 });
 
-export const { setTitle, setOriginalContentCategory, setOriginalContentLanguage, setDescription, setCreatedContentLanguage, setVideoFormsReset, addVideoSubtitle, updateVideoSubtitle, removeVideoSubtitle, setOnEditingSubtitleId } = TempVideoContentSlice.actions;
+export const { setTitle, setOriginalContentCategory, setOriginalContentLanguage, setDescription, setSubtitleCreatedLanguage, setVideoFormsReset, addVideoSubtitle, updateVideoSubtitle, removeVideoSubtitle, setOnEditingSubtitleId } = TempVideoContentSlice.actions;
 
 export default TempVideoContentSlice.reducer;

@@ -1,56 +1,47 @@
-import '@/styles/components/Text_Section.scss';
+import '@/styles/components/Video_Subtitles_Section.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleRight, faGripLines } from '@fortawesome/free-solid-svg-icons';
-
-import { Reorder, useDragControls, useMotionValue } from 'framer-motion';
+import { faFilePen, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 import { useSelector } from 'react-redux';
 
-export default function Video_Subtitles_Section({ item, selectedSubtitleId }) {
-  const dragControls = useDragControls();
-  const y = useMotionValue(0);
-
-  const activeSectionId = useSelector((state) => state.TempTextContentSlice.activeSectionId);
+export default function Video_Subtitles_Section({ id, language, date, setSelectedSubtitleId, setIsEditingCreatingSubtitleCues }) {
+  //const activeSectionId = useSelector((state) => state.TempTextContentSlice.activeSectionId);
 
   return (
-    <Reorder.Item
-      value={item}
-      id={item}
-      dragListener={false}
-      dragControls={dragControls}
-      onDragStart={handleDragStart}
-      onDragEnd={handleDragEnd}
-      style={{ position: 'relative', y }}
-    >
+    <div className="video-subtitles-section">
+      <span>{language}</span>
+      <span>{date}</span>
       <button
+        className="primary-button"
         type="button"
-        className="btn-section"
-        aria-pressed={item.id === activeSectionId}
         onClick={() => {
-          handleSectionActivation(item.id); // Garante que sempre que uma secção é selecionada, esta fique guardada para poder saber sempre a secção atual ativa
+          setSelectedSubtitleId(id);
+          setIsEditingCreatingSubtitleCues(true);
         }}
       >
-        <div className={item.id === activeSectionId ? 'text-section selected' : 'text-section'}>
-          <div className="text-section-title">
-            {item.id === activeSectionId ? (
-              <FontAwesomeIcon
-                className="selected"
-                icon={faAngleRight}
-              />
-            ) : (
-              ''
-            )}
-            <p className={item.id === activeSectionId ? 'selected' : ''}>{item.title}</p>
-          </div>
-          <div
-            className="drag-icon"
-            onPointerDown={(event) => dragControls.start(event)}
-          >
-            <FontAwesomeIcon icon={faGripLines} />
-          </div>
-        </div>
+        Abrir
       </button>
-    </Reorder.Item>
+      <button
+        className="primary-button icon"
+        type="button"
+        onClick={() => {
+          //openModal('updateSection');
+        }}
+      >
+        <FontAwesomeIcon icon={faFilePen} />
+        Editar
+      </button>
+      <button
+        className="negative-button icon"
+        type="button"
+        onClick={() => {
+          //openModal('deleteSection');
+        }}
+      >
+        <FontAwesomeIcon icon={faTrashCan} />
+        Apagar
+      </button>
+    </div>
   );
 }

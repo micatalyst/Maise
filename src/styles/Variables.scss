@@ -114,6 +114,8 @@ $informative-Blue-20: #d0e1f5; // Dark_Gray (12.80)
 
   --video-bg-color: #{$dark-gray};
   --video-controls-bg-color: #{$dark-gray};
+  --video-all-subtitles-table-header-bg-color: #{$dark-gray};
+  --video-all-subtitles-table-header-text-color: #{$light-gray};
 }
 
 /* [data-theme='dark'] {
@@ -164,6 +166,7 @@ $image-uploaded-container: 8px 12px;
 $image-preview-container: 30px;
 
 $video-size-responsive-height: calc(#{$video-forms-step2-main-min-height} - 30px - 30px);
+$video-forms-step2-all-subtitles-table-content-max-height: calc(#{$video-forms-step2-main-min-height} - 30px - 30px - 39px - 20px - 85.5px - 10px - 30px - 38.5px);
 
 /* quando for trocar estes valores por valores calculados mesmo para fazer o sizing em rem da pagina, saber que é font-size * line-height */
 

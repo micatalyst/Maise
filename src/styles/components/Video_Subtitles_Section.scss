@@ -1,0 +1,15 @@
+@import '../Variables.scss';
+
+.video-subtitles-section {
+  display: grid;
+  grid-template-columns: 150px 1fr repeat(3, max-content);
+  gap: 20px;
+
+  height: max-content;
+
+  align-items: center;
+
+  padding: 10px 20px;
+
+  border-bottom: 1px solid var(--content-creating-limit-border-color);
+}

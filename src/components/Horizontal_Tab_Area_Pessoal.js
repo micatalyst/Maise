@@ -2,7 +2,7 @@ import '@/styles/components/Horizontal_Tab.scss';
 
 import { useState } from 'react';
 
-export default function Horizontal_Tab({ onActiveTab }) {
+export default function Horizontal_Tab_Area_Pessoal({ onActiveTab }) {
   const [activeTab, setActiveTab] = useState('Documentos pessoais');
 
   return (

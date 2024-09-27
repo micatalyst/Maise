@@ -1,6 +1,6 @@
 'use client';
 
-import Horizontal_Tab from '@/components/Horizontal_Tab';
+import Horizontal_Tab_Area_Pessoal from '@/components/Horizontal_Tab_Area_Pessoal';
 import Toolbar from '@/components/Toolbar';
 import Content_Cards_Container from '@/components/Content_Cards_Container';
 
@@ -88,7 +88,7 @@ export default function Area_Pessoal() {
 
   return (
     <main className="main">
-      <Horizontal_Tab onActiveTab={handleTab} />
+      <Horizontal_Tab_Area_Pessoal onActiveTab={handleTab} />
       <div className="RightSide-Grid-Container">
         <div>
           <Toolbar

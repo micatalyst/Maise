@@ -3,15 +3,15 @@ import '@/styles/components/Forms_Video_Step2.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faCaretDown, faFileArrowUp, faFilePen, faTrashCan, faPlay, faPause, faStop, faRotateLeft, faRotateRight } from '@fortawesome/free-solid-svg-icons';
 
-import { faFileLines } from '@fortawesome/free-regular-svg-icons';
+import Horizontal_Tab_Video_Forms from '@/components/Horizontal_Tab_Video_Forms';
 
 import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCreatedContentLanguage, addVideoSubtitle } from '@/slicers/TempVideoContentSlice';
+import { setSubtitleCreatedLanguage, addVideoSubtitle } from '@/slicers/TempVideoContentSlice';
 
 import { useDropzone } from 'react-dropzone';
 
-import Video from 'next-video';
+import Video from 'next-video/player';
 
 import Video_Subtitles_Section from '@/components/Video/Video_Subtitles_Section';
 import Modal_Video_forms from '@/components/Video/Modal_Video_forms';
@@ -19,7 +19,7 @@ import Modal_Video_forms from '@/components/Video/Modal_Video_forms';
 import StepValidationFeedback from '@/components/StepValidationFeedback';
 
 export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, original_content_file, original_content_PreviewUrl, accessibleAudioFiles, setAccessibleAudioFiles }) {
-  const created_content_language = useSelector((state) => state.TempVideoContentSlice.created_content_language);
+  const subtitle_created_language = useSelector((state) => state.TempVideoContentSlice.subtitle_created_language);
 
   const videoSubtitles = useSelector((state) => state.TempVideoContentSlice.videoSubtitles);
 
@@ -28,15 +28,20 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
   // const maxSize = 50 * 1024 * 1024; // 50 MB
   // const [error, setError] = useState('');
 
-  const [selectedSubtitleId, setSelectedSubtitleId] = useState(''); // Guarda o Id da Secção que foi carregada para abrir o modal seja de edição ou para apagar
+  const [selectedSubtitleId, setSelectedSubtitleId] = useState(''); // Id das legendas que foram selecionadas para serem editadas (Legendas no geral e não cues)
+  const [selectedSubtitleCueId, setSelectedSubtitleCueId] = useState('');
+
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [isEditingCreatingSubtitleCues, setIsEditingCreatingSubtitleCues] = useState(false);
 
   const [subtitleTextOnChangeInputValue, setSubtitleTextOnChangeInputValue] = useState(''); // value do input do texto das legenda
   const [startTimeOnChangeInputValue, setStartTimeOnChangeInputValue] = useState(''); // value do input do tempo inicial das legenda
   const [endTimeOnChangeInputValue, setendTimeOnChangeInputValue] = useState(''); // value do input do tempo final das legenda
 
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [filterTab, setFilterTab] = useState('Legendas');
 
   const [handleAddSubtitleId, setHandleAddSubtitleId] = useState(2);
+  const [handleAddSubtitleCueId, setHandleAddSubtitleCueId] = useState(2);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState('');
@@ -52,15 +57,11 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
   useEffect(() => {
     setStepValidations([
       {
-        title: 'Idioma do conteúdo criado',
-        isValid: videoSubtitles.length > 0 && Boolean(created_content_language),
-      },
-      {
         title: 'Adicionar pelo menos uma legenda',
         isValid: videoSubtitles.length > 0, // usar > 0 em vez de so ver se tem length, para o isValid ser false em vez de 0 (que e falsy na mesma, mas nao e' boolean)
       },
     ]);
-  }, [videoSubtitles, created_content_language /* accessibleAudioFiles */]);
+  }, [videoSubtitles /* accessibleAudioFiles */]);
 
   useEffect(() => {
     setAllStepValidationsValid(stepValidations.every((step) => step.isValid));
@@ -71,6 +72,8 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
   const videoRef = useRef(null); // Para os controlos do video
 
   const handleLoadedData = () => {
+    setIsVideoLoaded(true);
+
     // Pause the video once it has loaded data
     const video = videoRef.current;
     if (video) {
@@ -122,29 +125,53 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
   // Adição de novas sections
 
   // Função para adicionar legendas (pelo teclado)
-  const handleKeyDown = (event) => {
+
+  /* const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
       event.preventDefault();
-      handleAddSubtitle();
+      // handleAddSubtitle();
     }
-  };
+  }; */
 
   // Função para adicionar legendas (pelo botão)
+
   const handleAddSubtitle = () => {
-    if (subtitleTextOnChangeInputValue) {
-      // Garante que existe um nome para section (previne a criação de sections sem nome)
+    if (subtitle_created_language) {
+      const dateFormatter = new Intl.DateTimeFormat('pt-PT', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
       dispatch(
         addVideoSubtitle({
           id: videoSubtitles.length ? handleAddSubtitleId : 1,
-          startTime: startTimeOnChangeInputValue,
-          endTime: endTimeOnChangeInputValue,
-          text: subtitleTextOnChangeInputValue,
+          language: subtitle_created_language,
+          date: dateFormatter.format(new Date()),
+          subtitlesCues: [],
         }),
       );
       if (videoSubtitles.length) {
         setHandleAddSubtitleId((previousValue) => previousValue + 1);
       } else {
         setHandleAddSubtitleId(2);
+      }
+
+      dispatch(setSubtitleCreatedLanguage(''));
+    }
+  };
+
+  const handleAddSubtitleCues = () => {
+    if (subtitleTextOnChangeInputValue) {
+      // Garante que existe um nome para section (previne a criação de sections sem nome)
+      dispatch(
+        addVideoSubtitle({
+          id: videoSubtitles.length ? handleAddSubtitleCueId : 1,
+          startTime: startTimeOnChangeInputValue,
+          endTime: endTimeOnChangeInputValue,
+          text: subtitleTextOnChangeInputValue,
+        }),
+      );
+      if (videoSubtitles.length) {
+        setHandleAddSubtitleCueId((previousValue) => previousValue + 1);
+      } else {
+        setHandleAddSubtitleCueId(2);
       }
 
       setSubtitleTextOnChangeInputValue('');
@@ -187,6 +214,10 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
 
   // Componente quando (não) há sections
 
+  const handleTab = (activeTab) => {
+    setFilterTab(activeTab);
+  };
+
   const videoDisplay = (
     <div className="video-display">
       <Video
@@ -197,106 +228,100 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
         autoPlay
         preload="metadata"
         onLoadedData={handleLoadedData}
-        controls /* ={false}  */
+        /* onTimeUpdate={colocar aqui a função das legendas que vão atualizar consoante o tempo do vídeo muda } */
+        controls
       />
-
-      {/* <div className="video-controls-bar">
-        <div className="video-progress">
-          <input
-            type="range"
-            min="0"
-            max="1"
-            step="0.001"
-            value={played}
-            onKeyDown={handleKeyDownPausePlay}
-            onChange={handleSeekChange} // Update the video position when dragging
-            style={{ width: '100%' }}
-          />
-          <p>
-            {formatTime(currentTime)} / {formatTime(duration)}
-          </p>
-        </div>
-        <div className="video-controls">
-          <button onClick={onStop}>
-            <FontAwesomeIcon icon={faStop} />
-          </button>
-          <button onClick={onPlayPause}>{isPlaying ? <FontAwesomeIcon icon={faPause} /> : <FontAwesomeIcon icon={faPlay} />}</button>
-          <button onClick={() => quickJump(-3)}>
-            <FontAwesomeIcon icon={faRotateLeft} />
-          </button>
-          <button onClick={() => quickJump(3)}>
-            <FontAwesomeIcon icon={faRotateRight} />
-          </button>
-          <input
-            type="range"
-            min="0"
-            max="1"
-            step="0.01"
-            onChange={(e) => updateVolume(e.target.value)}
-            value={volume}
-          />
-        </div>
-      </div> */}
     </div>
   );
 
-  const allSubtitlesDisplay = <div className="all-subtitles-display"></div>;
+  const AllSubtitlesTable = (
+    <div className="all-subtitles-table">
+      <div className="all-subtitles-table-header">
+        <span>Idioma</span>
+        <span>Data</span>
+      </div>
+      <div className="all-subtitles-table-content">
+        {videoSubtitles &&
+          videoSubtitles.map((item) => (
+            <Video_Subtitles_Section
+              key={item.id}
+              id={item.id}
+              language={item.language}
+              date={item.date}
+              setSelectedSubtitleId={setSelectedSubtitleId}
+              setIsEditingCreatingSubtitleCues={setIsEditingCreatingSubtitleCues}
+            />
+          ))}
+      </div>
+    </div>
+  );
 
-  // Componente quando há sections
-
-  const subtitlesCreationDisplay = (
-    <div className="subtitles-creation-display">
-      <div className="content-creation-left-side-bar">
-        {/*  {videoSubtitles.map((item) => (
-          <Video_Subtitles_Section
-            key={item.id}
-            item={item}
-            selectedSubtitleId={selectedSubtitleId}
-            setSelectedSubtitleId={setSelectedSubtitleId}
-          />
-        ))} */}
-
+  const allSubtitlesDisplay = (
+    <div className="all-subtitles-display">
+      <div className="language-set-subtitles-creation">
         <div className="language-container">
-          <label htmlFor="created_content_language">Idioma</label>
+          <label htmlFor="subtitle_created_language">Idioma</label>
           <div className="forms-select">
             <FontAwesomeIcon icon={faCaretDown} />
             <select
-              id="created_content_language"
-              name="created_content_language"
-              value={created_content_language}
-              onChange={(e) => dispatch(setCreatedContentLanguage(e.target.value))}
+              id="subtitle_created_language"
+              name="subtitle_created_language"
+              value={subtitle_created_language}
+              onChange={(e) => dispatch(setSubtitleCreatedLanguage(e.target.value))}
             >
               <option
                 value=""
                 disabled
               >
-                Idioma do conteúdo criado...
+                Idioma da legenda...
               </option>
               <option value="Português">Português</option>
               <option value="English">English</option>
             </select>
           </div>
         </div>
+        <button
+          className="primary-button"
+          type="button"
+          onClick={handleAddSubtitle}
+        >
+          Criar legendas
+        </button>
       </div>
-      <div className="content-creation-work-space">
-        <Modal_Video_forms
-          isOpen={isModalOpen}
-          closeModal={closeModal}
-          modal={modalType}
-          /* setAccessibleAudioFiles={setAccessibleAudioFiles} */
-          /* accessibleAudioFiles={accessibleAudioFiles} */
-          selectedSubtitleId={selectedSubtitleId}
-          /* handleSubtitleDeleted={handleSubtitleDeleted} */
+      {AllSubtitlesTable}
+    </div>
+  );
+
+  // Componente quando há sections
+
+  const subtitleCuesCreationDisplay = (
+    <div className="subtitle-cues-creation-display">
+      <div className="subtitle-cues-input-creation">
+        <input
+          id="subtitle"
+          type="text"
+          placeholder="Adicionar legenda..."
+          maxLength="80"
+          value={subtitleTextOnChangeInputValue}
+          onChange={(e) => setSubtitleTextOnChangeInputValue(e.target.value)}
         />
+        <div></div>
       </div>
     </div>
   );
+
+  const audiodescriptionDisplay = <div className="audiodescription-display">audio description</div>;
 
   return (
     <div className="forms-step2-video">
       <div className="content-creation-container">
         {videoDisplay}
-        {videoSubtitles.length > 0 ? subtitlesCreationDisplay : allSubtitlesDisplay}
+        {isVideoLoaded && (
+          <div className="subtitles-workspace">
+            {<Horizontal_Tab_Video_Forms onActiveTab={handleTab} />}
+            {filterTab === 'Legendas' ? (isEditingCreatingSubtitleCues ? subtitleCuesCreationDisplay : allSubtitlesDisplay) : audiodescriptionDisplay}
+          </div>
+        )}
       </div>
 
       {/* <div className="input-add-sections-container">
@@ -314,7 +339,7 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
         />
         <button
           type="button"
-          onClick={handleAddSubtitle}
+          // onClick={handleAddSubtitle}
           aria-label="Botão para a adição de secções"
         >
           <FontAwesomeIcon icon={faPlus} />
@@ -352,7 +377,15 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
           </button>
         </div>
       </div>
-      {/* </div> */}
+      <Modal_Video_forms
+        isOpen={isModalOpen}
+        closeModal={closeModal}
+        modal={modalType}
+        /* setAccessibleAudioFiles={setAccessibleAudioFiles} */
+        /* accessibleAudioFiles={accessibleAudioFiles} */
+        selectedSubtitleId={selectedSubtitleId}
+        /* handleSubtitleDeleted={handleSubtitleDeleted} */
+      />
     </div>
   );
 }
