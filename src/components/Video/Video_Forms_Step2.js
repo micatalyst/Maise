@@ -12,6 +12,7 @@ import { setSubtitleCreatedLanguage, addVideoSubtitle } from '@/slicers/TempVide
 import { useDropzone } from 'react-dropzone';
 
 import Video from 'next-video/player';
+import CustomTimeInput from '@/components/Video/CustomTimeInput';
 
 import Video_Subtitles_Section from '@/components/Video/Video_Subtitles_Section';
 import Modal_Video_forms from '@/components/Video/Modal_Video_forms';
@@ -218,17 +219,31 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
     setFilterTab(activeTab);
   };
 
+  const [videoDuration, setVideoDuration] = useState(0);
+  const [videoCurrentTime, setVideoCurrentTime] = useState(0);
+
+  const handleLoadedMetadata = () => {
+    if (videoRef.current) {
+      setVideoDuration(videoRef.current.duration); // Define a duração total do vídeo
+    }
+  };
+
+  const handleTimeUpdate = () => {
+    setVideoCurrentTime(videoRef.current.currentTime);
+  };
+
   const videoDisplay = (
     <div className="video-display">
       <Video
         ref={videoRef}
         src={original_content_PreviewUrl} // Path to your video file in the public directory
-        className="video"
+        className={isEditingCreatingSubtitleCues ? 'video videoEditingDisplay' : 'video'}
         accentColor="#1167d3"
         autoPlay
         preload="metadata"
         onLoadedData={handleLoadedData}
-        /* onTimeUpdate={colocar aqui a função das legendas que vão atualizar consoante o tempo do vídeo muda } */
+        onLoadedMetadata={handleLoadedMetadata}
+        onTimeUpdate={handleTimeUpdate}
         controls
       />
     </div>
@@ -292,20 +307,35 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
     </div>
   );
 
-  // Componente quando há sections
-
   const subtitleCuesCreationDisplay = (
     <div className="subtitle-cues-creation-display">
       <div className="subtitle-cues-input-creation">
         <input
           id="subtitle"
           type="text"
+          className="subtitle"
           placeholder="Adicionar legenda..."
           maxLength="80"
           value={subtitleTextOnChangeInputValue}
           onChange={(e) => setSubtitleTextOnChangeInputValue(e.target.value)}
         />
-        <div></div>
+        <CustomTimeInput
+          label="Início"
+          videoCurrentTime={videoCurrentTime}
+          videoDuration={videoDuration}
+        />
+        <CustomTimeInput
+          label="Fim"
+          videoCurrentTime={videoCurrentTime}
+          videoDuration={videoDuration}
+        />
+        <button
+          className="primary-button"
+          type="button"
+          //onClick={handleAddSubtitle}
+        >
+          Adicionar legenda
+        </button>
       </div>
     </div>
   );

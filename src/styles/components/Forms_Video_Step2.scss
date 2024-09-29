@@ -50,8 +50,12 @@
 
     .video {
       aspect-ratio: 16 / 9;
-      height: $video-size-responsive-height;
+      height: calc($video-size-responsive-height);
       background-color: var(--video-bg-color);
+
+      &.videoEditingDisplay {
+        height: calc($video-size-responsive-height - 100px);
+      }
     }
 
     /*  .video-controls-bar {
@@ -201,7 +205,7 @@
         }
 
         .all-subtitles-table-content {
-          overflow: scroll;
+          overflow: auto;
           overflow-x: hidden;
           scroll-behavior: smooth;
           max-height: $video-forms-step2-all-subtitles-table-content-max-height;
@@ -237,7 +241,81 @@
 
       .subtitle-cues-input-creation {
         display: grid;
-        grid-template-columns: 1fr repeat(2, max-content);
+        grid-template-columns: 1fr repeat(3, max-content);
+        gap: 20px;
+
+        align-items: center;
+
+        label {
+          margin: 0;
+        }
+
+        input[type='text'] {
+          border-radius: $border-radius-5;
+          border: 1px solid var(--input-border-color);
+
+          background-color: var(--input-bg-color);
+          font-size: $body-text-2;
+
+          padding: $input-forms-padding;
+
+          color: var(--base-text-color);
+
+          width: 100%;
+
+          &::placeholder {
+            color: var(--placeholders-text-color);
+          }
+
+          &:focus {
+            border: 1px solid $transparent;
+          }
+
+          &.subtitle {
+            width: 100%;
+          }
+        }
+
+        .input-time-container {
+          display: grid;
+          grid-template-columns: repeat(2, max-content);
+          gap: 10px;
+
+          align-items: center;
+
+          .input-time {
+            position: relative;
+
+            input {
+              padding: 12px 39px 12px 20px;
+            }
+
+            button {
+              display: flex;
+              align-items: center;
+              justify-items: center;
+
+              position: absolute;
+              right: 8px;
+              top: 50%;
+              transform: translateY(-50%);
+
+              border: 0;
+              border-radius: $border-radius-2;
+
+              background-color: var(--video-set-time-pin-bg-color);
+
+              padding: 6px 7px;
+
+              svg {
+                color: var(--video-set-time-pin-color);
+                height: 17px;
+                stroke: var(--icons-1-color);
+                stroke-width: 10;
+              }
+            }
+          }
+        }
       }
 
       .subtitles-work-space {
