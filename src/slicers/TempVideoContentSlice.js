@@ -9,7 +9,7 @@ const TempVideoContentSlice = createSlice({
     description: '',
     subtitle_created_language: '',
     videoSubtitles: [],
-    onEditingSubtitleId: undefined,
+    activeSubtitleId: undefined,
   },
   reducers: {
     setTitle: (state, action) => {
@@ -38,6 +38,13 @@ const TempVideoContentSlice = createSlice({
     addVideoSubtitle: (state, action) => {
       state.videoSubtitles.push(action.payload);
     },
+    addVideoSubtitleCue: (state, action) => {
+      const videoSubtitleIndex = state.videoSubtitles.findIndex((videoSubtitles) => videoSubtitles.id === state.activeSubtitleId);
+
+      if (videoSubtitleIndex !== -1) {
+        state.videoSubtitles[videoSubtitleIndex].subtitlesCues.push(action.payload);
+      }
+    },
     updateVideoSubtitleCue: (state, action) => {
       const { id, startTime, endTime, text } = action.payload;
       const videoSubtitleIndex = state.videoSubtitles.findIndex((videoSubtitles) => videoSubtitles.id === id);
@@ -57,11 +64,21 @@ const TempVideoContentSlice = createSlice({
       state.videoSubtitles = state.videoSubtitles.filter((section) => section.id !== id);
     },
     setOnEditingSubtitleId: (state, action) => {
-      state.onEditingSubtitleId = action.payload;
+      state.activeSubtitleId = action.payload;
     },
+  },
+  selectors: {
+    selectActiveSubtitle: (
+      state, // devolve um objeto com a info da secção selecionada, a partir do ID guardado no estado
+    ) => state.activeSubtitleId !== undefined && state.videoSubtitles.find((subtitle) => subtitle.id === state.activeSubtitleId),
+    selectActiveSubtitleCues: (
+      state, // devolve o array com a info das subtitlesCues presente no videoSubtitles cujo index é o da subtitles selecionada
+    ) => state.activeSubtitleId !== undefined && state.videoSubtitles[state.videoSubtitles.findIndex((subtitle) => subtitle.id === state.activeSubtitleId)].subtitlesCues,
   },
 });
 
-export const { setTitle, setOriginalContentCategory, setOriginalContentLanguage, setDescription, setSubtitleCreatedLanguage, setVideoFormsReset, addVideoSubtitle, updateVideoSubtitle, removeVideoSubtitle, setOnEditingSubtitleId } = TempVideoContentSlice.actions;
+export const { setTitle, setOriginalContentCategory, setOriginalContentLanguage, setDescription, setSubtitleCreatedLanguage, setVideoFormsReset, addVideoSubtitle, addVideoSubtitleCue, updateVideoSubtitle, removeVideoSubtitle, setOnEditingSubtitleId } = TempVideoContentSlice.actions;
+
+export const { selectActiveSubtitle, selectActiveSubtitleCues } = TempVideoContentSlice.selectors;
 
 export default TempVideoContentSlice.reducer;

@@ -3,10 +3,13 @@ import '@/styles/components/Video_Subtitles_Section.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilePen, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setOnEditingSubtitleId } from '@/slicers/TempVideoContentSlice';
 
-export default function Video_Subtitles_Section({ id, language, date, setSelectedSubtitleId, setIsEditingCreatingSubtitleCues }) {
-  //const activeSectionId = useSelector((state) => state.TempTextContentSlice.activeSectionId);
+export default function Video_Subtitles_Section({ id, language, date, setIsEditingCreatingSubtitleCues }) {
+  const activeSubtitleId = useSelector((state) => state.TempVideoContentSlice.activeSectionId);
+
+  const dispatch = useDispatch();
 
   return (
     <div className="video-subtitles-section">
@@ -16,8 +19,8 @@ export default function Video_Subtitles_Section({ id, language, date, setSelecte
         className="primary-button"
         type="button"
         onClick={() => {
-          setSelectedSubtitleId(id);
           setIsEditingCreatingSubtitleCues(true);
+          dispatch(setOnEditingSubtitleId(id));
         }}
       >
         Abrir

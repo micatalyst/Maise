@@ -238,6 +238,7 @@
     .subtitle-cues-creation-display {
       display: grid;
       grid-template-rows: max-content 1fr;
+      gap: 30px;
 
       .subtitle-cues-input-creation {
         display: grid;
@@ -318,17 +319,54 @@
         }
       }
 
-      .subtitles-work-space {
+      .subtitles-cues-table-container {
         display: grid;
-        grid-template-columns: 1fr max-content;
+        grid-template-rows: max-content 1fr;
+        gap: 20px;
 
-        .subtitles-container {
+        button {
+          justify-self: end;
+          align-self: end;
+        }
+      }
+
+      .subtitles-cues-table {
+        display: grid;
+        grid-template-rows: max-content 1fr;
+
+        .subtitles-cues-table-header {
           display: grid;
-          grid-template-rows: 1fr max-content;
+          grid-template-columns: 417px 40px 40px;
+          gap: 20px;
+
+          background-color: var(--video-all-subtitles-table-header-bg-color);
+          color: var(--video-all-subtitles-table-header-text-color);
+
+          padding: 8px 20px;
+
+          span {
+            font-size: $body-text-2;
+            font-weight: $bold;
+          }
         }
 
-        .subtitles-upload-dropzone {
-          display: grid;
+        .subtitles-cues-table-content {
+          overflow: auto;
+          overflow-x: hidden;
+          scroll-behavior: smooth;
+          max-height: $video-forms-step2-all-subtitles-table-content-max-height;
+
+          &::-webkit-scrollbar {
+            width: 5px;
+          }
+
+          &::-webkit-scrollbar-track {
+            background-color: var(--content-scrollbar-bg-color);
+          }
+
+          &::-webkit-scrollbar-thumb {
+            background-color: var(--content-scrollbar-color);
+          }
         }
       }
     }

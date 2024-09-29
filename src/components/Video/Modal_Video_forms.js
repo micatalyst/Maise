@@ -7,7 +7,7 @@ import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
 import '@/styles/components/Modal.scss';
 
-export default function Modal_Video_forms({ isOpen, closeModal, modal, setAccessibleAudioFiles, accessibleAudioFiles, selectedSubtitleId, handleSubtitleDeleted }) {
+export default function Modal_Video_forms({ isOpen, closeModal, modal, setAccessibleAudioFiles, accessibleAudioFiles, handleSubtitleDeleted }) {
   const dialogRef = useRef(null);
 
   const dispatch = useDispatch();

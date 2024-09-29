@@ -56,7 +56,7 @@ export default function Content_Typology_Card(props) {
         return (
           <div className="type-examples-container">
             <span>Palestras</span>
-            <span>Apresentações</span>
+            <span>Apresentações (slides)</span>
           </div>
         );
       case 'Áudio':

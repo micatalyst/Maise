@@ -1,0 +1,21 @@
+@import '../Variables.scss';
+
+.video-subtitle-cues-section {
+  display: grid;
+  grid-template-columns: 417px 40px 1fr max-content;
+  gap: 20px;
+
+  height: max-content;
+
+  align-items: center;
+
+  padding: 10px 20px;
+
+  border-bottom: 1px solid var(--content-creating-limit-border-color);
+
+  .video-subtitle-cues-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+    gap: 20px;
+  }
+}

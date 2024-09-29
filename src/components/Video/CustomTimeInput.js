@@ -1,12 +1,22 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbTack } from '@fortawesome/free-solid-svg-icons';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const CustomTimeInput = ({ label, videoDuration, videoCurrentTime }) => {
+const CustomTimeInput = ({ label, videoDuration, videoCurrentTime, setStartTimeOnChangeInputValue, setEndTimeOnChangeInputValue }) => {
   const [time, setTime] = useState('');
 
   const showHours = videoDuration >= 3600; // 3600 seconds = 1 hour
+
+  useEffect(() => {
+    // Adiciona o listener de eventos de teclado quando o componente é montado
+    window.addEventListener('keydown', handleKeyDown);
+
+    // Remove o listener de eventos de teclado quando o componente é desmontado
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [videoCurrentTime]);
 
   // Function to format the time in seconds into HH:MM:SS or MM:SS
   const formatTime = (secondsTotal) => {
@@ -56,6 +66,12 @@ const CustomTimeInput = ({ label, videoDuration, videoCurrentTime }) => {
       }
     }
 
+    if (label === 'Início') {
+      setStartTimeOnChangeInputValue(value);
+    } else if (label === 'Fim') {
+      setEndTimeOnChangeInputValue(value);
+    }
+
     setTime(value);
   };
 
@@ -73,12 +89,44 @@ const CustomTimeInput = ({ label, videoDuration, videoCurrentTime }) => {
           String(parts[1] || '00').padStart(2, '0'), // Second
         ].join(':');
 
+    if (label === 'Início') {
+      setStartTimeOnChangeInputValue(formattedTime);
+    } else if (label === 'Fim') {
+      setEndTimeOnChangeInputValue(formattedTime);
+    }
+
     setTime(formattedTime);
   };
 
   // Function to handle the button click and apply `videoCurrentTime` to the input
   const handleSetCurrentTime = () => {
     setTime(formatTime(videoCurrentTime)); // Set the formatted time to the input
+
+    if (label === 'Início') {
+      setStartTimeOnChangeInputValue(formatTime(videoCurrentTime));
+    }
+
+    if (label === 'Fim') {
+      setEndTimeOnChangeInputValue(formatTime(videoCurrentTime));
+    }
+  };
+
+  const handleKeyDown = (event) => {
+    const activeElement = document.activeElement;
+
+    if (activeElement.tagName.toLowerCase() === 'input' || event.key === 'Alt') {
+      return;
+    }
+
+    if (label === 'Início' && event.key === 'i') {
+      handleSetCurrentTime();
+      setStartTimeOnChangeInputValue(formatTime(videoCurrentTime));
+    }
+
+    if (label === 'Fim' && event.key === 'o') {
+      handleSetCurrentTime();
+      setEndTimeOnChangeInputValue(formatTime(videoCurrentTime));
+    }
   };
 
   const handleAriaLabel = () => {

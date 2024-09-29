@@ -7,7 +7,7 @@ import Horizontal_Tab_Video_Forms from '@/components/Horizontal_Tab_Video_Forms'
 
 import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setSubtitleCreatedLanguage, addVideoSubtitle } from '@/slicers/TempVideoContentSlice';
+import { setSubtitleCreatedLanguage, addVideoSubtitle, addVideoSubtitleCue, selectActiveSubtitle, selectActiveSubtitleCues } from '@/slicers/TempVideoContentSlice';
 
 import { useDropzone } from 'react-dropzone';
 
@@ -15,6 +15,8 @@ import Video from 'next-video/player';
 import CustomTimeInput from '@/components/Video/CustomTimeInput';
 
 import Video_Subtitles_Section from '@/components/Video/Video_Subtitles_Section';
+import Video_SubtitleCues_Section from '@/components/Video/Video_SubtitleCues_Section';
+
 import Modal_Video_forms from '@/components/Video/Modal_Video_forms';
 //import Audio_Visualiser from '@/components/Texto/Audio_Visualiser';
 import StepValidationFeedback from '@/components/StepValidationFeedback';
@@ -24,20 +26,23 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
 
   const videoSubtitles = useSelector((state) => state.TempVideoContentSlice.videoSubtitles);
 
+  const videoSubtitleCues = useSelector(selectActiveSubtitleCues);
+
   const dispatch = useDispatch();
 
   // const maxSize = 50 * 1024 * 1024; // 50 MB
   // const [error, setError] = useState('');
 
-  const [selectedSubtitleId, setSelectedSubtitleId] = useState(''); // Id das legendas que foram selecionadas para serem editadas (Legendas no geral e não cues)
-  const [selectedSubtitleCueId, setSelectedSubtitleCueId] = useState('');
+  // Id das legendas que foram selecionadas para serem editadas (Legendas no geral e não cues)
+
+  //const [selectedSubtitleCueId, setSelectedSubtitleCueId] = useState(''); // index do array das videoSubtitles
 
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [isEditingCreatingSubtitleCues, setIsEditingCreatingSubtitleCues] = useState(false);
 
   const [subtitleTextOnChangeInputValue, setSubtitleTextOnChangeInputValue] = useState(''); // value do input do texto das legenda
   const [startTimeOnChangeInputValue, setStartTimeOnChangeInputValue] = useState(''); // value do input do tempo inicial das legenda
-  const [endTimeOnChangeInputValue, setendTimeOnChangeInputValue] = useState(''); // value do input do tempo final das legenda
+  const [endTimeOnChangeInputValue, setEndTimeOnChangeInputValue] = useState(''); // value do input do tempo final das legenda
 
   const [filterTab, setFilterTab] = useState('Legendas');
 
@@ -159,23 +164,28 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
   };
 
   const handleAddSubtitleCues = () => {
-    if (subtitleTextOnChangeInputValue) {
-      // Garante que existe um nome para section (previne a criação de sections sem nome)
+    if (startTimeOnChangeInputValue && endTimeOnChangeInputValue) {
       dispatch(
-        addVideoSubtitle({
-          id: videoSubtitles.length ? handleAddSubtitleCueId : 1,
+        addVideoSubtitleCue({
+          id: videoSubtitleCues.length ? handleAddSubtitleCueId : 1,
           startTime: startTimeOnChangeInputValue,
           endTime: endTimeOnChangeInputValue,
-          text: subtitleTextOnChangeInputValue,
+          text: subtitleTextOnChangeInputValue ? subtitleTextOnChangeInputValue : 'Preencha a legenda...',
+          haveTextValue: subtitleTextOnChangeInputValue ? true : false,
         }),
       );
-      if (videoSubtitles.length) {
+      if (videoSubtitleCues.length) {
+        console.log('adicionou +1 ao id');
+        console.log(videoSubtitleCues.length);
         setHandleAddSubtitleCueId((previousValue) => previousValue + 1);
       } else {
+        console.log('resetou a contagem de ids');
         setHandleAddSubtitleCueId(2);
       }
-
+      console.log('está a guardar a stubtitle Cue acho!');
       setSubtitleTextOnChangeInputValue('');
+    } else {
+      console.log('falta supostamente os tempos!');
     }
   };
 
@@ -263,8 +273,30 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
               id={item.id}
               language={item.language}
               date={item.date}
-              setSelectedSubtitleId={setSelectedSubtitleId}
               setIsEditingCreatingSubtitleCues={setIsEditingCreatingSubtitleCues}
+              handleAddSubtitleCues={handleAddSubtitleCues}
+            />
+          ))}
+      </div>
+    </div>
+  );
+
+  const SubtitleCuesTable = (
+    <div className="subtitles-cues-table">
+      <div className="subtitles-cues-table-header">
+        <span>Legenda</span>
+        <span>Início</span>
+        <span>Fim</span>
+      </div>
+      <div className="subtitles-cues-table-content">
+        {videoSubtitleCues &&
+          videoSubtitleCues.map((item) => (
+            <Video_SubtitleCues_Section
+              key={item.id}
+              id={item.id}
+              startTime={item.startTime}
+              endTime={item.endTime}
+              text={item.text}
             />
           ))}
       </div>
@@ -323,18 +355,30 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
           label="Início"
           videoCurrentTime={videoCurrentTime}
           videoDuration={videoDuration}
+          setStartTimeOnChangeInputValue={setStartTimeOnChangeInputValue}
         />
         <CustomTimeInput
           label="Fim"
           videoCurrentTime={videoCurrentTime}
           videoDuration={videoDuration}
+          setEndTimeOnChangeInputValue={setEndTimeOnChangeInputValue}
         />
         <button
           className="primary-button"
           type="button"
-          //onClick={handleAddSubtitle}
+          onClick={handleAddSubtitleCues}
         >
           Adicionar legenda
+        </button>
+      </div>
+      <div className="subtitles-cues-table-container">
+        {SubtitleCuesTable}
+        <button
+          className="primary-button"
+          type="button"
+          onClick={() => setIsEditingCreatingSubtitleCues(false)}
+        >
+          Guardar legendas / Voltar
         </button>
       </div>
     </div>
@@ -413,7 +457,6 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
         modal={modalType}
         /* setAccessibleAudioFiles={setAccessibleAudioFiles} */
         /* accessibleAudioFiles={accessibleAudioFiles} */
-        selectedSubtitleId={selectedSubtitleId}
         /* handleSubtitleDeleted={handleSubtitleDeleted} */
       />
     </div>
