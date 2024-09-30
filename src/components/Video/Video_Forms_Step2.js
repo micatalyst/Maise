@@ -261,45 +261,37 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
 
   const AllSubtitlesTable = (
     <div className="all-subtitles-table">
-      <div className="all-subtitles-table-header">
-        <span>Idioma</span>
-        <span>Data</span>
-      </div>
-      <div className="all-subtitles-table-content">
-        {videoSubtitles &&
-          videoSubtitles.map((item) => (
-            <Video_Subtitles_Section
-              key={item.id}
-              id={item.id}
-              language={item.language}
-              date={item.date}
-              setIsEditingCreatingSubtitleCues={setIsEditingCreatingSubtitleCues}
-              handleAddSubtitleCues={handleAddSubtitleCues}
-            />
-          ))}
-      </div>
+      <span className="all-subtitles-table-header">Idioma</span>
+      <span className="all-subtitles-table-header">Data</span>
+      {videoSubtitles &&
+        videoSubtitles.map((item) => (
+          <Video_Subtitles_Section
+            key={item.id}
+            id={item.id}
+            language={item.language}
+            date={item.date}
+            setIsEditingCreatingSubtitleCues={setIsEditingCreatingSubtitleCues}
+            handleAddSubtitleCues={handleAddSubtitleCues}
+          />
+        ))}
     </div>
   );
 
   const SubtitleCuesTable = (
     <div className="subtitles-cues-table">
-      <div className="subtitles-cues-table-header">
-        <span>Legenda</span>
-        <span>Início</span>
-        <span>Fim</span>
-      </div>
-      <div className="subtitles-cues-table-content">
-        {videoSubtitleCues &&
-          videoSubtitleCues.map((item) => (
-            <Video_SubtitleCues_Section
-              key={item.id}
-              id={item.id}
-              startTime={item.startTime}
-              endTime={item.endTime}
-              text={item.text}
-            />
-          ))}
-      </div>
+      <span className="subtitles-cues-table-header">Legenda</span>
+      <span className="subtitles-cues-table-header">Início</span>
+      <span className="subtitles-cues-table-header">Fim</span>
+      {videoSubtitleCues &&
+        videoSubtitleCues.map((item) => (
+          <Video_SubtitleCues_Section
+            key={item.id}
+            id={item.id}
+            startTime={item.startTime}
+            endTime={item.endTime}
+            text={item.text}
+          />
+        ))}
     </div>
   );
 

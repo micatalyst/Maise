@@ -12,32 +12,34 @@ export default function Video_SubtitleCues_Section({ id, startTime, endTime, tex
   //const dispatch = useDispatch();
 
   return (
-    <div className="video-subtitle-cues-section">
-      <span>{text}</span>
-      <span>{startTime}</span>
-      <span>{endTime}</span>
-      <div className="video-subtitle-cues-buttons">
-        <button
-          className="primary-button icon"
-          type="button"
-          onClick={() => {
-            //openModal('updateSection');
-          }}
-        >
-          <FontAwesomeIcon icon={faFilePen} />
-          Editar
-        </button>
-        <button
-          className="negative-button icon"
-          type="button"
-          onClick={() => {
-            //openModal('deleteSection');
-          }}
-        >
-          <FontAwesomeIcon icon={faTrashCan} />
-          Apagar
-        </button>
+    <>
+      <span className="subtitles-cues-table-body first-body-component">{text}</span>
+      <span className="subtitles-cues-table-body">{startTime}</span>
+      <div className="subtitles-cues-table-section">
+        <span className="subtitles-cues-table-body">{endTime}</span>
+        <div className="subtitles-cues-table-body subtitles-cues-table-buttons">
+          <button
+            className="primary-button icon"
+            type="button"
+            onClick={() => {
+              //openModal('updateSection');
+            }}
+          >
+            <FontAwesomeIcon icon={faFilePen} />
+            Editar
+          </button>
+          <button
+            className="negative-button icon"
+            type="button"
+            onClick={() => {
+              //openModal('deleteSection');
+            }}
+          >
+            <FontAwesomeIcon icon={faTrashCan} />
+            Apagar
+          </button>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

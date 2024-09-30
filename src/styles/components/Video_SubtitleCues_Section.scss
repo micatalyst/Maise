@@ -1,21 +1,39 @@
 @import '../Variables.scss';
 
-.video-subtitle-cues-section {
+.subtitles-cues-table-body {
+  // todo o conteúdo do corpo da tabela
   display: grid;
-  grid-template-columns: 417px 40px 1fr max-content;
-  gap: 20px;
 
-  height: max-content;
-
+  //height: 100%;
   align-items: center;
-
-  padding: 10px 20px;
-
+  padding: 10px 15px;
   border-bottom: 1px solid var(--content-creating-limit-border-color);
 
-  .video-subtitle-cues-buttons {
+  &.first-body-component {
+    padding-left: 20px;
+    display: block; // Use block ou inline-block
+
+    //max-width: 100%; // Defina a largura máxima desejada
+    height: 100%; // Isso pode ser ajustado conforme necessári
+    overflow: hidden; // Oculta o texto que ultrapassa
+    text-overflow: ellipsis; // Adiciona reticências ao final do texto
+    white-space: nowrap; // Impede a quebra de linha
+
+    align-content: center;
+  }
+}
+
+.subtitles-cues-table-section {
+  display: grid;
+  grid-template-columns: 1fr max-content;
+
+  .subtitles-cues-table-buttons {
     display: grid;
     grid-template-columns: repeat(2, max-content);
     gap: 20px;
+
+    padding-right: 20px;
+
+    align-content: center;
   }
 }

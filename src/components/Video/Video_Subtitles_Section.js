@@ -12,39 +12,43 @@ export default function Video_Subtitles_Section({ id, language, date, setIsEditi
   const dispatch = useDispatch();
 
   return (
-    <div className="video-subtitles-section">
-      <span>{language}</span>
-      <span>{date}</span>
-      <button
-        className="primary-button"
-        type="button"
-        onClick={() => {
-          setIsEditingCreatingSubtitleCues(true);
-          dispatch(setOnEditingSubtitleId(id));
-        }}
-      >
-        Abrir
-      </button>
-      <button
-        className="primary-button icon"
-        type="button"
-        onClick={() => {
-          //openModal('updateSection');
-        }}
-      >
-        <FontAwesomeIcon icon={faFilePen} />
-        Editar
-      </button>
-      <button
-        className="negative-button icon"
-        type="button"
-        onClick={() => {
-          //openModal('deleteSection');
-        }}
-      >
-        <FontAwesomeIcon icon={faTrashCan} />
-        Apagar
-      </button>
-    </div>
+    <>
+      <span className="all-subtitles-table-body first-body-component">{language}</span>
+      <div className="all-subtitles-table-section">
+        <span className="all-subtitles-table-body">{date}</span>
+        <div className="all-subtitles-table-body all-subtitles-table-section-btns">
+          <button
+            className="primary-button"
+            type="button"
+            onClick={() => {
+              setIsEditingCreatingSubtitleCues(true);
+              dispatch(setOnEditingSubtitleId(id));
+            }}
+          >
+            Abrir
+          </button>
+          <button
+            className="primary-button icon"
+            type="button"
+            onClick={() => {
+              //openModal('updateSection');
+            }}
+          >
+            <FontAwesomeIcon icon={faFilePen} />
+            Editar
+          </button>
+          <button
+            className="negative-button icon"
+            type="button"
+            onClick={() => {
+              //openModal('deleteSection');
+            }}
+          >
+            <FontAwesomeIcon icon={faTrashCan} />
+            Apagar
+          </button>
+        </div>
+      </div>
+    </>
   );
 }
