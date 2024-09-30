@@ -332,7 +332,7 @@
 
       .subtitles-cues-table {
         display: grid;
-        grid-template-columns: 1fr max-content max-content;
+        grid-template-columns: 1fr max-content minmax(303px, max-content);
 
         overflow: auto;
         overflow-x: hidden;

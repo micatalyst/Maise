@@ -33,7 +33,7 @@ export default function Content_Card(props) {
         </div>
         <div className="content-card-title">
           <h4>{props.title}</h4>
-          {props.sections && props.sections.length && <div>{props.sections.length} secções</div>}
+          {/* {props.sections && props.sections.length && <div>{props.sections.length} secções</div>} */}
         </div>
         <div className="content-card-date">
           <span>{props.date}</span>
