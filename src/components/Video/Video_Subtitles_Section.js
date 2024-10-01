@@ -6,9 +6,7 @@ import { faFilePen, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { setOnEditingSubtitleId } from '@/slicers/TempVideoContentSlice';
 
-export default function Video_Subtitles_Section({ id, language, date, setIsEditingCreatingSubtitleCues }) {
-  const activeSubtitleId = useSelector((state) => state.TempVideoContentSlice.activeSectionId);
-
+export default function Video_Subtitles_Section({ id, language, date, setIsEditingCreatingSubtitleCues, openModal }) {
   const dispatch = useDispatch();
 
   return (
@@ -25,23 +23,25 @@ export default function Video_Subtitles_Section({ id, language, date, setIsEditi
               dispatch(setOnEditingSubtitleId(id));
             }}
           >
-            Abrir
+            Editar Legendas
           </button>
           <button
-            className="primary-button icon"
+            className="primary-button"
             type="button"
             onClick={() => {
-              //openModal('updateSection');
+              dispatch(setOnEditingSubtitleId(id));
+              openModal('updateSubtitlesLanguage');
             }}
           >
-            <FontAwesomeIcon icon={faFilePen} />
-            Editar
+            {/* <FontAwesomeIcon icon={faFilePen} /> */}
+            Editar Idioma
           </button>
           <button
             className="negative-button icon"
             type="button"
             onClick={() => {
-              //openModal('deleteSection');
+              dispatch(setOnEditingSubtitleId(id));
+              openModal('deleteSubtitles');
             }}
           >
             <FontAwesomeIcon icon={faTrashCan} />

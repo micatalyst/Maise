@@ -18,6 +18,25 @@ dialog {
     width: 100%;
   }
 
+  select {
+    width: 100% !important;
+  }
+
+  .forms-select {
+    position: relative;
+
+    svg {
+      position: absolute;
+      height: auto;
+      width: 18px;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--icons-1-color);
+      pointer-events: none;
+    }
+  }
+
   .btn-placement {
     display: grid;
     grid-template-columns: max-content max-content;

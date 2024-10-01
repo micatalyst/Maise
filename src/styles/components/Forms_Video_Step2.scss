@@ -53,9 +53,9 @@
       height: calc($video-size-responsive-height);
       background-color: var(--video-bg-color);
 
-      &.videoEditingDisplay {
+      /* &.videoEditingDisplay {
         height: calc($video-size-responsive-height - 100px);
-      }
+      } */
     }
 
     /*  .video-controls-bar {
@@ -114,17 +114,20 @@
 
   .content-creation-container {
     display: grid;
-    grid-template-columns: max-content 1fr;
-    gap: 30px;
+    grid-template-rows: max-content 1fr;
 
     background-color: var(--forms-container-bg);
-
-    height: 100%;
-    max-height: $video-forms-step2-main-min-height;
-
     padding: 30px;
 
-    /* .subtitles-container {
+    .video-content-creation {
+      display: grid;
+      grid-template-columns: max-content 1fr;
+      gap: 30px;
+
+      height: 100%;
+      max-height: $video-forms-step2-main-min-height;
+
+      /* .subtitles-container {
           overflow: scroll;
           overflow-x: hidden;
           scroll-behavior: smooth;
@@ -143,229 +146,230 @@
           }
         } */
 
-    .subtitles-workspace {
-      display: grid;
-      grid-template-rows: max-content 1fr;
-      gap: 10px;
-    }
-
-    .all-subtitles-display {
-      display: grid;
-      grid-template-rows: max-content max-content;
-
-      .language-set-subtitles-creation {
+      .subtitles-workspace {
         display: grid;
-        grid-template-columns: repeat(2, max-content);
-        gap: 20px;
-
-        padding-bottom: 30px;
-
-        button {
-          align-self: end;
-        }
-
-        .language-container {
-          //padding: $forms-step2-language-container-padding;
-
-          .forms-select {
-            position: relative;
-
-            svg {
-              position: absolute;
-              height: auto;
-              width: 18px;
-              right: 14px;
-              top: 50%;
-              transform: translateY(-50%);
-              color: var(--icons-1-color);
-              pointer-events: none;
-            }
-          }
-        }
+        grid-template-rows: 1fr;
+        //gap: 10px;
       }
 
-      .all-subtitles-table {
+      .all-subtitles-display {
         display: grid;
-        grid-template-columns: minmax(140px, max-content) 1fr;
+        grid-template-rows: max-content max-content;
 
-        overflow: auto;
-        overflow-x: hidden;
-        scroll-behavior: smooth;
-        max-height: $video-forms-step2-all-subtitles-table-content-max-height;
-
-        &::-webkit-scrollbar {
-          width: 5px;
-        }
-
-        &::-webkit-scrollbar-track {
-          background-color: var(--content-scrollbar-bg-color);
-        }
-
-        &::-webkit-scrollbar-thumb {
-          background-color: var(--content-scrollbar-color);
-        }
-
-        .all-subtitles-table-header {
-          grid-row: 1; // Targets the first row
-
-          background-color: var(--video-all-subtitles-table-header-bg-color);
-          color: var(--video-all-subtitles-table-header-text-color);
-
-          padding: 8px 20px;
-
-          position: sticky;
-          top: 0;
-          //z-index: 5;
-
-          span {
-            font-size: $body-text-2;
-            font-weight: $bold;
-          }
-        }
-      }
-
-      p.no-section-placeholder {
-        font-size: $no-content-placeholder-text-size;
-        color: var(--placeholder-container-text-color);
-        text-align: center;
-
-        span {
-          font-weight: $bold;
-        }
-      }
-    }
-
-    .subtitle-cues-creation-display {
-      display: grid;
-      grid-template-rows: max-content 1fr;
-      gap: 30px;
-
-      .subtitle-cues-input-creation {
-        display: grid;
-        grid-template-columns: 1fr repeat(3, max-content);
-        gap: 20px;
-
-        align-items: center;
-
-        label {
-          margin: 0;
-        }
-
-        input[type='text'] {
-          border-radius: $border-radius-5;
-          border: 1px solid var(--input-border-color);
-
-          background-color: var(--input-bg-color);
-          font-size: $body-text-2;
-
-          padding: $input-forms-padding;
-
-          color: var(--base-text-color);
-
-          width: 100%;
-
-          &::placeholder {
-            color: var(--placeholders-text-color);
-          }
-
-          &:focus {
-            border: 1px solid $transparent;
-          }
-
-          &.subtitle {
-            width: 100%;
-          }
-        }
-
-        .input-time-container {
+        .language-set-subtitles-creation {
           display: grid;
           grid-template-columns: repeat(2, max-content);
-          gap: 10px;
+          gap: 20px;
 
-          align-items: center;
+          padding-bottom: 30px;
 
-          .input-time {
-            position: relative;
+          button {
+            align-self: end;
+          }
 
-            input {
-              padding: 12px 39px 12px 20px;
-            }
+          .language-container {
+            //padding: $forms-step2-language-container-padding;
 
-            button {
-              display: flex;
-              align-items: center;
-              justify-items: center;
-
-              position: absolute;
-              right: 8px;
-              top: 50%;
-              transform: translateY(-50%);
-
-              border: 0;
-              border-radius: $border-radius-2;
-
-              background-color: var(--video-set-time-pin-bg-color);
-
-              padding: 6px 7px;
+            .forms-select {
+              position: relative;
 
               svg {
-                color: var(--video-set-time-pin-color);
-                height: 17px;
-                stroke: var(--icons-1-color);
-                stroke-width: 10;
+                position: absolute;
+                height: auto;
+                width: 18px;
+                right: 14px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: var(--icons-1-color);
+                pointer-events: none;
               }
             }
           }
         }
-      }
 
-      .subtitles-cues-table-container {
-        display: grid;
-        grid-template-rows: max-content 1fr;
-        gap: 20px;
+        .all-subtitles-table {
+          display: grid;
+          grid-template-columns: minmax(140px, max-content) 1fr;
 
-        button {
-          justify-self: end;
-          align-self: end;
+          overflow: auto;
+          overflow-x: hidden;
+          scroll-behavior: smooth;
+          max-height: $video-forms-step2-all-subtitles-table-content-max-height;
+
+          &::-webkit-scrollbar {
+            width: 5px;
+          }
+
+          &::-webkit-scrollbar-track {
+            background-color: var(--content-scrollbar-bg-color);
+          }
+
+          &::-webkit-scrollbar-thumb {
+            background-color: var(--content-scrollbar-color);
+          }
+
+          .all-subtitles-table-header {
+            grid-row: 1; // Targets the first row
+
+            background-color: var(--video-all-subtitles-table-header-bg-color);
+            color: var(--video-all-subtitles-table-header-text-color);
+
+            padding: 8px 20px;
+
+            position: sticky;
+            top: 0;
+            //z-index: 5;
+
+            span {
+              font-size: $body-text-2;
+              font-weight: $bold;
+            }
+          }
         }
-      }
 
-      .subtitles-cues-table {
-        display: grid;
-        grid-template-columns: 1fr max-content minmax(303px, max-content);
-
-        overflow: auto;
-        overflow-x: hidden;
-        scroll-behavior: smooth;
-        max-height: $video-forms-step2-all-subtitles-table-content-max-height;
-
-        &::-webkit-scrollbar {
-          width: 5px;
-        }
-
-        &::-webkit-scrollbar-track {
-          background-color: var(--content-scrollbar-bg-color);
-        }
-
-        &::-webkit-scrollbar-thumb {
-          background-color: var(--content-scrollbar-color);
-        }
-
-        .subtitles-cues-table-header {
-          grid-row: 1; // Targets the first row
-
-          background-color: var(--video-all-subtitles-table-header-bg-color);
-          color: var(--video-all-subtitles-table-header-text-color);
-
-          padding: 8px 20px;
-
-          position: sticky;
-          top: 0;
-          //z-index: 5;
+        p.no-section-placeholder {
+          font-size: $no-content-placeholder-text-size;
+          color: var(--placeholder-container-text-color);
+          text-align: center;
 
           span {
-            font-size: $body-text-2;
             font-weight: $bold;
+          }
+        }
+      }
+
+      .subtitle-cues-creation-display {
+        display: grid;
+        grid-template-rows: max-content 1fr;
+        gap: 30px;
+
+        .subtitle-cues-input-creation {
+          display: grid;
+          grid-template-columns: 1fr repeat(3, max-content);
+          gap: 20px;
+
+          align-items: center;
+
+          label {
+            margin: 0;
+          }
+
+          input[type='text'] {
+            border-radius: $border-radius-5;
+            border: 1px solid var(--input-border-color);
+
+            background-color: var(--input-bg-color);
+            font-size: $body-text-2;
+
+            padding: $input-forms-padding;
+
+            color: var(--base-text-color);
+
+            width: 100%;
+
+            &::placeholder {
+              color: var(--placeholders-text-color);
+            }
+
+            &:focus {
+              border: 1px solid $transparent;
+            }
+
+            &.subtitle {
+              width: 100%;
+            }
+          }
+
+          .input-time-container {
+            display: grid;
+            grid-template-columns: repeat(2, max-content);
+            gap: 10px;
+
+            align-items: center;
+
+            .input-time {
+              position: relative;
+
+              input {
+                padding: 12px 39px 12px 20px;
+              }
+
+              button {
+                display: flex;
+                align-items: center;
+                justify-items: center;
+
+                position: absolute;
+                right: 8px;
+                top: 50%;
+                transform: translateY(-50%);
+
+                border: 0;
+                border-radius: $border-radius-2;
+
+                background-color: var(--video-set-time-pin-bg-color);
+
+                padding: 6px 7px;
+
+                svg {
+                  color: var(--video-set-time-pin-color);
+                  height: 17px;
+                  stroke: var(--icons-1-color);
+                  stroke-width: 10;
+                }
+              }
+            }
+          }
+        }
+
+        .subtitles-cues-table-container {
+          display: grid;
+          grid-template-rows: max-content 1fr;
+          gap: 20px;
+
+          button {
+            justify-self: end;
+            align-self: end;
+          }
+        }
+
+        .subtitles-cues-table {
+          display: grid;
+          grid-template-columns: 1fr max-content minmax(303px, max-content);
+
+          overflow: auto;
+          overflow-x: hidden;
+          scroll-behavior: smooth;
+          max-height: $video-forms-step2-subtitles-cues-table-content-max-height;
+
+          &::-webkit-scrollbar {
+            width: 5px;
+          }
+
+          &::-webkit-scrollbar-track {
+            background-color: var(--content-scrollbar-bg-color);
+          }
+
+          &::-webkit-scrollbar-thumb {
+            background-color: var(--content-scrollbar-color);
+          }
+
+          .subtitles-cues-table-header {
+            grid-row: 1; // Targets the first row
+
+            background-color: var(--video-all-subtitles-table-header-bg-color);
+            color: var(--video-all-subtitles-table-header-text-color);
+
+            padding: 8px 20px;
+
+            position: sticky;
+            top: 0;
+            //z-index: 5;
+
+            span {
+              font-size: $body-text-2;
+              font-weight: $bold;
+            }
           }
         }
       }

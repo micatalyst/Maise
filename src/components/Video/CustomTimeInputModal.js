@@ -1,35 +1,20 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbTack } from '@fortawesome/free-solid-svg-icons';
-
 import React, { useState, useEffect } from 'react';
 
-const CustomTimeInput = ({ label, videoDuration, videoCurrentTime, setStartTimeOnChangeInputValue, setEndTimeOnChangeInputValue }) => {
+const CustomTimeInputModal = ({ label, videoDuration, setStartTimeOnChangeInputValue, setEndTimeOnChangeInputValue, subtitleStartTimeInputValue, subtitleEndTimeInputValue }) => {
   const [time, setTime] = useState('');
 
-  const showHours = videoDuration >= 3600; // 3600 seconds = 1 hour
-
   useEffect(() => {
-    // Adiciona o listener de eventos de teclado quando o componente é montado
-    window.addEventListener('keydown', handleKeyDown);
+    if (label === 'Início') {
+      setTime(subtitleStartTimeInputValue);
+    }
 
-    // Remove o listener de eventos de teclado quando o componente é desmontado
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [videoCurrentTime]);
+    if (label === 'Fim') {
+      setTime(subtitleEndTimeInputValue);
+    }
+    console.log('correu uma vez');
+  }, [label, subtitleStartTimeInputValue, subtitleEndTimeInputValue]);
 
-  // Function to format the time in seconds into HH:MM:SS or MM:SS
-  const formatTime = (secondsTotal) => {
-    const hours = Math.floor(secondsTotal / 3600);
-    const minutes = Math.floor((secondsTotal % 3600) / 60);
-    const seconds = Math.floor(secondsTotal % 60);
-
-    const formattedHours = showHours ? String(hours).padStart(2, '0') : null;
-    const formattedMinutes = String(minutes).padStart(2, '0');
-    const formattedSeconds = String(seconds).padStart(2, '0');
-
-    return showHours ? `${formattedHours}:${formattedMinutes}:${formattedSeconds}` : `${formattedMinutes}:${formattedSeconds}`;
-  };
+  const showHours = videoDuration >= 3600; // 3600 seconds = 1 hour
 
   const handleChange = (event) => {
     let value = event.target.value.replace(/\D/g, ''); // Remove non-numeric characters
@@ -98,38 +83,6 @@ const CustomTimeInput = ({ label, videoDuration, videoCurrentTime, setStartTimeO
     setTime(formattedTime);
   };
 
-  // Function to handle the button click and apply `videoCurrentTime` to the input
-  const handleSetCurrentTime = () => {
-    setTime(formatTime(videoCurrentTime)); // Set the formatted time to the input
-
-    if (label === 'Início') {
-      setStartTimeOnChangeInputValue(formatTime(videoCurrentTime));
-    }
-
-    if (label === 'Fim') {
-      setEndTimeOnChangeInputValue(formatTime(videoCurrentTime));
-    }
-  };
-
-  const handleKeyDown = (event) => {
-    const activeElement = document.activeElement;
-
-    if (activeElement.tagName.toLowerCase() === 'input' || event.code === 'AltLeft' || event.code === 'AltRight') {
-      // o alt serve para prevenir que quando o utilziador faz alt tab a página não atualize ambos os campos de input
-      return;
-    }
-
-    if (label === 'Início' && event.code === 'KeyA') {
-      handleSetCurrentTime();
-      setStartTimeOnChangeInputValue(formatTime(videoCurrentTime));
-    }
-
-    if (label === 'Fim' && event.code === 'KeyD') {
-      handleSetCurrentTime();
-      setEndTimeOnChangeInputValue(formatTime(videoCurrentTime));
-    }
-  };
-
   const handleAriaLabel = () => {
     switch (label) {
       case 'Início':
@@ -155,16 +108,9 @@ const CustomTimeInput = ({ label, videoDuration, videoCurrentTime, setStartTimeO
           maxLength={showHours ? 8 : 5} // Set max length based on format
           onFocus={(e) => e.target.select()} // Select input text on focus
         />
-        <button
-          type="button"
-          onClick={handleSetCurrentTime}
-          aria-label={`Botão para marcar o tempo ${handleAriaLabel()}`}
-        >
-          <FontAwesomeIcon icon={faThumbTack} />
-        </button>
       </div>
     </div>
   );
 };
 
-export default CustomTimeInput;
+export default CustomTimeInputModal;

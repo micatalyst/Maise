@@ -20,7 +20,7 @@ export default function Video_Forms_Step1({ handleNextStep, original_content_fil
 
   const dispatch = useDispatch();
 
-  const maxSize = 500 * 1024 * 1024; // 500 MB Temporário
+  const maxSize = 800 * 1024 * 1024; // 500 MB Temporário
   const [error, setError] = useState('');
 
   const [stepValidations, setStepValidations] = useState([]);

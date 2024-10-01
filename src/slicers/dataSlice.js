@@ -64,7 +64,6 @@ const dataSlice = createSlice({
       })
       .addCase(fetchContentById.fulfilled, (state, { payload }) => {
         state.loading = false;
-        debugger;
         state.currentContent = payload;
       })
       .addCase(fetchContentById.rejected, (state) => {

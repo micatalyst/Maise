@@ -9,8 +9,6 @@ import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSubtitleCreatedLanguage, addVideoSubtitle, addVideoSubtitleCue, selectActiveSubtitle, selectActiveSubtitleCues } from '@/slicers/TempVideoContentSlice';
 
-import { useDropzone } from 'react-dropzone';
-
 import Video from 'next-video/player';
 import CustomTimeInput from '@/components/Video/CustomTimeInput';
 
@@ -25,8 +23,7 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
   const subtitle_created_language = useSelector((state) => state.TempVideoContentSlice.subtitle_created_language);
 
   const videoSubtitles = useSelector((state) => state.TempVideoContentSlice.videoSubtitles);
-
-  const videoSubtitleCues = useSelector(selectActiveSubtitleCues);
+  const videoSubtitleObj = useSelector(selectActiveSubtitle);
 
   const dispatch = useDispatch();
 
@@ -52,11 +49,24 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState('');
 
-  useEffect(() => {
+  const [videoDuration, setVideoDuration] = useState(0);
+  const [videoCurrentTime, setVideoCurrentTime] = useState(0);
+
+  /* useEffect(() => {
     if (videoSubtitles.length === 1) {
       // Não havia videoSubtitles antes, mostrar algum placeholder para a adição de subtitles
     }
-  }, [videoSubtitles]);
+  }, [videoSubtitles]); */
+
+  /* useEffect(() => {
+    // Adiciona o listener de eventos de teclado quando o componente é montado
+    window.addEventListener('keydown', handleKeyDownAddSubtitleCues);
+
+    // Remove o listener de eventos de teclado quando o componente é desmontado
+    return () => {
+      window.removeEventListener('keydown', handleKeyDownAddSubtitleCues);
+    };
+  }, [videoCurrentTime]); */
 
   const [stepValidations, setStepValidations] = useState([]);
   const [allStepValidationsValid, setAllStepValidationsValid] = useState(false);
@@ -87,36 +97,6 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
     }
   };
 
-  // const sectionTime = sectionsCurrentAudioTime[activeSectionId] || 0;
-
-  /* function updateSectionTime(time, sectionId) {
-    // Use the sectionId arg instead of this component activeSectionId, because
-    // throttle still calls this callback after the section changed (so it should send the old section ID)
-    // const previousTime = sectionsCurrentAudioTime[sectionId];
-    // if (previousTime === time) {
-    //   console.log(`updateSectionTime: section ${sectionId} - same time, not updating`);
-    //   return;
-    // }
-    // console.log(`updateSectionTime: section ${sectionId} - different time (${previousTime} vs ${time}), updating`);
-    // console.log(`updateSectionTime: section ${sectionId}, updating time: ${time}`);
-    setSectionsCurrentAudioTime((state) => ({ ...state, [sectionId]: time }));
-  } */
-
-  /*  function deleteSectionAudioTimestamp(deletedSectionId) {
-    setSectionsCurrentAudioTime((state) => {
-      return Object.fromEntries(Object.entries(state).filter(([key]) => key !== deletedSectionId.toString()));
-    });
-  }
- */
-  /* function handleSubtitleDeleted(deletedSectionId) {
-    // deleteSectionAudioTimestamp(deletedSectionId);
-  } */
-
-  /* function handleRemoveSectionAudio() {
-    setAccessibleAudioFiles((state) => state.filter((file) => file.id !== activeSectionId));
-    // deleteSectionAudioTimestamp(activeSectionId);
-  } */
-
   // Modal
 
   const openModal = (modal) => {
@@ -128,17 +108,6 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
     setIsModalOpen(false);
   };
 
-  // Adição de novas sections
-
-  // Função para adicionar legendas (pelo teclado)
-
-  /* const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      // handleAddSubtitle();
-    }
-  }; */
-
   // Função para adicionar legendas (pelo botão)
 
   const handleAddSubtitle = () => {
@@ -147,7 +116,7 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
 
       dispatch(
         addVideoSubtitle({
-          id: videoSubtitles.length ? handleAddSubtitleId : 1,
+          id: videoSubtitles.length > 0 ? handleAddSubtitleId : 1,
           language: subtitle_created_language,
           date: dateFormatter.format(new Date()),
           subtitlesCues: [],
@@ -167,70 +136,34 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
     if (startTimeOnChangeInputValue && endTimeOnChangeInputValue) {
       dispatch(
         addVideoSubtitleCue({
-          id: videoSubtitleCues.length ? handleAddSubtitleCueId : 1,
+          id: videoSubtitleObj.subtitlesCues.length > 0 ? handleAddSubtitleCueId : 1,
           startTime: startTimeOnChangeInputValue,
           endTime: endTimeOnChangeInputValue,
           text: subtitleTextOnChangeInputValue ? subtitleTextOnChangeInputValue : 'Preencha a legenda...',
           haveTextValue: subtitleTextOnChangeInputValue ? true : false,
         }),
       );
-      if (videoSubtitleCues.length) {
-        console.log('adicionou +1 ao id');
-        console.log(videoSubtitleCues.length);
+
+      if (videoSubtitleObj.subtitlesCues.length) {
         setHandleAddSubtitleCueId((previousValue) => previousValue + 1);
       } else {
-        console.log('resetou a contagem de ids');
         setHandleAddSubtitleCueId(2);
       }
-      console.log('está a guardar a stubtitle Cue acho!');
+
       setSubtitleTextOnChangeInputValue('');
-    } else {
-      console.log('falta supostamente os tempos!');
     }
   };
 
-  // Carregamento da vertente mais acessivel (Áudio)
-
-  /*  const onDrop = (acceptedFiles, rejectedFiles) => {
-    // Verifica se o arquivo foi aceite
-    if (rejectedFiles.length > 0) {
-      const errorMessage = rejectedFiles[0].errors[0].message;
-      setError(errorMessage);
-      return;
+  /* const handleKeyDownAddSubtitleCues = (event) => {
+    if (event.code === 'Enter') {
+      console.log('entrou enter');
+      handleAddSubtitleCues();
     }
-
-    // Se o arquivo foi aceite
-
-    setAccessibleAudioFiles((prevFiles) => [
-      ...prevFiles,
-      {
-        id: activeSectionId,
-        audioFile: acceptedFiles[0],
-        audioFilePreviewUrl: URL.createObjectURL(acceptedFiles[0]),
-      },
-    ]);
-
-    setError('');
   }; */
-
-  /*  const { getRootProps, getInputProps } = useDropzone({
-    onDrop,
-    accept: {
-      'audio/mpeg': ['.mp3'],
-      'audio/wav': ['.wav'],
-    },
-    maxSize: maxSize,
-    multiple: false,
-  }); */
-
-  // Componente quando (não) há sections
 
   const handleTab = (activeTab) => {
     setFilterTab(activeTab);
   };
-
-  const [videoDuration, setVideoDuration] = useState(0);
-  const [videoCurrentTime, setVideoCurrentTime] = useState(0);
 
   const handleLoadedMetadata = () => {
     if (videoRef.current) {
@@ -247,7 +180,7 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
       <Video
         ref={videoRef}
         src={original_content_PreviewUrl} // Path to your video file in the public directory
-        className={isEditingCreatingSubtitleCues ? 'video videoEditingDisplay' : 'video'}
+        className="video"
         accentColor="#1167d3"
         autoPlay
         preload="metadata"
@@ -271,7 +204,7 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
             language={item.language}
             date={item.date}
             setIsEditingCreatingSubtitleCues={setIsEditingCreatingSubtitleCues}
-            handleAddSubtitleCues={handleAddSubtitleCues}
+            openModal={openModal}
           />
         ))}
     </div>
@@ -282,14 +215,16 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
       <span className="subtitles-cues-table-header">Legenda</span>
       <span className="subtitles-cues-table-header">Início</span>
       <span className="subtitles-cues-table-header">Fim</span>
-      {videoSubtitleCues &&
-        videoSubtitleCues.map((item) => (
+      {isEditingCreatingSubtitleCues &&
+        videoSubtitleObj.subtitlesCues.length > 0 &&
+        videoSubtitleObj.subtitlesCues.map((item) => (
           <Video_SubtitleCues_Section
             key={item.id}
             id={item.id}
             startTime={item.startTime}
             endTime={item.endTime}
             text={item.text}
+            openModal={openModal}
           />
         ))}
     </div>
@@ -376,41 +311,17 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
     </div>
   );
 
-  const audiodescriptionDisplay = <div className="audiodescription-display">audio description</div>;
+  const audiodescriptionDisplay = <div className="audiodescription-display">Em construção...</div>;
 
   return (
     <div className="forms-step2-video">
       <div className="content-creation-container">
-        {videoDisplay}
-        {isVideoLoaded && (
-          <div className="subtitles-workspace">
-            {<Horizontal_Tab_Video_Forms onActiveTab={handleTab} />}
-            {filterTab === 'Legendas' ? (isEditingCreatingSubtitleCues ? subtitleCuesCreationDisplay : allSubtitlesDisplay) : audiodescriptionDisplay}
-          </div>
-        )}
+        {<Horizontal_Tab_Video_Forms onActiveTab={handleTab} />}
+        <div className="video-content-creation">
+          {videoDisplay}
+          {isVideoLoaded && <div className="subtitles-workspace">{filterTab === 'Legendas' ? (isEditingCreatingSubtitleCues ? subtitleCuesCreationDisplay : allSubtitlesDisplay) : audiodescriptionDisplay}</div>}
+        </div>
       </div>
-
-      {/* <div className="input-add-sections-container">
-        <input
-          type="text"
-          placeholder="Adicionar secções..."
-          value={sectionOnChangeInputValue} // Ao criar o componente certo de adição das legendas seria algo assim que precisava só que com os useState corretos das legendas e dos tempos
-          aria-label="Campo de inserção de novas secções"
-          aria-keyshortcuts="Enter"
-          onChange={(e) => {
-            setSubtitleTextOnChangeInputValue(e.target.value);
-          }}
-          onKeyDown={handleKeyDown}
-          maxLength="70"
-        />
-        <button
-          type="button"
-          // onClick={handleAddSubtitle}
-          aria-label="Botão para a adição de secções"
-        >
-          <FontAwesomeIcon icon={faPlus} />
-        </button>
-      </div> */}
 
       <div className="forms-step2-bottom-bar">
         <div className="forms-step2-back-button">
@@ -447,9 +358,9 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
         isOpen={isModalOpen}
         closeModal={closeModal}
         modal={modalType}
-        /* setAccessibleAudioFiles={setAccessibleAudioFiles} */
-        /* accessibleAudioFiles={accessibleAudioFiles} */
-        /* handleSubtitleDeleted={handleSubtitleDeleted} */
+        isEditingCreatingSubtitleCues={isEditingCreatingSubtitleCues}
+        videoCurrentTime={videoCurrentTime}
+        videoDuration={videoDuration}
       />
     </div>
   );

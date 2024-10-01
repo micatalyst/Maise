@@ -1,28 +1,59 @@
-import { useRef, useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { updateSectionTitle, removeSection, selectActiveSection } from '@/slicers/TempTextContentSlice';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
-
 import '@/styles/components/Modal.scss';
 
-export default function Modal_Video_forms({ isOpen, closeModal, modal, setAccessibleAudioFiles, accessibleAudioFiles, handleSubtitleDeleted }) {
+import { useRef, useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateVideoSubtitlesLanguage, selectActiveSubtitle, removeVideoSubtitle, updateVideoSubtitleCue } from '@/slicers/TempVideoContentSlice';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import CustomTimeInputModal from '@/components/Video/CustomTimeInputModal';
+
+export default function Modal_Video_forms({ isOpen, closeModal, modal, isEditingCreatingSubtitleCues, videoCurrentTime, videoDuration, setStartTimeOnChangeInputValue }) {
   const dialogRef = useRef(null);
 
   const dispatch = useDispatch();
 
-  const activeSection = useSelector(selectActiveSection);
+  const activeSubtitleObj = useSelector(selectActiveSubtitle);
 
-  const [sectionOnChangeInputValue, setSectionOnChangeInputValue] = useState('');
+  const activeSubtitleCueId = useSelector((state) => state.TempVideoContentSlice.activeSubtitleCueId);
+
+  const [subtitleLanguageInputValue, setsubtitleLanguageInputValue] = useState('');
+  const [subtitleTextInputValue, setSubtitleTextInputValue] = useState('');
+  const [subtitleStartTimeInputValue, setSubtitleStartTimeInputValue] = useState('');
+  const [subtitleEndTimeInputValue, setsubtitleEndTimeInputValue] = useState('');
+  const [subtitleHaveTextValue, setSubtitleHaveTextValue] = useState('');
+
+  const [subtitleHaveTextInicialVerification, setSubtitleHaveTextInicialVerification] = useState();
 
   // Abre o modal se o prop "isOpen" for verdadeiro
   useEffect(() => {
-    if (isOpen && dialogRef.current) {
-      setSectionOnChangeInputValue(activeSection && activeSection.title);
+    if (isOpen && dialogRef.current && !isEditingCreatingSubtitleCues) {
+      setsubtitleLanguageInputValue(activeSubtitleObj && activeSubtitleObj.language);
       dialogRef.current.showModal();
     }
+
+    if (isOpen && dialogRef.current && isEditingCreatingSubtitleCues) {
+      const activeSubtitleCueIndex = activeSubtitleObj.subtitlesCues.findIndex((videoSubtitleCues) => videoSubtitleCues.id === activeSubtitleCueId);
+      setSubtitleTextInputValue(activeSubtitleObj.subtitlesCues[activeSubtitleCueIndex] && activeSubtitleObj.subtitlesCues[activeSubtitleCueIndex].text);
+      setSubtitleStartTimeInputValue(activeSubtitleObj.subtitlesCues[activeSubtitleCueIndex] && activeSubtitleObj.subtitlesCues[activeSubtitleCueIndex].startTime);
+      setsubtitleEndTimeInputValue(activeSubtitleObj.subtitlesCues[activeSubtitleCueIndex] && activeSubtitleObj.subtitlesCues[activeSubtitleCueIndex].endTime);
+      setSubtitleHaveTextValue(activeSubtitleObj.subtitlesCues[activeSubtitleCueIndex] && activeSubtitleObj.subtitlesCues[activeSubtitleCueIndex].haveTextValue);
+      setSubtitleHaveTextInicialVerification(true);
+      dialogRef.current.showModal();
+      //debugger;
+    }
   }, [isOpen]);
+
+  useEffect(() => {
+    if (subtitleHaveTextInicialVerification && subtitleHaveTextValue !== undefined) {
+      console.log('a verificação tá true');
+      if (!subtitleHaveTextValue) {
+        setSubtitleTextInputValue('');
+      }
+      setSubtitleHaveTextInicialVerification(false);
+    }
+    console.log('pelo menos entrou');
+  }, [isOpen, subtitleHaveTextInicialVerification, subtitleHaveTextValue, subtitleTextInputValue]);
 
   // Fecha o modal quando clicado fora ou quando o botão fechar for acionado
   const handleClose = () => {
@@ -30,61 +61,67 @@ export default function Modal_Video_forms({ isOpen, closeModal, modal, setAccess
     closeModal();
   };
 
-  const handleKeyDownOnSectionTitleInput = (event) => {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      handleUpdateSection();
-    }
-  };
-
-  // Atualiza o título da secção
-  const handleUpdateSection = () => {
-    if (sectionOnChangeInputValue) {
+  // Atualiza o idioma das legendas
+  const handleUpdateSubtitlesLanguage = () => {
+    if (subtitleLanguageInputValue) {
       dispatch(
-        updateSectionTitle({
-          id: activeSection.id,
-          title: sectionOnChangeInputValue,
+        updateVideoSubtitlesLanguage({
+          language: subtitleLanguageInputValue,
         }),
       );
       handleClose();
     }
   };
 
-  // Apaga a secção
-  const handleRemoveSection = () => {
-    dispatch(removeSection(activeSection.id));
-
-    //Apaga o objeto do conteudo mais acessivel do array de todos os objetos onde este foi inserido
-    setAccessibleAudioFiles(accessibleAudioFiles.filter((file) => file.id !== activeSectionId));
-
-    handleSectionDeleted(activeSectionId);
+  // Apaga as legendas
+  const handleRemoveSubtitles = () => {
+    dispatch(removeVideoSubtitle());
     handleClose();
   };
 
-  const Modal_Update_Section = (
+  // Atualiza os cues das Legendas
+
+  const handleUpdateSubtitleCue = () => {
+    dispatch(
+      updateVideoSubtitleCue({
+        startTime: subtitleStartTimeInputValue,
+        endTime: subtitleEndTimeInputValue,
+        text: subtitleTextInputValue ? subtitleTextInputValue : 'Preencha a legenda...',
+        haveTextValue: subtitleTextInputValue ? true : false,
+      }),
+    );
+    handleClose();
+  };
+
+  const Modal_Update_Subtitles_Language = (
     <dialog
       className="primary"
       ref={dialogRef}
       onClose={handleClose}
     >
-      <h2>Atualize o título da secção</h2>
-      <input
-        type="text"
-        id="section-name"
-        value={sectionOnChangeInputValue}
-        maxLength="70"
-        onChange={(e) => {
-          setSectionOnChangeInputValue(e.target.value);
-        }}
-        onKeyDown={handleKeyDownOnSectionTitleInput}
-        name="section-name"
-        aria-label="Nome da Seção"
-      />
+      <h2>Atualize o idioma destas legendas</h2>
+      <div className="forms-select">
+        <select
+          id="subtitle_created_language"
+          name="subtitle_created_language"
+          value={subtitleLanguageInputValue}
+          onChange={(e) => setsubtitleLanguageInputValue(e.target.value)}
+        >
+          <option
+            value=""
+            disabled
+          >
+            Idioma da legenda...
+          </option>
+          <option value="Português">Português</option>
+          <option value="English">English</option>
+        </select>
+      </div>
       <div className="btn-placement">
         <button
           className="primary-button pressed-look"
           type="button"
-          onClick={handleUpdateSection}
+          onClick={handleUpdateSubtitlesLanguage}
         >
           Atualizar
         </button>
@@ -99,26 +136,68 @@ export default function Modal_Video_forms({ isOpen, closeModal, modal, setAccess
     </dialog>
   );
 
-  const Modal_Delete_Section = (
+  const Modal_Update_SubtitleCue = (
+    <dialog
+      className="primary"
+      ref={dialogRef}
+      onClose={handleClose}
+    >
+      <h2>Atualize o título da secção</h2>
+      <input
+        id="subtitle"
+        type="text"
+        className="subtitle"
+        placeholder="Adicionar legenda..."
+        maxLength="80"
+        value={subtitleTextInputValue}
+        onChange={(e) => setSubtitleTextInputValue(e.target.value)}
+      />
+      <CustomTimeInputModal
+        label="Início"
+        videoCurrentTime={videoCurrentTime}
+        videoDuration={videoDuration}
+        setStartTimeOnChangeInputValue={setSubtitleStartTimeInputValue}
+        subtitleStartTimeInputValue={subtitleStartTimeInputValue}
+      />
+      <CustomTimeInputModal
+        label="Fim"
+        videoCurrentTime={videoCurrentTime}
+        videoDuration={videoDuration}
+        setEndTimeOnChangeInputValue={setsubtitleEndTimeInputValue}
+        subtitleEndTimeInputValue={subtitleEndTimeInputValue}
+      />
+      <div className="btn-placement">
+        <button
+          className="primary-button pressed-look"
+          type="button"
+          onClick={handleUpdateSubtitleCue}
+        >
+          Atualizar
+        </button>
+        <button
+          className="primary-button"
+          type="button"
+          onClick={handleClose}
+        >
+          Cancelar
+        </button>
+      </div>
+    </dialog>
+  );
+
+  const Modal_Delete_Subtitles = (
     <dialog
       className="negative"
       ref={dialogRef}
       onClose={handleClose}
     >
-      <h2>Apagar secção</h2>
-      <p>Tem a certeza que pretende apagar a secção selecionada?</p>
-      <div className="section-name">
-        <FontAwesomeIcon
-          className="selected"
-          icon={faAngleRight}
-        />
-        <p>{sectionOnChangeInputValue}</p>
-      </div>
+      <h2>Apagar legendas</h2>
+      <p>Tem a certeza que pretende apagar estas legendas?</p>
       <div className="btn-placement">
         <button
           className="negative-button pressed-look"
           type="button"
-          onClick={handleRemoveSection}
+          onClick={handleRemoveSubtitles}
         >
           Apagar
         </button>
@@ -133,42 +212,48 @@ export default function Modal_Video_forms({ isOpen, closeModal, modal, setAccess
     </dialog>
   );
 
-  /* const Modal_Delete_Section_Audio = (
-    <dialog
-      className="negative"
-      ref={dialogRef}
-      onClose={handleClose}
-    >
-      <h2>Apagar o áudio</h2>
-      <p>Tem a certeza que pretende apagar o áudio desta secção?</p>
-      <div className="btn-placement">
-        <button
-          className="negative-button pressed-look"
-          type="button"
-          onClick={() => {
-            handleRemoveSectionAudio();
-            handleClose();
-          }}
-        >
-          Apagar
-        </button>
-        <button
-          className="primary-button"
-          type="button"
-          onClick={handleClose}
-        >
-          Cancelar
-        </button>
-      </div>
-    </dialog>
-  ); */
+  // const Modal_Delete_SubtitleCue = (
+  //   <dialog
+  //     className="negative"
+  //     ref={dialogRef}
+  //     onClose={handleClose}
+  //   >
+  //     <h2>Apagar secção</h2>
+  //     <p>Tem a certeza que pretende apagar a secção selecionada?</p>
+  //     <div className="section-name">
+  //       <FontAwesomeIcon
+  //         className="selected"
+  //         icon={faAngleRight}
+  //       />
+  //       <p>{sectionOnChangeInputValue}</p>
+  //     </div>
+  //     <div className="btn-placement">
+  //       <button
+  //         className="negative-button pressed-look"
+  //         type="button"
+  //         onClick={handleRemoveSection}
+  //       >
+  //         Apagar
+  //       </button>
+  //       <button
+  //         className="primary-button"
+  //         type="button"
+  //         onClick={handleClose}
+  //       >
+  //         Cancelar
+  //       </button>
+  //     </div>
+  //   </dialog>
+  // );
 
   switch (modal) {
-    case 'updateSection':
-      return Modal_Update_Section;
-    case 'deleteSection':
-      return Modal_Delete_Section;
-    /* case 'deleteSectionAudio':
-      return Modal_Delete_Section_Audio; */
+    case 'updateSubtitlesLanguage':
+      return Modal_Update_Subtitles_Language;
+    case 'deleteSubtitles':
+      return Modal_Delete_Subtitles;
+    case 'updateSubtitleCue':
+      return Modal_Update_SubtitleCue;
+    /* case 'deleteSubtitleCue':
+      return Modal_Delete_SubtitleCue; */
   }
 }

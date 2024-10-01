@@ -10,6 +10,7 @@ const TempVideoContentSlice = createSlice({
     subtitle_created_language: '',
     videoSubtitles: [],
     activeSubtitleId: undefined,
+    activeSubtitleCueId: undefined,
   },
   reducers: {
     setTitle: (state, action) => {
@@ -45,39 +46,67 @@ const TempVideoContentSlice = createSlice({
         state.videoSubtitles[videoSubtitleIndex].subtitlesCues.push(action.payload);
       }
     },
-    updateVideoSubtitleCue: (state, action) => {
-      const { id, startTime, endTime, text } = action.payload;
-      const videoSubtitleIndex = state.videoSubtitles.findIndex((videoSubtitles) => videoSubtitles.id === id);
+    updateVideoSubtitlesLanguage: (state, action) => {
+      const { language } = action.payload;
+      const videoSubtitleIndex = state.videoSubtitles.findIndex((videoSubtitles) => videoSubtitles.id === state.activeSubtitleId);
       if (videoSubtitleIndex !== -1) {
         state.videoSubtitles[videoSubtitleIndex] = {
           ...state.videoSubtitles[videoSubtitleIndex],
-          startTime,
-          endTime,
-          text,
+          language,
         };
       }
     },
-    removeVideoSubtitle: (state, action) => {
-      const id = action.payload;
-
+    updateVideoSubtitleCue: (state, action) => {
+      const { startTime, endTime, text, haveTextValue } = action.payload;
+      const activeVideoSubtitleObj = state.videoSubtitles.find((subtitle) => subtitle.id === state.activeSubtitleId);
+      const videoSubtitleCuesIndex = state.videoSubtitles.findIndex((videoSubtitles) => videoSubtitles.id === state.activeSubtitleCueId);
+      if (videoSubtitleCuesIndex !== -1) {
+        activeVideoSubtitleObj.subtitlesCues[videoSubtitleCuesIndex] = {
+          ...activeVideoSubtitleObj.subtitlesCues[videoSubtitleCuesIndex],
+          startTime,
+          endTime,
+          text,
+          haveTextValue,
+        };
+      }
+    },
+    removeVideoSubtitle: (state) => {
       // Remove
-      state.videoSubtitles = state.videoSubtitles.filter((section) => section.id !== id);
+      console.log(state.videoSubtitles.length);
+      state.videoSubtitles = state.videoSubtitles.filter((section) => section.id !== state.activeSubtitleId);
     },
     setOnEditingSubtitleId: (state, action) => {
       state.activeSubtitleId = action.payload;
+    },
+    setOnEditingSubtitleCueId: (state, action) => {
+      state.activeSubtitleCueId = action.payload;
     },
   },
   selectors: {
     selectActiveSubtitle: (
       state, // devolve um objeto com a info da secção selecionada, a partir do ID guardado no estado
     ) => state.activeSubtitleId !== undefined && state.videoSubtitles.find((subtitle) => subtitle.id === state.activeSubtitleId),
-    selectActiveSubtitleCues: (
+    /* selectActiveSubtitleCues: (
       state, // devolve o array com a info das subtitlesCues presente no videoSubtitles cujo index é o da subtitles selecionada
-    ) => state.activeSubtitleId !== undefined && state.videoSubtitles[state.videoSubtitles.findIndex((subtitle) => subtitle.id === state.activeSubtitleId)].subtitlesCues,
+    ) => state.activeSubtitleId !== undefined && state.videoSubtitles.find((subtitle) => subtitle.id === state.activeSubtitleId).subtitlesCues, */
   },
 });
 
-export const { setTitle, setOriginalContentCategory, setOriginalContentLanguage, setDescription, setSubtitleCreatedLanguage, setVideoFormsReset, addVideoSubtitle, addVideoSubtitleCue, updateVideoSubtitle, removeVideoSubtitle, setOnEditingSubtitleId } = TempVideoContentSlice.actions;
+export const {
+  setTitle,
+  setOriginalContentCategory,
+  setOriginalContentLanguage,
+  setDescription,
+  setSubtitleCreatedLanguage,
+  setVideoFormsReset,
+  addVideoSubtitle,
+  addVideoSubtitleCue,
+  updateVideoSubtitlesLanguage,
+  updateVideoSubtitleCue,
+  removeVideoSubtitle,
+  setOnEditingSubtitleId,
+  setOnEditingSubtitleCueId,
+} = TempVideoContentSlice.actions;
 
 export const { selectActiveSubtitle, selectActiveSubtitleCues } = TempVideoContentSlice.selectors;
 

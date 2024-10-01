@@ -4,12 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilePen, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { selectActiveSubtitle } from '@/slicers/TempVideoContentSlice';
+import { setOnEditingSubtitleCueId } from '@/slicers/TempVideoContentSlice';
 
-export default function Video_SubtitleCues_Section({ id, startTime, endTime, text }) {
-  //const activeSubtitle = useSelector(selectActiveSubtitle);
-
-  //const dispatch = useDispatch();
+export default function Video_SubtitleCues_Section({ id, startTime, endTime, text, openModal }) {
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -22,7 +20,8 @@ export default function Video_SubtitleCues_Section({ id, startTime, endTime, tex
             className="primary-button icon"
             type="button"
             onClick={() => {
-              //openModal('updateSection');
+              dispatch(setOnEditingSubtitleCueId(id));
+              openModal('updateSubtitleCue');
             }}
           >
             <FontAwesomeIcon icon={faFilePen} />
@@ -32,7 +31,8 @@ export default function Video_SubtitleCues_Section({ id, startTime, endTime, tex
             className="negative-button icon"
             type="button"
             onClick={() => {
-              //openModal('deleteSection');
+              dispatch(setOnEditingSubtitleCueId(id));
+              //openModal('deleteSubtitleCue');
             }}
           >
             <FontAwesomeIcon icon={faTrashCan} />
