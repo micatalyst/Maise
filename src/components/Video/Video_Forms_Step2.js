@@ -77,7 +77,7 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
         isValid: videoSubtitles.length > 0, // usar > 0 em vez de so ver se tem length, para o isValid ser false em vez de 0 (que e falsy na mesma, mas nao e' boolean)
       },
     ]);
-  }, [videoSubtitles /* accessibleAudioFiles */]);
+  }, [videoSubtitles]);
 
   useEffect(() => {
     setAllStepValidationsValid(stepValidations.every((step) => step.isValid));

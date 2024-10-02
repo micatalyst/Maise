@@ -2,11 +2,12 @@ import '@/styles/components/Modal.scss';
 
 import { useRef, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateVideoSubtitlesLanguage, selectActiveSubtitle, removeVideoSubtitle, updateVideoSubtitleCue } from '@/slicers/TempVideoContentSlice';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { updateVideoSubtitlesLanguage, selectActiveSubtitle, removeVideoSubtitle, updateVideoSubtitleCue, removeVideoSubtitleCue } from '@/slicers/TempVideoContentSlice';
 
 import CustomTimeInputModal from '@/components/Video/CustomTimeInputModal';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 export default function Modal_Video_forms({ isOpen, closeModal, modal, isEditingCreatingSubtitleCues, videoCurrentTime, videoDuration, setStartTimeOnChangeInputValue }) {
   const dialogRef = useRef(null);
@@ -93,6 +94,12 @@ export default function Modal_Video_forms({ isOpen, closeModal, modal, isEditing
     handleClose();
   };
 
+  // Apaga uma legenda
+  const handleRemoveSubtitleCues = () => {
+    dispatch(removeVideoSubtitleCue());
+    handleClose();
+  };
+
   const Modal_Update_Subtitles_Language = (
     <dialog
       className="primary"
@@ -101,6 +108,7 @@ export default function Modal_Video_forms({ isOpen, closeModal, modal, isEditing
     >
       <h2>Atualize o idioma destas legendas</h2>
       <div className="forms-select">
+        <FontAwesomeIcon icon={faCaretDown} />
         <select
           id="subtitle_created_language"
           name="subtitle_created_language"
@@ -192,7 +200,7 @@ export default function Modal_Video_forms({ isOpen, closeModal, modal, isEditing
       onClose={handleClose}
     >
       <h2>Apagar legendas</h2>
-      <p>Tem a certeza que pretende apagar estas legendas?</p>
+      <p>Tem a certeza de que pretende apagar estas legendas?</p>
       <div className="btn-placement">
         <button
           className="negative-button pressed-look"
@@ -212,39 +220,32 @@ export default function Modal_Video_forms({ isOpen, closeModal, modal, isEditing
     </dialog>
   );
 
-  // const Modal_Delete_SubtitleCue = (
-  //   <dialog
-  //     className="negative"
-  //     ref={dialogRef}
-  //     onClose={handleClose}
-  //   >
-  //     <h2>Apagar secção</h2>
-  //     <p>Tem a certeza que pretende apagar a secção selecionada?</p>
-  //     <div className="section-name">
-  //       <FontAwesomeIcon
-  //         className="selected"
-  //         icon={faAngleRight}
-  //       />
-  //       <p>{sectionOnChangeInputValue}</p>
-  //     </div>
-  //     <div className="btn-placement">
-  //       <button
-  //         className="negative-button pressed-look"
-  //         type="button"
-  //         onClick={handleRemoveSection}
-  //       >
-  //         Apagar
-  //       </button>
-  //       <button
-  //         className="primary-button"
-  //         type="button"
-  //         onClick={handleClose}
-  //       >
-  //         Cancelar
-  //       </button>
-  //     </div>
-  //   </dialog>
-  // );
+  const Modal_Delete_SubtitleCue = (
+    <dialog
+      className="negative"
+      ref={dialogRef}
+      onClose={handleClose}
+    >
+      <h2>Apagar legenda</h2>
+      <p>Tem a certeza de que pretende apagar esta legenda?</p>
+      <div className="btn-placement">
+        <button
+          className="negative-button pressed-look"
+          type="button"
+          onClick={handleRemoveSubtitleCues}
+        >
+          Apagar
+        </button>
+        <button
+          className="primary-button"
+          type="button"
+          onClick={handleClose}
+        >
+          Cancelar
+        </button>
+      </div>
+    </dialog>
+  );
 
   switch (modal) {
     case 'updateSubtitlesLanguage':
@@ -253,7 +254,7 @@ export default function Modal_Video_forms({ isOpen, closeModal, modal, isEditing
       return Modal_Delete_Subtitles;
     case 'updateSubtitleCue':
       return Modal_Update_SubtitleCue;
-    /* case 'deleteSubtitleCue':
-      return Modal_Delete_SubtitleCue; */
+    case 'deleteSubtitleCue':
+      return Modal_Delete_SubtitleCue;
   }
 }

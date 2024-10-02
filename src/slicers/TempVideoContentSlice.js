@@ -58,22 +58,33 @@ const TempVideoContentSlice = createSlice({
     },
     updateVideoSubtitleCue: (state, action) => {
       const { startTime, endTime, text, haveTextValue } = action.payload;
-      const activeVideoSubtitleObj = state.videoSubtitles.find((subtitle) => subtitle.id === state.activeSubtitleId);
-      const videoSubtitleCuesIndex = state.videoSubtitles.findIndex((videoSubtitles) => videoSubtitles.id === state.activeSubtitleCueId);
-      if (videoSubtitleCuesIndex !== -1) {
-        activeVideoSubtitleObj.subtitlesCues[videoSubtitleCuesIndex] = {
-          ...activeVideoSubtitleObj.subtitlesCues[videoSubtitleCuesIndex],
+      const videoSubtitleIndex = state.videoSubtitles.findIndex((videoSubtitles) => videoSubtitles.id === state.activeSubtitleId);
+      const activeVideoSubtitleCueIndex = state.videoSubtitles[videoSubtitleIndex].subtitlesCues.findIndex((subtitle) => subtitle.id === state.activeSubtitleCueId);
+      //debugger;
+      if (activeVideoSubtitleCueIndex !== -1) {
+        state.videoSubtitles[videoSubtitleIndex].subtitlesCues[activeVideoSubtitleCueIndex] = {
+          ...state.videoSubtitles[videoSubtitleIndex].subtitlesCues[activeVideoSubtitleCueIndex],
           startTime,
           endTime,
           text,
           haveTextValue,
         };
+        //debugger;
       }
+    },
+    removeAllVideoSubtitles: (state) => {
+      // Remove
+      state.videoSubtitles = [];
     },
     removeVideoSubtitle: (state) => {
       // Remove
-      console.log(state.videoSubtitles.length);
       state.videoSubtitles = state.videoSubtitles.filter((section) => section.id !== state.activeSubtitleId);
+    },
+    removeVideoSubtitleCue: (state) => {
+      // Remove
+      const videoSubtitleIndex = state.videoSubtitles.findIndex((videoSubtitles) => videoSubtitles.id === state.activeSubtitleId);
+      state.videoSubtitles[videoSubtitleIndex].subtitlesCues = state.videoSubtitles[videoSubtitleIndex].subtitlesCues.filter((subtitleCues) => subtitleCues.id !== state.activeSubtitleCueId);
+      //debugger;
     },
     setOnEditingSubtitleId: (state, action) => {
       state.activeSubtitleId = action.payload;
@@ -103,7 +114,9 @@ export const {
   addVideoSubtitleCue,
   updateVideoSubtitlesLanguage,
   updateVideoSubtitleCue,
+  removeAllVideoSubtitles,
   removeVideoSubtitle,
+  removeVideoSubtitleCue,
   setOnEditingSubtitleId,
   setOnEditingSubtitleCueId,
 } = TempVideoContentSlice.actions;

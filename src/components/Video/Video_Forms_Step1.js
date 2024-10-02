@@ -8,7 +8,7 @@ import { useDropzone } from 'react-dropzone';
 import React, { useState, useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { setTitle, setOriginalContentCategory, setOriginalContentLanguage, setDescription } from '@/slicers/TempVideoContentSlice';
+import { setTitle, setOriginalContentCategory, setOriginalContentLanguage, setDescription, removeAllVideoSubtitles } from '@/slicers/TempVideoContentSlice';
 
 import StepValidationFeedback from '@/components/StepValidationFeedback';
 
@@ -67,6 +67,7 @@ export default function Video_Forms_Step1({ handleNextStep, original_content_fil
   const handleRemoveFile = () => {
     setOriginal_content_file('');
     setOriginal_content_PreviewUrl('');
+    dispatch(removeAllVideoSubtitles());
   };
 
   const onDrop = (acceptedFiles, rejectedFiles) => {

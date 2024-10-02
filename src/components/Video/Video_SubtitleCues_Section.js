@@ -32,7 +32,7 @@ export default function Video_SubtitleCues_Section({ id, startTime, endTime, tex
             type="button"
             onClick={() => {
               dispatch(setOnEditingSubtitleCueId(id));
-              //openModal('deleteSubtitleCue');
+              openModal('deleteSubtitleCue');
             }}
           >
             <FontAwesomeIcon icon={faTrashCan} />
