@@ -16,23 +16,16 @@ import Video_Subtitles_Section from '@/components/Video/Video_Subtitles_Section'
 import Video_SubtitleCues_Section from '@/components/Video/Video_SubtitleCues_Section';
 
 import Modal_Video_forms from '@/components/Video/Modal_Video_forms';
-//import Audio_Visualiser from '@/components/Texto/Audio_Visualiser';
 import StepValidationFeedback from '@/components/StepValidationFeedback';
 
 export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, original_content_file, original_content_PreviewUrl, accessibleAudioFiles, setAccessibleAudioFiles }) {
   const subtitle_created_language = useSelector((state) => state.TempVideoContentSlice.subtitle_created_language);
 
   const videoSubtitles = useSelector((state) => state.TempVideoContentSlice.videoSubtitles);
+
   const videoSubtitleObj = useSelector(selectActiveSubtitle);
 
   const dispatch = useDispatch();
-
-  // const maxSize = 50 * 1024 * 1024; // 50 MB
-  // const [error, setError] = useState('');
-
-  // Id das legendas que foram selecionadas para serem editadas (Legendas no geral e não cues)
-
-  //const [selectedSubtitleCueId, setSelectedSubtitleCueId] = useState(''); // index do array das videoSubtitles
 
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [isEditingCreatingSubtitleCues, setIsEditingCreatingSubtitleCues] = useState(false);
@@ -52,29 +45,74 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
   const [videoDuration, setVideoDuration] = useState(0);
   const [videoCurrentTime, setVideoCurrentTime] = useState(0);
 
-  /* useEffect(() => {
-    if (videoSubtitles.length === 1) {
-      // Não havia videoSubtitles antes, mostrar algum placeholder para a adição de subtitles
+  const [currentSubtitle, setCurrentSubtitle] = useState('');
+
+  const convertTimeToSeconds = (time) => {
+    const timeParts = time.split(':').map(Number); // Divide o tempo em partes e converte para números
+    let seconds = 0;
+
+    if (timeParts.length === 3) {
+      // Caso o formato seja "hh:mm:ss"
+      const [hours, minutes, secondsPart] = timeParts;
+      seconds = hours * 3600 + minutes * 60 + secondsPart;
+    } else if (timeParts.length === 2) {
+      // Caso o formato seja "mm:ss"
+      const [minutes, secondsPart] = timeParts;
+      seconds = minutes * 60 + secondsPart;
     }
-  }, [videoSubtitles]); */
 
-  /* useEffect(() => {
-    // Adiciona o listener de eventos de teclado quando o componente é montado
-    window.addEventListener('keydown', handleKeyDownAddSubtitleCues);
+    return seconds;
+  };
 
-    // Remove o listener de eventos de teclado quando o componente é desmontado
-    return () => {
-      window.removeEventListener('keydown', handleKeyDownAddSubtitleCues);
-    };
-  }, [videoCurrentTime]); */
+  // Função para verificar sobreposição de tempos
+  const isTimeOverlapping = (newStartTime, newEndTime, subtitlesCues) => {
+    const newStartInSeconds = convertTimeToSeconds(newStartTime);
+    const newEndInSeconds = convertTimeToSeconds(newEndTime);
+
+    // Verificar se o startTime é maior que o endTime
+    if (newStartInSeconds > newEndInSeconds) {
+      alert('O tempo de início não pode ser maior que o tempo de término.');
+      return true; // Bloqueia a criação
+    }
+
+    // Verificar sobreposição de tempos com as legendas existentes
+    const isOverlapping = subtitlesCues.some((cue) => {
+      const cueStartInSeconds = convertTimeToSeconds(cue.startTime);
+      const cueEndInSeconds = convertTimeToSeconds(cue.endTime);
+
+      return (newStartInSeconds >= cueStartInSeconds && newStartInSeconds < cueEndInSeconds) || (newEndInSeconds > cueStartInSeconds && newEndInSeconds <= cueEndInSeconds) || (newStartInSeconds <= cueStartInSeconds && newEndInSeconds >= cueEndInSeconds);
+    });
+
+    if (isOverlapping) {
+      alert('O intervalo de tempo sobrepõe-se a uma legenda existente. Por favor, ajuste o tempo.');
+    }
+
+    return isOverlapping;
+  };
+
+  useEffect(() => {
+    if (isEditingCreatingSubtitleCues) {
+      const currentSubtitle = videoSubtitleObj.subtitlesCues.find((subtitle) => {
+        const startTimeInSeconds = convertTimeToSeconds(subtitle.startTime);
+        const endTimeInSeconds = convertTimeToSeconds(subtitle.endTime);
+        return videoCurrentTime >= startTimeInSeconds && videoCurrentTime <= endTimeInSeconds; // Verifica se o tempo atual está no intervalo
+      });
+
+      if (currentSubtitle && currentSubtitle.haveTextValue) {
+        setCurrentSubtitle(currentSubtitle.text); // Atualiza a legenda exibida
+      } else {
+        setCurrentSubtitle(''); // Limpa a legenda se não houver nenhuma válida
+      }
+    }
+  }, [videoCurrentTime, isEditingCreatingSubtitleCues]); // Recalcular sempre que o tempo atual mudar
 
   const [stepValidations, setStepValidations] = useState([]);
   const [allStepValidationsValid, setAllStepValidationsValid] = useState(false);
   useEffect(() => {
     setStepValidations([
       {
-        title: 'Adicionar pelo menos uma legenda',
-        isValid: videoSubtitles.length > 0, // usar > 0 em vez de so ver se tem length, para o isValid ser false em vez de 0 (que e falsy na mesma, mas nao e' boolean)
+        title: 'Criar pelo menos um grupo de legendas',
+        isValid: videoSubtitles.length > 0,
       },
     ]);
   }, [videoSubtitles]);
@@ -134,6 +172,11 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
 
   const handleAddSubtitleCues = () => {
     if (startTimeOnChangeInputValue && endTimeOnChangeInputValue) {
+      // Verificar se o tempo da nova legenda sobrepõe um já existente
+      if (isTimeOverlapping(startTimeOnChangeInputValue, endTimeOnChangeInputValue, videoSubtitleObj.subtitlesCues)) {
+        return; // Bloqueia a criação da legenda
+      }
+
       dispatch(
         addVideoSubtitleCue({
           id: videoSubtitleObj.subtitlesCues.length > 0 ? handleAddSubtitleCueId : 1,
@@ -189,6 +232,7 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
         onTimeUpdate={handleTimeUpdate}
         controls
       />
+      {isEditingCreatingSubtitleCues ? <p className="current-subtitles-showing">{currentSubtitle}</p> : ''}
     </div>
   );
 
@@ -217,16 +261,19 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
       <span className="subtitles-cues-table-header">Fim</span>
       {isEditingCreatingSubtitleCues &&
         videoSubtitleObj.subtitlesCues.length > 0 &&
-        videoSubtitleObj.subtitlesCues.map((item) => (
-          <Video_SubtitleCues_Section
-            key={item.id}
-            id={item.id}
-            startTime={item.startTime}
-            endTime={item.endTime}
-            text={item.text}
-            openModal={openModal}
-          />
-        ))}
+        videoSubtitleObj.subtitlesCues
+          .slice() // Cria uma cópia do array para não modificar o original
+          .sort((a, b) => convertTimeToSeconds(a.startTime) - convertTimeToSeconds(b.startTime)) // Ordena por startTime
+          .map((item) => (
+            <Video_SubtitleCues_Section
+              key={item.id}
+              id={item.id}
+              startTime={item.startTime}
+              endTime={item.endTime}
+              text={item.text}
+              openModal={openModal}
+            />
+          ))}
     </div>
   );
 
@@ -323,37 +370,40 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
         </div>
       </div>
 
-      <div className="forms-step2-bottom-bar">
-        <div className="forms-step2-back-button">
-          <button
-            className="forms-button"
-            type="button"
-            onClick={handlePreviousStep}
-          >
-            Voltar
-          </button>
+      {isEditingCreatingSubtitleCues ? (
+        <div className="forms-step2-SubtitleCues-bottom-bar"></div> // Aqui ficaria o react dropzone para fazer o upload de legendas em formato vtt pré-feitas na paltaforma
+      ) : (
+        <div className="forms-step2-bottom-bar">
+          <div className="forms-step2-back-button">
+            <button
+              className="forms-button"
+              type="button"
+              onClick={handlePreviousStep}
+            >
+              Voltar
+            </button>
+          </div>
+          <div className="forms-step-feedback-bar with-padding">
+            <StepValidationFeedback
+              title="Requisitos obrigatórios para finalizar:"
+              validation={stepValidations}
+              gridColumns="video-step2"
+            />
+            <button
+              className={allStepValidationsValid ? 'forms-button' : 'forms-button invalid'}
+              type="button"
+              onClick={(e) => {
+                allStepValidationsValid && handleSubmit(e);
+              }}
+              disabled={!allStepValidationsValid}
+              aria-disabled={allStepValidationsValid ? false : true}
+            >
+              {/* Fazer a logica para que esteja "disabled" no botão enquanto ainda faltar preencher alguma coisa. Isto ajudará*/}
+              Submit
+            </button>
+          </div>
         </div>
-        {/* <div className="forms-step-input-feedback-container"> */}
-        <div className="forms-step-feedback-bar with-padding">
-          <StepValidationFeedback
-            title="Requisitos obrigatórios para finalizar:"
-            validation={stepValidations}
-            gridColumns="text-step2"
-          />
-          <button
-            className={allStepValidationsValid ? 'forms-button' : 'forms-button invalid'}
-            type="button"
-            onClick={(e) => {
-              allStepValidationsValid && handleSubmit(e);
-            }}
-            disabled={!allStepValidationsValid}
-            aria-disabled={allStepValidationsValid ? false : true}
-          >
-            {/* Fazer a logica para que esteja "disabled" no botão enquanto ainda faltar preencher alguma coisa. Isto ajudará*/}
-            Submit
-          </button>
-        </div>
-      </div>
+      )}
       <Modal_Video_forms
         isOpen={isModalOpen}
         closeModal={closeModal}

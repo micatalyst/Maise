@@ -72,8 +72,17 @@ export default function Text_Forms_Step1({ handleNextStep, original_content_file
   const onDrop = (acceptedFiles, rejectedFiles) => {
     // Verifica se o arquivo foi aceito
     if (rejectedFiles.length > 0) {
-      const errorMessage = rejectedFiles[0].errors[0].message;
-      setError(errorMessage);
+      const error = rejectedFiles[0].errors[0];
+
+      if (error.code === 'file-too-large') {
+        alert('O arquivo excede o tamanho máximo permitido. Por favor, escolha um arquivo menor.');
+      } else if (error.code === 'file-invalid-type') {
+        alert('O tipo de arquivo não é permitido. Por favor, escolha um arquivo com a extensão correta.');
+      } else {
+        alert('Erro ao carregar o arquivo: ' + error.message);
+      }
+
+      setError(error.message); // Armazena a mensagem de erro no estado
       return;
     }
 

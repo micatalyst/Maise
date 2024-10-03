@@ -20,7 +20,7 @@ export default function Video_Forms_Step1({ handleNextStep, original_content_fil
 
   const dispatch = useDispatch();
 
-  const maxSize = 800 * 1024 * 1024; // 500 MB Temporário
+  const maxSize = 500 * 1024 * 1024; // 500 MB Temporário
   const [error, setError] = useState('');
 
   const [stepValidations, setStepValidations] = useState([]);
@@ -73,8 +73,17 @@ export default function Video_Forms_Step1({ handleNextStep, original_content_fil
   const onDrop = (acceptedFiles, rejectedFiles) => {
     // Verifica se o arquivo foi aceito
     if (rejectedFiles.length > 0) {
-      const errorMessage = rejectedFiles[0].errors[0].message;
-      setError(errorMessage);
+      const error = rejectedFiles[0].errors[0];
+
+      if (error.code === 'file-too-large') {
+        alert('O arquivo excede o tamanho máximo permitido. Por favor, escolha um arquivo menor.');
+      } else if (error.code === 'file-invalid-type') {
+        alert('O tipo de arquivo não é permitido. Por favor, escolha um arquivo com a extensão correta.');
+      } else {
+        alert('Erro ao carregar o arquivo: ' + error.message);
+      }
+
+      setError(error.message); // Armazena a mensagem de erro no estado
       return;
     }
 
@@ -93,6 +102,7 @@ export default function Video_Forms_Step1({ handleNextStep, original_content_fil
       'video/x-msvideo': ['.avi'],
     },
     maxSize: maxSize,
+    multiple: false,
   });
 
   return (

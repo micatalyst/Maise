@@ -1,0 +1,242 @@
+@import '../Variables.scss';
+
+.forms-step2-audio {
+  display: grid;
+  grid-template-rows: 1fr max-content;
+  height: 100%;
+
+  .forms-step2-audio-container {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 30px;
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+
+      font-size: $forms-label-text-size;
+      font-weight: bold;
+    }
+
+    input {
+      border-radius: $border-radius-5;
+      border: 1px solid var(--input-border-color);
+      //outline: none;
+      width: 280px;
+      padding: $input-forms-padding;
+
+      background-color: var(--input-bg-color);
+      font-size: $body-text-2;
+
+      color: var(--base-text-color);
+
+      &::placeholder {
+        color: var(--placeholders-text-color);
+      }
+
+      &:focus {
+        border: 1px solid $transparent;
+      }
+    }
+
+    textarea {
+      resize: none;
+
+      border-radius: $border-radius-5;
+      border: 1px solid var(--input-border-color);
+      //outline: none;
+      width: 400px;
+      height: 100%;
+
+      padding: $textarea-padding;
+
+      background-color: var(--input-bg-color);
+      font-size: $body-text-2;
+
+      color: var(--base-text-color);
+
+      &::placeholder {
+        color: var(--placeholders-text-color);
+      }
+
+      &:focus {
+        border: 1px solid $transparent;
+      }
+    }
+
+    select {
+      //cursor: pointer;
+
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+
+      border-radius: $border-radius-5;
+      border: 1px solid var(--input-border-color);
+      //outline: none;
+      width: 258px;
+      padding: $input-padding;
+
+      background-color: var(--input-bg-color);
+      font-size: $body-text-2;
+
+      color: var(--base-text-color);
+
+      &:invalid {
+        color: var(--placeholders-text-color);
+      }
+
+      &:focus {
+        border: 1px solid $transparent;
+      }
+    }
+
+    .content-creation-container {
+      display: grid;
+      grid-template-rows: repeat(2, max-content) 1fr;
+      padding: 30px;
+
+      background-color: var(--forms-container-bg);
+
+      height: 100%;
+      max-height: $audio-forms-step2-main-min-height;
+
+      .audio-section-inputs-container {
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        gap: 30px;
+
+        .title-time-inputs {
+          display: grid;
+          grid-template-rows: repeat(2, max-content);
+
+          .time-inputs {
+            display: grid;
+            grid-template-columns: repeat(2, max-content);
+          }
+        }
+
+        .forms-text-area {
+          display: grid;
+          grid-template-rows: max-content 1fr;
+        }
+      }
+
+      .audio-section-inputs-footer-container {
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        gap: 30px;
+
+        place-items: end;
+
+        .language-container {
+          .forms-select {
+            position: relative;
+
+            svg {
+              position: absolute;
+              height: auto;
+              width: 18px;
+              right: 14px;
+              top: 50%;
+              transform: translateY(-50%);
+              color: var(--icons-1-color);
+              pointer-events: none;
+            }
+          }
+        }
+      }
+    }
+
+    .audio-sections-display-container {
+      display: grid;
+      grid-template-rows: max-content 1fr;
+      gap: 30px;
+
+      .audio-sections-header {
+        background-color: var(--forms-container-bg);
+        padding: $audio-sections-header-padding;
+
+        h2 {
+          margin: 0;
+        }
+      }
+
+      .no-sections-container {
+        display: grid;
+        grid-template-rows: 1fr;
+        place-items: center;
+
+        background-color: var(--forms-container-bg);
+
+        padding: $audio-sections-padding;
+
+        //height: 100%;
+        //max-height: $text-forms-step2-main-min-height;
+
+        p.no-section-placeholder {
+          font-size: $no-audio-content-placeholder-text-size;
+          color: var(--placeholder-container-text-color);
+          text-align: center;
+
+          span {
+            font-weight: $bold;
+          }
+        }
+      }
+
+      .sections-container {
+        padding: $audio-sections-padding;
+        //height: 100%;
+        //max-height: $audio-forms-step2-main-min-height;
+        background-color: var(--forms-container-bg);
+
+        overflow: auto;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+
+        &::-webkit-scrollbar {
+          width: 5px;
+        }
+
+        &::-webkit-scrollbar-track {
+          background-color: var(--content-scrollbar-bg-color);
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background-color: var(--content-scrollbar-color);
+        }
+      }
+    }
+  }
+
+  .forms-step2-bottom-bar {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 20px;
+
+    align-items: center;
+
+    margin-top: 20px;
+
+    .forms-step2-back-button {
+      padding: 20px 30px;
+      background-color: var(--forms-container-bg);
+    }
+  }
+
+  .forms-step-feedback-bar {
+    display: grid;
+    grid-template-columns: 1fr max-content;
+    gap: 30px;
+
+    justify-items: space-between;
+    align-items: center;
+
+    background-color: var(--forms-container-bg);
+
+    &.with-padding {
+      padding: 20px 30px;
+    }
+  }
+}

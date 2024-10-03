@@ -21,15 +21,15 @@
     }
 
     &.image-step2 {
-      grid-template-columns: repeat(4, max-content);
+      grid-template-columns: repeat(3, max-content);
     }
 
     &.audio-step2 {
-      grid-template-columns: repeat(4, max-content);
+      grid-template-columns: repeat(3, max-content);
     }
 
     &.video-step2 {
-      grid-template-columns: repeat(4, max-content);
+      grid-template-columns: repeat(1, max-content);
     }
 
     div {

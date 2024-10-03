@@ -36,7 +36,6 @@ const TempAudioContentSlice = createSlice({
       state.sections = [];
     },
     addSection: (state, action) => {
-      //state.sections.push({ ...action.payload, description: "hey" });
       state.sections.push(action.payload);
     },
     updateSectionTitle: (state, action) => {
@@ -66,9 +65,6 @@ const TempAudioContentSlice = createSlice({
         state.activeSectionId = state.sections[newSelectedSectionIndex].id;
       }
     },
-    setReorderedSections: (state, action) => {
-      state.sections = action.payload;
-    },
     setActiveSectionId: (state, action) => {
       state.activeSectionId = action.payload;
     },
@@ -80,7 +76,7 @@ const TempAudioContentSlice = createSlice({
   },
 });
 
-export const { setTitle, setOriginalContentCategory, setOriginalContentLanguage, setDescription, setCreatedContentLanguage, setAudioFormsReset, addSection, updateSectionTitle, removeSection, setReorderedSections, setActiveSectionId } = TempAudioContentSlice.actions;
+export const { setTitle, setOriginalContentCategory, setOriginalContentLanguage, setDescription, setCreatedContentLanguage, setAudioFormsReset, addSection, updateSectionTitle, removeSection, setActiveSectionId } = TempAudioContentSlice.actions;
 
 export const { selectActiveSection } = TempAudioContentSlice.selectors;
 

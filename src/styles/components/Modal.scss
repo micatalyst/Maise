@@ -22,6 +22,34 @@ dialog {
     width: 100% !important;
   }
 
+  .input-time-group {
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+    gap: 20px;
+
+    margin: 20px 0 30px;
+  }
+
+  .input-time-container {
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+    gap: 10px;
+
+    align-items: center;
+
+    label {
+      margin: 0;
+    }
+
+    .input-time {
+      position: relative;
+
+      input {
+        padding: 12px 20px;
+      }
+    }
+  }
+
   .forms-select {
     position: relative;
 

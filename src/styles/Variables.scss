@@ -113,11 +113,16 @@ $informative-Blue-20: #d0e1f5; // Dark_Gray (12.80)
   --image-uploaded-sections-border-color: #{$dark-gray};
 
   --video-bg-color: #{$dark-gray};
+  --video-current-subtitles-showing-bg-color: #{$dark-gray};
+  --video-current-subtitles-showing-text-color: #{$white};
   --video-controls-bg-color: #{$dark-gray};
   --video-all-subtitles-table-header-bg-color: #{$dark-gray};
   --video-all-subtitles-table-header-text-color: #{$light-gray};
   --video-set-time-pin-color: #{$white};
   --video-set-time-pin-bg-color: #{$dark-gray};
+
+  --audio-section-time-bg-color: #{$dark-gray};
+  --audio-section-time-text-color: #{$white};
 }
 
 /* [data-theme='dark'] {
@@ -156,6 +161,7 @@ $forms-step2-language-container-padding: 20px 30px 30px;
 $text-forms-step2-main-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 42px - 40px - 46.5px - 30px - 89px - 20px);
 $image-forms-step2-main-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 42px - 40px - 89px - 20px);
 $video-forms-step2-main-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 42px - 40px - 89px - 20px);
+$audio-forms-step2-main-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 42px - 40px - 89px - 20px);
 
 $text-forms-step2-work-space-max-height: calc(#{$text-forms-step2-main-min-height} - #{nth($forms-step2-content-creation-top-bar-padding, 1)} - #{nth($forms-step2-content-creation-top-bar-padding, 1)} - 40.5px - 5px);
 
@@ -171,6 +177,8 @@ $video-size-responsive-height: calc(#{$video-forms-step2-main-min-height} - 30px
 $video-forms-step2-all-subtitles-table-content-max-height: calc(#{$video-size-responsive-height} - 85.5px - 30px);
 $video-forms-step2-subtitles-cues-table-content-max-height: calc(#{$video-size-responsive-height} - 48.5px - 30px - 20px - 40.5px);
 
+$audio-sections-padding: 30px;
+$audio-sections-header-padding: 20px 30px;
 /* quando for trocar estes valores por valores calculados mesmo para fazer o sizing em rem da pagina, saber que é font-size * line-height */
 
 // Border
@@ -237,6 +245,7 @@ $dropzone-file-type-text-size: 57px;
 $dropzone-file-type-video-text-size: 38px;
 
 $no-content-placeholder-text-size: 57px;
+$no-audio-content-placeholder-text-size: 48px;
 
 $section-title-text-size: 16px;
 

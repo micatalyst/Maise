@@ -36,7 +36,6 @@ const TempTextContentSlice = createSlice({
       state.sections = [];
     },
     addSection: (state, action) => {
-      //state.sections.push({ ...action.payload, description: "hey" });
       state.sections.push(action.payload);
     },
     updateSectionTitle: (state, action) => {

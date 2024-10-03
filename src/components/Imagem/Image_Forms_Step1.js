@@ -74,8 +74,19 @@ export default function Image_Forms_Step1({ handleNextStep, original_content_fil
   const onDrop = (acceptedFiles, rejectedFiles) => {
     // Verifica se o arquivo foi aceito
     if (rejectedFiles.length > 0) {
-      const errorMessage = rejectedFiles[0].errors[0].message;
-      setError(errorMessage);
+      const errorMessages = rejectedFiles.map((rejectedFile) => {
+        const error = rejectedFile.errors[0]; // Pega o primeiro erro
+        if (error.code === 'file-too-large') {
+          return `O arquivo ${rejectedFile.file.name} excede o tamanho máximo permitido.`;
+        } else if (error.code === 'file-invalid-type') {
+          return `O arquivo ${rejectedFile.file.name} tem um tipo inválido.`;
+        } else {
+          return `Erro no arquivo ${rejectedFile.file.name}: ${error.message}`;
+        }
+      });
+      // Exibe todos os erros encontrados
+      alert(errorMessages.join('\n'));
+      setError(errorMessages.join(', '));
       return;
     }
 

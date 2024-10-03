@@ -86,7 +86,7 @@ export default function Modal_Image_forms({ isOpen, closeModal, modal, setAccess
       ref={dialogRef}
       onClose={handleClose}
     >
-      <h2>Apagar o áudio</h2>
+      <h2>Apagar áudio</h2>
       <p>Tem a certeza que pretende apagar o áudio desta secção?</p>
       <div className="btn-placement">
         <button

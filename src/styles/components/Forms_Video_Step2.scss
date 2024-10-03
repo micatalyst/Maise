@@ -40,76 +40,30 @@
 
   .video-display {
     display: grid;
-    grid-template-columns: max-content max-content;
+    grid-template-columns: max-content;
+    position: relative;
 
     height: $video-size-responsive-height;
-
-    /*  video::-webkit-media-controls-start-playback-button {
-      display: none !important;
-    } */
 
     .video {
       aspect-ratio: 16 / 9;
       height: calc($video-size-responsive-height);
       background-color: var(--video-bg-color);
-
-      /* &.videoEditingDisplay {
-        height: calc($video-size-responsive-height - 100px);
-      } */
     }
 
-    /*  .video-controls-bar {
-      display: grid;
-      grid-template-rows: repeat(2, max-content);
-      gap: 15px;
+    .current-subtitles-showing {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 55px;
 
-      padding: 20px;
+      background-color: var(--video-current-subtitles-showing-bg-color);
+      color: var(--video-current-subtitles-showing-text-color);
+      padding: 5px 10px;
 
-      background-color: var(--video-controls-bg-color);
-      border-radius: 0 0 $border-radius-5 $border-radius-5;
-
-      p {
-        font-size: 15px;
-        font-weight: $bold;
-        color: white;
-      }
-
-      button {
-        border-radius: $border-radius-5;
-        padding: 5px 12px;
-        min-width: 36px;
-        border: 0;
-
-        background-color: var(--audio-controls-buttons-bg-color);
-        color: var(--audio-controls-buttons-svg-color);
-        width: max-content;
-        height: max-content;
-
-        &:hover {
-          background-color: var(--audio-controls-buttons-bg-hover-color);
-        }
-      }
-
-      input[type='range'] {
-        justify-self: end;
-        padding: 0;
-        width: 100px;
-      }
-
-      .video-progress {
-        display: grid;
-        grid-template-columns: 1fr max-content;
-        gap: 20px;
-      }
-
-      .video-controls {
-        display: grid;
-        grid-template-columns: repeat(4, max-content) 1fr;
-        gap: 15px;
-
-        //margin-top: 20px;
-      }
-    } */
+      text-align: center;
+      max-width: 40ch;
+    }
   }
 
   .content-creation-container {
@@ -404,5 +358,17 @@
     &.with-padding {
       padding: 20px 30px;
     }
+  }
+
+  .forms-step2-SubtitleCues-bottom-bar {
+    display: grid;
+    grid-template-rows: 1fr;
+
+    margin-top: 20px;
+
+    background-color: var(--forms-container-bg);
+
+    width: 100%;
+    height: 89px;
   }
 }

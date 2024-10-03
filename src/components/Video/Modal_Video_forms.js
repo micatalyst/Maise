@@ -106,7 +106,7 @@ export default function Modal_Video_forms({ isOpen, closeModal, modal, isEditing
       ref={dialogRef}
       onClose={handleClose}
     >
-      <h2>Atualize o idioma destas legendas</h2>
+      <h2>Atualizar idioma das legendas</h2>
       <div className="forms-select">
         <FontAwesomeIcon icon={faCaretDown} />
         <select
@@ -150,7 +150,7 @@ export default function Modal_Video_forms({ isOpen, closeModal, modal, isEditing
       ref={dialogRef}
       onClose={handleClose}
     >
-      <h2>Atualize o título da secção</h2>
+      <h2>Atualizar legenda</h2>
       <input
         id="subtitle"
         type="text"
@@ -160,20 +160,22 @@ export default function Modal_Video_forms({ isOpen, closeModal, modal, isEditing
         value={subtitleTextInputValue}
         onChange={(e) => setSubtitleTextInputValue(e.target.value)}
       />
-      <CustomTimeInputModal
-        label="Início"
-        videoCurrentTime={videoCurrentTime}
-        videoDuration={videoDuration}
-        setStartTimeOnChangeInputValue={setSubtitleStartTimeInputValue}
-        subtitleStartTimeInputValue={subtitleStartTimeInputValue}
-      />
-      <CustomTimeInputModal
-        label="Fim"
-        videoCurrentTime={videoCurrentTime}
-        videoDuration={videoDuration}
-        setEndTimeOnChangeInputValue={setsubtitleEndTimeInputValue}
-        subtitleEndTimeInputValue={subtitleEndTimeInputValue}
-      />
+      <div className="input-time-group">
+        <CustomTimeInputModal
+          label="Início"
+          videoCurrentTime={videoCurrentTime}
+          videoDuration={videoDuration}
+          setStartTimeOnChangeInputValue={setSubtitleStartTimeInputValue}
+          subtitleStartTimeInputValue={subtitleStartTimeInputValue}
+        />
+        <CustomTimeInputModal
+          label="Fim"
+          videoCurrentTime={videoCurrentTime}
+          videoDuration={videoDuration}
+          setEndTimeOnChangeInputValue={setsubtitleEndTimeInputValue}
+          subtitleEndTimeInputValue={subtitleEndTimeInputValue}
+        />
+      </div>
       <div className="btn-placement">
         <button
           className="primary-button pressed-look"

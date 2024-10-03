@@ -6,15 +6,13 @@ import { setAudioFormsReset } from '@/slicers/TempAudioContentSlice';
 import { useRouter } from 'next/navigation';
 
 import Audio_Forms_Step1 from '@/components/Audio/Audio_Forms_Step1';
-/* import Audio_Forms_Step2 from '@/components/Audio/Audio_Forms_Step2'; */
+import Audio_Forms_Step2 from '@/components/Audio/Audio_Forms_Step2';
 
 export default function Audio() {
   const [step, setStep] = useState(1);
 
   const [original_content_file, setOriginal_content_file] = useState(null);
   const [original_content_PreviewUrl, setOriginal_content_PreviewUrl] = useState('');
-
-  /* const [accessibleAudioFiles, setAccessibleAudioFiles] = useState([]); */
 
   const tempAudioContentSliceData = useSelector((state) => state.TempAudioContentSlice);
   /* const { name, numMecan } = useSelector((state) => state.userSlice); */
@@ -109,11 +107,9 @@ export default function Audio() {
         {step === 2 && ( // trocar os numeros dos steps novamente (apenas os troquei para facilitar a edição do step 2)
           <Audio_Forms_Step2
             handlePreviousStep={handlePreviousStep}
-            handleSubmit={handleSubmit}
+            //handleSubmit={handleSubmit}
             original_content_file={original_content_file}
             original_content_PreviewUrl={original_content_PreviewUrl}
-            accessibleAudioFiles={accessibleAudioFiles}
-            setAccessibleAudioFiles={setAccessibleAudioFiles}
           />
         )}
       </form>

@@ -7,7 +7,7 @@ import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
 import '@/styles/components/Modal.scss';
 
-export default function Modal_Text_forms({ isOpen, closeModal, modal, setAccessibleAudioFiles, accessibleAudioFiles, activeSectionId, handleSectionDeleted, handleRemoveSectionAudio }) {
+export default function Modal_Audio_forms({ isOpen, closeModal, modal, setAccessibleAudioFiles, accessibleAudioFiles, activeSectionId, handleSectionDeleted, handleRemoveSectionAudio }) {
   const dialogRef = useRef(null);
 
   const dispatch = useDispatch();

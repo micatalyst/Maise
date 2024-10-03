@@ -1,0 +1,23 @@
+@import '../Variables.scss';
+
+.section-container {
+  display: grid;
+  grid-template-rows: repeat(3, max-content);
+
+  padding-bottom: 20px;
+  border-bottom: 2px solid var(--content-creating-limit-border-color);
+
+  .section-header {
+    display: grid;
+    grid-template-columns: 1fr repeat(2, max-content);
+    gap: 30px;
+
+    .section-time {
+      background-color: var(--audio-section-time-bg-color);
+      color: var(--audio-section-time-text-color);
+      font-weight: $bold;
+
+      border-radius: $border-radius-2;
+    }
+  }
+}
