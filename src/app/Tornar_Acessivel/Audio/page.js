@@ -109,7 +109,6 @@ export default function Audio() {
             handlePreviousStep={handlePreviousStep}
             //handleSubmit={handleSubmit}
             original_content_file={original_content_file}
-            original_content_PreviewUrl={original_content_PreviewUrl}
           />
         )}
       </form>

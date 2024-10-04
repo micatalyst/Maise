@@ -1,25 +1,34 @@
-import { useRef, useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { updateSectionTitle, removeSection, selectActiveSection } from '@/slicers/TempTextContentSlice';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
-
 import '@/styles/components/Modal.scss';
 
-export default function Modal_Audio_forms({ isOpen, closeModal, modal, setAccessibleAudioFiles, accessibleAudioFiles, activeSectionId, handleSectionDeleted, handleRemoveSectionAudio }) {
+import { useRef, useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateSectionTitle, removeSection } from '@/slicers/TempAudioContentSlice';
+
+import CustomTimeInputModal from '@/components/Video/CustomTimeInputModal';
+
+export default function Modal_Video_forms({ isOpen, closeModal, modal, audioCurrentTime, audioDuration }) {
   const dialogRef = useRef(null);
 
   const dispatch = useDispatch();
 
-  const activeSection = useSelector(selectActiveSection);
+  const sections = useSelector((state) => state.TempAudioContentSlice.sections);
 
-  const [sectionOnChangeInputValue, setSectionOnChangeInputValue] = useState('');
+  const activeSectionId = useSelector((state) => state.TempAudioContentSlice.activeSectionId);
+
+  const [titleInputValue, setTitleInputValue] = useState('');
+  const [startTimeInputValue, setStartTimeInputValue] = useState('');
+  const [endTimeInputValue, setEndTimeInputValue] = useState('');
+  const [descriptionInputValue, setDescriptionInputValue] = useState('');
 
   // Abre o modal se o prop "isOpen" for verdadeiro
   useEffect(() => {
     if (isOpen && dialogRef.current) {
-      setSectionOnChangeInputValue(activeSection && activeSection.title);
+      const activeSectionIndex = sections.findIndex((section) => section.id === activeSectionId);
+      setTitleInputValue(sections && sections[activeSectionIndex].title);
+      setStartTimeInputValue(sections && sections[activeSectionIndex].startTime);
+      setEndTimeInputValue(sections && sections[activeSectionIndex].endTime);
+      setDescriptionInputValue(sections && sections[activeSectionIndex].description);
+
       dialogRef.current.showModal();
     }
   }, [isOpen]);
@@ -30,34 +39,24 @@ export default function Modal_Audio_forms({ isOpen, closeModal, modal, setAccess
     closeModal();
   };
 
-  const handleKeyDownOnSectionTitleInput = (event) => {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      handleUpdateSection();
-    }
-  };
+  // Atualiza a section
 
-  // Atualiza o título da secção
   const handleUpdateSection = () => {
-    if (sectionOnChangeInputValue) {
-      dispatch(
-        updateSectionTitle({
-          id: activeSection.id,
-          title: sectionOnChangeInputValue,
-        }),
-      );
-      handleClose();
-    }
+    dispatch(
+      updateSectionTitle({
+        title: titleInputValue,
+        description: descriptionInputValue,
+        startTime: startTimeInputValue,
+        endTime: endTimeInputValue,
+      }),
+    );
+    handleClose();
   };
 
-  // Apaga a secção
+  // Apaga a section
+
   const handleRemoveSection = () => {
-    dispatch(removeSection(activeSection.id));
-
-    //Apaga o objeto do conteudo mais acessivel do array de todos os objetos onde este foi inserido
-    setAccessibleAudioFiles(accessibleAudioFiles.filter((file) => file.id !== activeSectionId));
-
-    handleSectionDeleted(activeSectionId);
+    dispatch(removeSection());
     handleClose();
   };
 
@@ -67,18 +66,37 @@ export default function Modal_Audio_forms({ isOpen, closeModal, modal, setAccess
       ref={dialogRef}
       onClose={handleClose}
     >
-      <h2>Atualizar título da secção</h2>
+      <h2>Atualizar Secção</h2>
       <input
+        id="title"
         type="text"
-        id="section-name"
-        value={sectionOnChangeInputValue}
-        maxLength="70"
-        onChange={(e) => {
-          setSectionOnChangeInputValue(e.target.value);
-        }}
-        onKeyDown={handleKeyDownOnSectionTitleInput}
-        name="section-name"
-        aria-label="Nome da Seção"
+        placeholder="Titulo da secção..."
+        maxLength="80"
+        value={titleInputValue}
+        onChange={(e) => setTitleInputValue(e.target.value)}
+      />
+      <div className="input-time-group">
+        <CustomTimeInputModal
+          label="Início"
+          videoCurrentTime={audioCurrentTime}
+          videoDuration={audioDuration}
+          setStartTimeOnChangeInputValue={setStartTimeInputValue}
+          subtitleStartTimeInputValue={startTimeInputValue}
+        />
+        <CustomTimeInputModal
+          label="Fim"
+          videoCurrentTime={audioCurrentTime}
+          videoDuration={audioDuration}
+          setEndTimeOnChangeInputValue={setEndTimeInputValue}
+          subtitleEndTimeInputValue={endTimeInputValue}
+        />
+      </div>
+      <textarea
+        id="description"
+        name="description"
+        placeholder="Descrição do conteúdo..."
+        value={descriptionInputValue}
+        onChange={(e) => setDescriptionInputValue(e.target.value)}
       />
       <div className="btn-placement">
         <button
@@ -105,15 +123,8 @@ export default function Modal_Audio_forms({ isOpen, closeModal, modal, setAccess
       ref={dialogRef}
       onClose={handleClose}
     >
-      <h2>Apagar secção</h2>
-      <p>Tem a certeza que pretende apagar a secção selecionada?</p>
-      <div className="section-name">
-        <FontAwesomeIcon
-          className="selected"
-          icon={faAngleRight}
-        />
-        <p>{sectionOnChangeInputValue}</p>
-      </div>
+      <h2>Apagar Secção</h2>
+      <p>Tem a certeza de que pretende apagar esta secção?</p>
       <div className="btn-placement">
         <button
           className="negative-button pressed-look"
@@ -133,42 +144,10 @@ export default function Modal_Audio_forms({ isOpen, closeModal, modal, setAccess
     </dialog>
   );
 
-  const Modal_Delete_Section_Audio = (
-    <dialog
-      className="negative"
-      ref={dialogRef}
-      onClose={handleClose}
-    >
-      <h2>Apagar áudio</h2>
-      <p>Tem a certeza que pretende apagar o áudio desta secção?</p>
-      <div className="btn-placement">
-        <button
-          className="negative-button pressed-look"
-          type="button"
-          onClick={() => {
-            handleRemoveSectionAudio();
-            handleClose();
-          }}
-        >
-          Apagar
-        </button>
-        <button
-          className="primary-button"
-          type="button"
-          onClick={handleClose}
-        >
-          Cancelar
-        </button>
-      </div>
-    </dialog>
-  );
-
   switch (modal) {
     case 'updateSection':
       return Modal_Update_Section;
     case 'deleteSection':
       return Modal_Delete_Section;
-    case 'deleteSectionAudio':
-      return Modal_Delete_Section_Audio;
   }
 }

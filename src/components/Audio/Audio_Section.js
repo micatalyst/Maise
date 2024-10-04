@@ -3,23 +3,27 @@ import '@/styles/components/Audio_Section.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilePen, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { setActiveSectionId } from '@/slicers/TempAudioContentSlice';
 
 export default function Audio_Section({ id, title, description, startTime, endTime, openModal }) {
+  const dispatch = useDispatch();
   return (
     <div className="section-container">
       <div className="section-header">
-        <span className="section-time">
-          {startTime} - {endTime}
-        </span>
+        <div className="section-time">
+          <p>
+            {startTime} - {endTime}
+          </p>
+        </div>
+
         <button
           className="primary-button icon"
           type="button"
           onClick={() => {
             dispatch(setActiveSectionId(id));
-            openModal('updateSubtitlesLanguage');
+            openModal('updateSection');
           }}
         >
           <FontAwesomeIcon icon={faFilePen} />
@@ -30,7 +34,7 @@ export default function Audio_Section({ id, title, description, startTime, endTi
           type="button"
           onClick={() => {
             dispatch(setActiveSectionId(id));
-            openModal('deleteSubtitles');
+            openModal('deleteSection');
           }}
         >
           <FontAwesomeIcon icon={faTrashCan} />

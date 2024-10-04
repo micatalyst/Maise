@@ -1,0 +1,64 @@
+@import '../Variables.scss';
+
+.audio-container {
+  width: 100%;
+}
+
+.audio-content-container {
+  width: 100%;
+  padding: 10px 20px;
+  //background-color: #d9d9d9;
+  border-radius: 15px;
+  border: 2px solid var(--audio-container-border-color);
+  //border-bottom: 2px solid var(--audio-container-border-color);
+}
+
+.audio-controls-bar {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  margin: 20px 0 15px;
+
+  .audio-controls {
+    display: grid;
+    grid-template-columns: repeat(5, max-content) 1fr;
+    gap: 10px;
+
+    align-items: center;
+
+    //margin-top: 20px;
+
+    p {
+      //margin-right: 10px;
+
+      background-color: var(--audio-section-time-bg-color);
+      color: var(--audio-section-time-text-color);
+      font-weight: $bold;
+      padding: 5px 12px;
+
+      border-radius: $border-radius-5;
+    }
+
+    button {
+      border-radius: $border-radius-5;
+      padding: 5px 12px;
+      min-width: 36px;
+      border: 0;
+
+      background-color: var(--audio-controls-buttons-bg-color);
+      color: var(--audio-controls-buttons-svg-color);
+      width: max-content;
+      height: max-content;
+
+      &:hover {
+        background-color: var(--audio-controls-buttons-bg-hover-color);
+      }
+    }
+
+    input[type='range'] {
+      justify-self: end;
+      padding: 0;
+      width: 100px;
+    }
+  }
+}

@@ -179,6 +179,8 @@ $video-forms-step2-subtitles-cues-table-content-max-height: calc(#{$video-size-r
 
 $audio-sections-padding: 30px;
 $audio-sections-header-padding: 20px 30px;
+$audio-forms-step2-sections-min-height: calc(#{$audio-forms-step2-main-min-height} - 33px - 20px - 20px - 20px - #{$audio-sections-padding} - #{$audio-sections-padding});
+
 /* quando for trocar estes valores por valores calculados mesmo para fazer o sizing em rem da pagina, saber que é font-size * line-height */
 
 // Border

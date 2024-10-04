@@ -1,4 +1,4 @@
-import '@/styles/components/Audio_Visualiser.scss';
+import '@/styles/components/Audio_Forms_Visualiser.scss';
 
 import React, { useCallback, useState, useRef, useEffect } from 'react';
 import { useWavesurfer } from '@wavesurfer/react';
@@ -8,15 +8,9 @@ import throttle from 'lodash.throttle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faPause, faStop, faRotateLeft, faRotateRight, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
-let didInit = false;
-
-export default function Audio_Forms_Visualiser({ accessibleAudioFiles, activeSectionId, globalAudioVolume, sectionTime, updateSectionTime, openModal }) {
+export default function Audio_Forms_Visualiser({ original_content_file, globalAudioVolume, setAudioCurrentTime, setAudioDuration }) {
   const containerRef = useRef(null);
   const [file, setFile] = useState(null);
-
-  // Save props value to check if changed (instead of using useEffect)
-  const [prevActiveSectionId, setPrevActiveSectionId] = useState(activeSectionId);
-  const [prevAccessibleAudioFiles, setPrevAccessibleAudioFiles] = useState(accessibleAudioFiles);
 
   const { wavesurfer, isReady, isPlaying, currentTime } = useWavesurfer({
     container: containerRef,
@@ -31,7 +25,6 @@ export default function Audio_Forms_Visualiser({ accessibleAudioFiles, activeSec
     height: 70,
     responsive: true, // Se você quiser que o waveform seja responsivo
   });
-  const [prevWavesurfer, setPrevWavesurfer] = useState(wavesurfer);
   const wavesurferDecoded = useRef(false);
 
   useEffect(() => {
@@ -42,26 +35,33 @@ export default function Audio_Forms_Visualiser({ accessibleAudioFiles, activeSec
 
     const unsubscribeLoad = wavesurfer.on('load', () => {
       // When audio starts loading, to set wavesurferDecoded to false and prevent updating the time on parent with an old time from the previous file
-      console.log(`Wavesurfer file load started for section ${activeSectionId}`);
       wavesurferDecoded.current = false;
     });
 
     const unsubscribeDecode = wavesurfer.on('decode', () => {
-      // Audio file decoded, set the time (from the prop) on wavesurfer
+      // Audio file decoded, set the time on wavesurfer
       wavesurferDecoded.current = true;
-      console.log(`Wavesurfer file decoded for section ${activeSectionId}, setting the time to ${sectionTime}`);
-      setWavesurferTime(sectionTime);
+
+      console.log(file);
+
+      if (wavesurfer) {
+        const time = 0;
+        wavesurfer.setTime(time);
+
+        const duration = wavesurfer.getDuration();
+        setAudioDuration(duration);
+      }
     });
 
     return () => {
       unsubscribeLoad();
       unsubscribeDecode();
     };
-  }, [wavesurfer, activeSectionId]);
+  }, [wavesurfer]);
 
   const updateTimeOnParent = useCallback(
-    throttle((time, sectionId) => {
-      updateSectionTime(time, sectionId);
+    throttle((time) => {
+      setAudioCurrentTime(time);
     }, 100),
     [],
   );
@@ -70,26 +70,13 @@ export default function Audio_Forms_Visualiser({ accessibleAudioFiles, activeSec
     if (!wavesurfer) {
       return;
     }
-    if (activeSectionId === prevActiveSectionId) {
-      updateTimeOnParent(currentTime, activeSectionId);
-    } else {
-      console.log('Active section different from the previous! Not updating time now.');
-    }
-  }, [wavesurfer, currentTime, activeSectionId, prevActiveSectionId]);
+    updateTimeOnParent(currentTime);
+  }, [wavesurfer, currentTime]);
 
-  if (!didInit || wavesurfer !== prevWavesurfer || accessibleAudioFiles !== prevAccessibleAudioFiles || activeSectionId !== prevActiveSectionId) {
-    // Set current values as the previous ones, to be able to enter this again if something changes
-    didInit = true;
-    setPrevWavesurfer(wavesurfer);
-    setPrevAccessibleAudioFiles(accessibleAudioFiles);
-    setPrevActiveSectionId(activeSectionId);
-    //
+  useEffect(() => {
+    setFile(original_content_file);
 
-    // Prop changed, set the file
-    const tmpFile = accessibleAudioFiles.find((file) => file.id === activeSectionId);
-    setFile(tmpFile);
-
-    if (tmpFile && wavesurfer) {
+    if (original_content_file && wavesurfer) {
       const reader = new FileReader();
 
       reader.onload = (evt) => {
@@ -100,22 +87,14 @@ export default function Audio_Forms_Visualiser({ accessibleAudioFiles, activeSec
         wavesurfer.loadBlob(blob);
       };
 
-      reader.readAsArrayBuffer(tmpFile.audioFile);
+      reader.readAsArrayBuffer(original_content_file);
 
       // Set volume
       wavesurfer.setVolume(globalAudioVolume.current);
     } else {
-      console.log('no file or no wavesurfer. file:', file);
-      console.log('no file or no wavesurfer. wavesurfer:', wavesurfer);
+      console.log('Nenhum arquivo ou Wavesurfer disponível.');
     }
-  }
-
-  function setWavesurferTime(time) {
-    if (wavesurfer && !isNaN(time)) {
-      console.log(`Set wavesurfer time to ${time}`);
-      wavesurfer.setTime(time);
-    }
-  }
+  }, [wavesurfer]);
 
   const onPlayPause = () => {
     wavesurfer && wavesurfer.playPause();
@@ -130,13 +109,27 @@ export default function Audio_Forms_Visualiser({ accessibleAudioFiles, activeSec
     if (wavesurfer) {
       wavesurfer.setVolume(vol);
       setVolume(vol);
-      globalAudioVolume.current = vol; // save on parent
+      //globalAudioVolume.current = vol; // save on parent
+    }
+  };
+
+  const formatTime = (seconds) => {
+    // Converte segundos para horas, minutos e segundos
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = Math.floor(seconds % 60);
+
+    // Formata a string conforme necessário
+    if (hours > 0) {
+      return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    } else {
+      return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
     }
   };
 
   const timestamp = () => {
-    const current = new Date(null, null, null, null, null, currentTime).toTimeString().match(/\d{2}:\d{2}:\d{2}/)[0];
-    const length = new Date(null, null, null, null, null, wavesurfer.getDuration()).toTimeString().match(/\d{2}:\d{2}:\d{2}/)[0];
+    const current = formatTime(currentTime); // Formata o tempo atual
+    const length = formatTime(wavesurfer.getDuration()); // Formata a duração total
     return `${current} de ${length}`;
   };
 
@@ -144,44 +137,19 @@ export default function Audio_Forms_Visualiser({ accessibleAudioFiles, activeSec
     wavesurfer.setTime(currentTime + offset);
   };
 
-  const updateVoluremoveExtensione = (contentName) => {
-    const lastDotIndex = contentName.lastIndexOf('.');
-
-    // Se existir um ponto, corta a string até o ponto, caso contrário retorna a string original
-    return lastDotIndex !== -1 ? contentName.substring(0, lastDotIndex) : contentName;
-  };
-
   return (
     <div className="audio-container">
-      {/* {sectionTime} */}
-      <div style={{ display: 'flex' }}>
-        <h3>Nome: {file && updateVoluremoveExtensione(file.audioFile.name)}</h3>
-        <button
-          className="negative-button icon"
-          type="button"
-          style={{ marginLeft: 'auto', marginBottom: '1rem' }}
-          onClick={() => {
-            openModal('deleteSectionAudio');
-          }}
-        >
-          <FontAwesomeIcon icon={faTrashCan} />
-          Apagar áudio
-        </button>
-      </div>
       <div
         className="audio-content-container"
         ref={containerRef}
       />
-      {file && file.audioFile && (
+      {file && (
         <>
           {wavesurfer && (
             <div className="audio-controls-bar">
-              <div className="timestamp">
-                <p>{timestamp()}</p>
-              </div>
-              <div></div>
               {/* Controles para o player */}
               <div className="audio-controls">
+                <p>{timestamp()}</p>
                 <button onClick={onStop}>
                   <FontAwesomeIcon icon={faStop} />
                 </button>

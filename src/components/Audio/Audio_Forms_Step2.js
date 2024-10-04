@@ -7,14 +7,14 @@ import { setCreatedContentLanguage, addSection } from '@/slicers/TempAudioConten
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
-import CustomTimeInput from '@/components/Video/CustomTimeInput';
+import CustomTimeInput from '@/components/Audio/CustomTimeInput';
 
 import Audio_Section from '@/components/Audio/Audio_Section';
 import Modal_Audio_forms from '@/components/Audio/Modal_Audio_forms';
 import Audio_Forms_Visualiser from '@/components/Audio/Audio_Forms_Visualiser';
 import StepValidationFeedback from '@/components/StepValidationFeedback';
 
-export default function Audio_Forms_Step2({ handlePreviousStep, handleSubmit, original_content_file, original_content_PreviewUrl }) {
+export default function Audio_Forms_Step2({ handlePreviousStep, handleSubmit, original_content_file }) {
   const created_content_language = useSelector((state) => state.TempAudioContentSlice.created_content_language);
 
   const sections = useSelector((state) => state.TempAudioContentSlice.sections);
@@ -27,6 +27,9 @@ export default function Audio_Forms_Step2({ handlePreviousStep, handleSubmit, or
   const [endTimeOnChangeInputValue, setEndTimeOnChangeInputValue] = useState(''); // value do input do tempo final do áudio
   const [descriptionOnChangeInputValue, setDescriptionOnChangeInputValue] = useState(''); // value do input da descrição do áudio
 
+  const [audioCurrentTime, setAudioCurrentTime] = useState(0);
+  const [audioDuration, setAudioDuration] = useState(0);
+
   const [handleAddSectionId, setHandleAddSectionId] = useState(2);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -34,6 +37,49 @@ export default function Audio_Forms_Step2({ handlePreviousStep, handleSubmit, or
 
   const [stepValidations, setStepValidations] = useState([]);
   const [allStepValidationsValid, setAllStepValidationsValid] = useState(false);
+
+  const convertTimeToSeconds = (time) => {
+    const timeParts = time.split(':').map(Number); // Divide o tempo em partes e converte para números
+    let seconds = 0;
+
+    if (timeParts.length === 3) {
+      // Caso o formato seja "hh:mm:ss"
+      const [hours, minutes, secondsPart] = timeParts;
+      seconds = hours * 3600 + minutes * 60 + secondsPart;
+    } else if (timeParts.length === 2) {
+      // Caso o formato seja "mm:ss"
+      const [minutes, secondsPart] = timeParts;
+      seconds = minutes * 60 + secondsPart;
+    }
+
+    return seconds;
+  };
+
+  // Função para verificar sobreposição de tempos
+  const isTimeOverlapping = (newStartTime, newEndTime, sections) => {
+    const newStartInSeconds = convertTimeToSeconds(newStartTime);
+    const newEndInSeconds = convertTimeToSeconds(newEndTime);
+
+    // Verificar se o startTime é maior que o endTime
+    if (newStartInSeconds > newEndInSeconds) {
+      alert('O tempo de início não pode ser maior que o tempo de término.');
+      return true; // Bloqueia a criação
+    }
+
+    // Verificar sobreposição de tempos com as legendas existentes
+    const isOverlapping = sections.some((cue) => {
+      const cueStartInSeconds = convertTimeToSeconds(cue.startTime);
+      const cueEndInSeconds = convertTimeToSeconds(cue.endTime);
+
+      return (newStartInSeconds >= cueStartInSeconds && newStartInSeconds < cueEndInSeconds) || (newEndInSeconds > cueStartInSeconds && newEndInSeconds <= cueEndInSeconds) || (newStartInSeconds <= cueStartInSeconds && newEndInSeconds >= cueEndInSeconds);
+    });
+
+    if (isOverlapping) {
+      alert('O intervalo de tempo sobrepõe-se a uma secção existente. Por favor, ajuste o tempo.');
+    }
+
+    return isOverlapping;
+  };
 
   useEffect(() => {
     // Verificar se os nomes das secçoes sao unicos
@@ -67,8 +113,6 @@ export default function Audio_Forms_Step2({ handlePreviousStep, handleSubmit, or
 
   const globalAudioVolume = useRef(0.5);
 
-  const sectionTime = 0;
-
   // Modal
 
   const openModal = (modal) => {
@@ -83,6 +127,10 @@ export default function Audio_Forms_Step2({ handlePreviousStep, handleSubmit, or
   // Função para adicionar sections (pelo botão)
   const handleAddSection = () => {
     if (titleOnChangeInputValue && startTimeOnChangeInputValue && endTimeOnChangeInputValue && descriptionOnChangeInputValue) {
+      if (isTimeOverlapping(startTimeOnChangeInputValue, endTimeOnChangeInputValue, sections)) {
+        return; // Bloqueia a criação da legenda
+      }
+
       dispatch(
         addSection({
           id: sections.length ? handleAddSectionId : 1,
@@ -129,21 +177,29 @@ export default function Audio_Forms_Step2({ handlePreviousStep, handleSubmit, or
         <h2>Secções</h2>
       </div>
       <div className="sections-container">
-        {sections.map((item) => (
-          <Audio_Section
-            key={item.id}
-            id={item.id}
-            title={item.title}
-            description={item.description}
-            startTime={item.startTime}
-            endTime={item.endTime}
-            openModal={openModal}
-          />
-        ))}
+        <div className="section-description">
+          {sections
+            .slice() // Cria uma cópia do array para não modificar o original
+            .sort((a, b) => convertTimeToSeconds(a.startTime) - convertTimeToSeconds(b.startTime)) // Ordena por startTime
+            .map((item) => (
+              <Audio_Section
+                key={item.id}
+                id={item.id}
+                title={item.title}
+                description={item.description}
+                startTime={item.startTime}
+                endTime={item.endTime}
+                openModal={openModal}
+              />
+            ))}
+        </div>
+
         <Modal_Audio_forms
           isOpen={isModalOpen}
           closeModal={closeModal}
           modal={modalType}
+          audioCurrentTime={audioCurrentTime}
+          audioDuration={audioDuration}
         />
       </div>
     </div>
@@ -153,16 +209,15 @@ export default function Audio_Forms_Step2({ handlePreviousStep, handleSubmit, or
 
   const contentCreationDisplay = (
     <div className="content-creation-container">
-      {/* <Audio_Forms_Visualiser
-        accessibleAudioFiles={accessibleAudioFiles}
-        activeSectionId={activeSectionId}
-        sectionTime={sectionTime}
-        updateSectionTime={updateSectionTime}
+      <Audio_Forms_Visualiser
+        setAudioCurrentTime={setAudioCurrentTime}
+        setAudioDuration={setAudioDuration}
         globalAudioVolume={globalAudioVolume}
-      /> */}
+        original_content_file={original_content_file}
+      />
       <div className="audio-section-inputs-container">
         <div className="title-time-inputs">
-          <div>
+          <div className="title-input">
             <label htmlFor="title">Título</label>
             <input
               id="title"
@@ -172,22 +227,21 @@ export default function Audio_Forms_Step2({ handlePreviousStep, handleSubmit, or
               maxLength="80"
               value={titleOnChangeInputValue}
               onChange={(e) => setTitleOnChangeInputValue(e.target.value)}
-              required
             />
           </div>
           <div className="time-inputs">
-            {/* <CustomTimeInput
+            <CustomTimeInput
               label="Início"
-              videoCurrentTime={videoCurrentTime}
-              videoDuration={videoDuration}
+              audioCurrentTime={audioCurrentTime}
+              audioDuration={audioDuration}
               setStartTimeOnChangeInputValue={setStartTimeOnChangeInputValue}
             />
             <CustomTimeInput
               label="Fim"
-              videoCurrentTime={videoCurrentTime}
-              videoDuration={videoDuration}
+              audioCurrentTime={audioCurrentTime}
+              audioDuration={audioDuration}
               setEndTimeOnChangeInputValue={setEndTimeOnChangeInputValue}
-            /> */}
+            />
           </div>
         </div>
         <div className="forms-text-area">
@@ -198,7 +252,6 @@ export default function Audio_Forms_Step2({ handlePreviousStep, handleSubmit, or
             placeholder="Descrição do conteúdo..."
             value={descriptionOnChangeInputValue}
             onChange={(e) => setDescriptionOnChangeInputValue(e.target.value)}
-            required
           />
         </div>
       </div>
@@ -239,14 +292,7 @@ export default function Audio_Forms_Step2({ handlePreviousStep, handleSubmit, or
     <div className="forms-step2-audio">
       <div className="forms-step2-audio-container">
         {contentCreationDisplay}
-        {/* <button
-            type="button"
-            onClick={handleAddSection}
-            aria-label="Botão para a adição de secções"
-          >
-            <FontAwesomeIcon icon={faPlus} />
-          </button> */}
-        {sections.length > 0 ? noSectionsDisplay : SectionsDisplay} {/* {sections.length > 0 ? SectionsDisplay : noSectionsDisplay} */}
+        {sections.length > 0 ? SectionsDisplay : noSectionsDisplay} {/* {sections.length > 0 ? SectionsDisplay : noSectionsDisplay} */}
       </div>
       <div className="forms-step2-bottom-bar">
         <div className="forms-step2-back-button">

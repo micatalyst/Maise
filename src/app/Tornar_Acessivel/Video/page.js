@@ -112,8 +112,6 @@ export default function Video() {
             /* handleSubmit={handleSubmit} */
             original_content_file={original_content_file}
             original_content_PreviewUrl={original_content_PreviewUrl}
-            /* accessibleAudioFiles={accessibleAudioFiles}
-            setAccessibleAudioFiles={setAccessibleAudioFiles} */
           />
         )}
       </form>

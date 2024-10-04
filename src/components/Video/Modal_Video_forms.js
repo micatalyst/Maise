@@ -9,7 +9,7 @@ import CustomTimeInputModal from '@/components/Video/CustomTimeInputModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
-export default function Modal_Video_forms({ isOpen, closeModal, modal, isEditingCreatingSubtitleCues, videoCurrentTime, videoDuration, setStartTimeOnChangeInputValue }) {
+export default function Modal_Video_forms({ isOpen, closeModal, modal, isEditingCreatingSubtitleCues, videoCurrentTime, videoDuration }) {
   const dialogRef = useRef(null);
 
   const dispatch = useDispatch();
@@ -95,6 +95,7 @@ export default function Modal_Video_forms({ isOpen, closeModal, modal, isEditing
   };
 
   // Apaga uma legenda
+
   const handleRemoveSubtitleCues = () => {
     dispatch(removeVideoSubtitleCue());
     handleClose();

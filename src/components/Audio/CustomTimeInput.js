@@ -3,12 +3,12 @@ import { faThumbTack } from '@fortawesome/free-solid-svg-icons';
 
 import React, { useState, useEffect } from 'react';
 
-const CustomTimeInput = ({ label, videoDuration, videoCurrentTime, setStartTimeOnChangeInputValue, setEndTimeOnChangeInputValue }) => {
+const CustomTimeInput = ({ label, audioDuration, audioCurrentTime, setStartTimeOnChangeInputValue, setEndTimeOnChangeInputValue }) => {
   const [time, setTime] = useState('');
 
-  const showHours = videoDuration >= 3600; // 3600 seconds = 1 hour
+  const showHours = audioDuration >= 3600; // 3600 seconds = 1 hour
 
-  useEffect(() => {
+ /*  useEffect(() => {
     // Adiciona o listener de eventos de teclado quando o componente é montado
     window.addEventListener('keydown', handleKeyDown);
 
@@ -16,7 +16,7 @@ const CustomTimeInput = ({ label, videoDuration, videoCurrentTime, setStartTimeO
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [videoCurrentTime]);
+  }, [audioCurrentTime]); */
 
   // Function to format the time in seconds into HH:MM:SS or MM:SS
   const formatTime = (secondsTotal) => {
@@ -98,20 +98,20 @@ const CustomTimeInput = ({ label, videoDuration, videoCurrentTime, setStartTimeO
     setTime(formattedTime);
   };
 
-  // Function to handle the button click and apply `videoCurrentTime` to the input
+  // Function to handle the button click and apply `audioCurrentTime` to the input
   const handleSetCurrentTime = () => {
-    setTime(formatTime(videoCurrentTime)); // Set the formatted time to the input
+    setTime(formatTime(audioCurrentTime)); // Set the formatted time to the input
 
     if (label === 'Início') {
-      setStartTimeOnChangeInputValue(formatTime(videoCurrentTime));
+      setStartTimeOnChangeInputValue(formatTime(audioCurrentTime));
     }
 
     if (label === 'Fim') {
-      setEndTimeOnChangeInputValue(formatTime(videoCurrentTime));
+      setEndTimeOnChangeInputValue(formatTime(audioCurrentTime));
     }
   };
 
-  const handleKeyDown = (event) => {
+ /*  const handleKeyDown = (event) => {
     const activeElement = document.activeElement;
 
     if (activeElement.tagName.toLowerCase() === 'input' || event.code === 'AltLeft' || event.code === 'AltRight') {
@@ -121,14 +121,14 @@ const CustomTimeInput = ({ label, videoDuration, videoCurrentTime, setStartTimeO
 
     if (label === 'Início' && event.code === 'KeyA') {
       handleSetCurrentTime();
-      setStartTimeOnChangeInputValue(formatTime(videoCurrentTime));
+      setStartTimeOnChangeInputValue(formatTime(audioCurrentTime));
     }
 
     if (label === 'Fim' && event.code === 'KeyD') {
       handleSetCurrentTime();
-      setEndTimeOnChangeInputValue(formatTime(videoCurrentTime));
+      setEndTimeOnChangeInputValue(formatTime(audioCurrentTime));
     }
-  };
+  }; */
 
   const handleAriaLabel = () => {
     switch (label) {

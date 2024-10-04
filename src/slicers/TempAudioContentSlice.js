@@ -39,31 +39,20 @@ const TempAudioContentSlice = createSlice({
       state.sections.push(action.payload);
     },
     updateSectionTitle: (state, action) => {
-      const { id, title } = action.payload;
-      const sectionIndex = state.sections.findIndex((section) => section.id === id);
+      const { title, description, startTime, endTime } = action.payload;
+      const sectionIndex = state.sections.findIndex((section) => section.id === state.activeSectionId);
       if (sectionIndex !== -1) {
         state.sections[sectionIndex] = {
           ...state.sections[sectionIndex],
           title,
+          description,
+          startTime,
+          endTime,
         };
       }
     },
-    removeSection: (state, action) => {
-      const id = action.payload;
-
-      // Get the index before deleting
-      const index = state.sections.findIndex((section) => section.id === id);
-
-      // Remove
-      state.sections = state.sections.filter((section) => section.id !== id);
-
-      // Select previous or next section
-      // if deleting the first one (index 0), select the next (goes to index 0)
-      // if deleting the second (index 1), select the previous (index 0)
-      if (state.sections.length) {
-        const newSelectedSectionIndex = index === 0 ? 0 : index - 1;
-        state.activeSectionId = state.sections[newSelectedSectionIndex].id;
-      }
+    removeSection: (state) => {
+      state.sections = state.sections.filter((section) => section.id !== state.activeSectionId);
     },
     setActiveSectionId: (state, action) => {
       state.activeSectionId = action.payload;
