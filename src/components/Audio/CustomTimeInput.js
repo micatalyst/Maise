@@ -8,7 +8,7 @@ const CustomTimeInput = ({ label, audioDuration, audioCurrentTime, setStartTimeO
 
   const showHours = audioDuration >= 3600; // 3600 seconds = 1 hour
 
- /*  useEffect(() => {
+  /*  useEffect(() => {
     // Adiciona o listener de eventos de teclado quando o componente é montado
     window.addEventListener('keydown', handleKeyDown);
 
@@ -111,7 +111,7 @@ const CustomTimeInput = ({ label, audioDuration, audioCurrentTime, setStartTimeO
     }
   };
 
- /*  const handleKeyDown = (event) => {
+  /*  const handleKeyDown = (event) => {
     const activeElement = document.activeElement;
 
     if (activeElement.tagName.toLowerCase() === 'input' || event.code === 'AltLeft' || event.code === 'AltRight') {
