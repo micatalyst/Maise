@@ -83,15 +83,6 @@ const CustomTimeInputModal = ({ label, videoDuration, setStartTimeOnChangeInputV
     setTime(formattedTime);
   };
 
-  const handleAriaLabel = () => {
-    switch (label) {
-      case 'Início':
-        return 'inicial da legenda';
-      case 'Fim':
-        return 'final da legenda';
-    }
-  };
-
   return (
     <div className="input-time-container">
       <label htmlFor={label}>{label}</label>

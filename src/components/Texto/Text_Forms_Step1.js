@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown, faCheck, faFileArrowUp, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { faFileLines } from '@fortawesome/free-regular-svg-icons';
 
+import { toast } from 'sonner';
+
 import { useDropzone } from 'react-dropzone';
 import React, { useState, useEffect } from 'react';
 
@@ -20,7 +22,7 @@ export default function Text_Forms_Step1({ handleNextStep, original_content_file
 
   const dispatch = useDispatch();
 
-  const maxSize = 5 * 1024 * 1024; // 5 MB
+  const maxSize = 25 * 1024 * 1024; // 25 MB
   const [error, setError] = useState('');
 
   const [stepValidations, setStepValidations] = useState([]);
@@ -72,17 +74,26 @@ export default function Text_Forms_Step1({ handleNextStep, original_content_file
   const onDrop = (acceptedFiles, rejectedFiles) => {
     // Verifica se o arquivo foi aceito
     if (rejectedFiles.length > 0) {
-      const error = rejectedFiles[0].errors[0];
-
-      if (error.code === 'file-too-large') {
-        alert('O arquivo excede o tamanho máximo permitido. Por favor, escolha um arquivo menor.');
-      } else if (error.code === 'file-invalid-type') {
-        alert('O tipo de arquivo não é permitido. Por favor, escolha um arquivo com a extensão correta.');
-      } else {
-        alert('Erro ao carregar o arquivo: ' + error.message);
-      }
-
-      setError(error.message); // Armazena a mensagem de erro no estado
+      const errorMessages = rejectedFiles.map((rejectedFile) => {
+        const error = rejectedFile.errors[0]; // Pega o primeiro erro
+        if (error.code === 'file-too-large') {
+          return `O arquivo ${rejectedFile.file.name} excede o tamanho máximo permitido.`;
+        } else if (error.code === 'file-invalid-type') {
+          return `O arquivo ${rejectedFile.file.name} possui um formato de arquivo inválido.`;
+        } else {
+          return `Erro no arquivo ${rejectedFile.file.name}: ${error.message}`;
+        }
+      });
+      // Exibe todos os erros encontrados
+      //alert(errorMessages.join('\n'));
+      toast.warning(errorMessages.join('\n'), {
+        style: {
+          background: '#f3b21b',
+          color: '#1c1c1c',
+          border: 'none',
+        },
+      });
+      setError(errorMessages.join(', '));
       return;
     }
 
@@ -181,7 +192,7 @@ export default function Text_Forms_Step1({ handleNextStep, original_content_file
             className="forms-input-file"
             aria-live="assertive"
           >
-            <label>Conteúdo original (Carrega até um ficheiro PDF)</label>
+            <label>Conteúdo original (Carrega um ficheiro de texto)</label>
             <div
               className="file-uploaded-container"
               aria-label="Acabaste de carregar aqui um documento"
@@ -234,7 +245,7 @@ export default function Text_Forms_Step1({ handleNextStep, original_content_file
             aria-live="assertive"
             aria-label="procura o documento, que pretendes carregar, presente no teu PC"
           >
-            <label htmlFor="fileImport">Conteúdo original (Carrega até um ficheiro PDF)</label>
+            <label htmlFor="fileImport">Conteúdo original (Carrega um ficheiro de texto)</label>
             <div
               {...getRootProps({
                 className: 'dropzone',

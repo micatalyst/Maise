@@ -71,7 +71,7 @@ export default function Modal_Video_forms({ isOpen, closeModal, modal, audioCurr
         id="title"
         type="text"
         placeholder="Titulo da secção..."
-        maxLength="80"
+        maxLength="60"
         value={titleInputValue}
         onChange={(e) => setTitleInputValue(e.target.value)}
       />

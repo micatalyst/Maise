@@ -1,7 +1,7 @@
 @import '../Variables.scss';
 
 .audio-container {
-  width: 100%;
+  width: 100% !important;
 }
 
 .audio-content-container {
@@ -55,10 +55,40 @@
       }
     }
 
+    .volume-input {
+      display: grid;
+      grid-template-columns: repeat(2, max-content);
+      gap: 10px;
+      align-items: center;
+      justify-content: end;
+    }
+
     input[type='range'] {
-      justify-self: end;
       padding: 0;
-      width: 100px;
+      -webkit-appearance: none;
+      appearance: none;
+      width: 150px;
+      height: 20px;
+
+      border: none;
+
+      background-color: rgba(#1167d3, 0.4);
+      border-radius: $border-radius-5;
+      overflow: hidden;
+
+      cursor: pointer;
+
+      &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 0;
+        box-shadow: -100px 0 0 100px rgba(#1167d3, 1);
+      }
+
+      &::-moz-range-thumb {
+        border: none;
+        width: 0;
+        box-shadow: -100px 0 0 100px rgba(#d0e1f5, 1);
+      }
     }
   }
 }

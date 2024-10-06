@@ -1,5 +1,7 @@
 import '@/styles/components/Forms_Audio_Step2.scss';
 
+import { toast } from 'sonner';
+
 import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCreatedContentLanguage, addSection } from '@/slicers/TempAudioContentSlice';
@@ -62,7 +64,14 @@ export default function Audio_Forms_Step2({ handlePreviousStep, handleSubmit, or
 
     // Verificar se o startTime é maior que o endTime
     if (newStartInSeconds > newEndInSeconds) {
-      alert('O tempo de início não pode ser maior que o tempo de término.');
+      //alert('O tempo de início não pode ser maior que o tempo de término.');
+      toast.warning('O tempo de início não pode ser maior que o tempo de término.', {
+        style: {
+          background: '#f3b21b',
+          color: '#1c1c1c',
+          border: 'none',
+        },
+      });
       return true; // Bloqueia a criação
     }
 
@@ -75,7 +84,14 @@ export default function Audio_Forms_Step2({ handlePreviousStep, handleSubmit, or
     });
 
     if (isOverlapping) {
-      alert('O intervalo de tempo sobrepõe-se a uma secção existente. Por favor, ajuste o tempo.');
+      // alert('O intervalo de tempo sobrepõe-se a uma secção existente. Por favor, ajuste o tempo.');
+      toast.warning('O intervalo de tempo sobrepõe-se a uma secção existente. Por favor, ajuste o tempo.', {
+        style: {
+          background: '#f3b21b',
+          color: '#1c1c1c',
+          border: 'none',
+        },
+      });
     }
 
     return isOverlapping;
@@ -87,21 +103,21 @@ export default function Audio_Forms_Step2({ handlePreviousStep, handleSubmit, or
     // 2) Criar um array desse set
     // 3) Se os tamanhos (das sections e dos nomes unicos) forem iguais, entao os nomes sao unicos
 
-    // const allSectionsHaveUniqueNames = Boolean(sections.length > 0 && Array.from(new Set(sections.map((s) => s.title))).length === sections.length);
+    const allSectionsHaveUniqueNames = Boolean(sections.length > 0 && Array.from(new Set(sections.map((s) => s.title))).length === sections.length);
 
     setStepValidations([
       {
         title: 'Idioma do conteúdo criado',
-        isValid: sections.length > 0 && Boolean(created_content_language),
+        isValid: Boolean(created_content_language),
       },
       {
         title: 'Adicionar pelo menos uma secção',
         isValid: sections.length > 0, // usar > 0 em vez de so ver se tem length, para o isValid ser false em vez de 0 (que e falsy na mesma, mas nao e' boolean)
       },
-      /* {
+      {
         title: 'Secções devem ter títulos únicos',
         isValid: allSectionsHaveUniqueNames,
-      }, */
+      },
     ]);
   }, [sections, created_content_language]);
 
@@ -224,7 +240,7 @@ export default function Audio_Forms_Step2({ handlePreviousStep, handleSubmit, or
               name="title"
               type="text"
               placeholder="Titulo da secção..."
-              maxLength="80"
+              maxLength="60"
               value={titleOnChangeInputValue}
               onChange={(e) => setTitleOnChangeInputValue(e.target.value)}
             />

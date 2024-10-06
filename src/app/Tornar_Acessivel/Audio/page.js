@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setAudioFormsReset } from '@/slicers/TempAudioContentSlice';
 import { useRouter } from 'next/navigation';
 
+import { toast } from 'sonner';
+
 import Audio_Forms_Step1 from '@/components/Audio/Audio_Forms_Step1';
 import Audio_Forms_Step2 from '@/components/Audio/Audio_Forms_Step2';
 
@@ -88,6 +90,13 @@ export default function Audio() {
       router.push('/');
     } catch (e) {
       console.error('Could not send content:', e);
+      toast.error("Sentimos muito, mas houve um erro ao tentar criar o seu conteúdo. Estamos a trabalhar para resolver isso. Por favor, tente novamente mais tarde.", {
+        style: {
+          background: '#f3b21b',
+          color: '#1c1c1c',
+          border: 'none',
+        },
+      });
     }
   }); */
 

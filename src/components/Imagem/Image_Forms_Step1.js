@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown, faCheck, faFileArrowUp, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { faFileLines } from '@fortawesome/free-regular-svg-icons';
 
+import { toast } from 'sonner';
+
 import { useDropzone } from 'react-dropzone';
 import React, { useState, useEffect } from 'react';
 
@@ -61,16 +63,6 @@ export default function Image_Forms_Step1({ handleNextStep, original_content_fil
     console.log(sections);
   }, [sections]);
 
-  // handlePreview abre um separador com o documento original aberto
-
-  const handlePreview = () => {
-    if (original_content_PreviewUrl) {
-      window.open(original_content_PreviewUrl, '_blank'); // Abre o ficheiro num novo separador
-    } else {
-      // trigger de feedback a dizer que o documento não foi carregado
-    }
-  };
-
   const onDrop = (acceptedFiles, rejectedFiles) => {
     // Verifica se o arquivo foi aceito
     if (rejectedFiles.length > 0) {
@@ -79,13 +71,20 @@ export default function Image_Forms_Step1({ handleNextStep, original_content_fil
         if (error.code === 'file-too-large') {
           return `O arquivo ${rejectedFile.file.name} excede o tamanho máximo permitido.`;
         } else if (error.code === 'file-invalid-type') {
-          return `O arquivo ${rejectedFile.file.name} tem um tipo inválido.`;
+          return `O arquivo ${rejectedFile.file.name} possui um formato de arquivo inválido.`;
         } else {
           return `Erro no arquivo ${rejectedFile.file.name}: ${error.message}`;
         }
       });
       // Exibe todos os erros encontrados
-      alert(errorMessages.join('\n'));
+      //alert(errorMessages.join('\n'));
+      toast.warning(errorMessages.join('\n'), {
+        style: {
+          background: '#f3b21b',
+          color: '#1c1c1c',
+          border: 'none',
+        },
+      });
       setError(errorMessages.join(', '));
       return;
     }
@@ -118,6 +117,7 @@ export default function Image_Forms_Step1({ handleNextStep, original_content_fil
       'image/png': ['.png'],
     },
     maxSize: maxSize,
+    multiple: true,
   });
 
   return (
@@ -201,7 +201,7 @@ export default function Image_Forms_Step1({ handleNextStep, original_content_fil
             aria-live="assertive"
             aria-label="procura o documento, que pretendes carregar, presente no teu PC"
           >
-            <label htmlFor="fileImport">Conteúdo original (Carrega até várias imagens)</label>
+            <label htmlFor="fileImport">Conteúdo original (Carrega uma ou várias imagens)</label>
             <div className="images-uploaded-container">
               <div
                 {...getRootProps({
@@ -244,7 +244,7 @@ export default function Image_Forms_Step1({ handleNextStep, original_content_fil
             aria-live="assertive"
             aria-label="procura o documento, que pretendes carregar, presente no teu PC"
           >
-            <label htmlFor="fileImport">Conteúdo original (Carrega até várias imagens)</label>
+            <label htmlFor="fileImport">Conteúdo original (Carrega uma ou várias imagens)</label>
             <div
               {...getRootProps({
                 className: 'dropzone',

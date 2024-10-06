@@ -2,6 +2,8 @@
 
 import '@/styles/components/Content_Cards_Container.scss';
 
+import { toast } from 'sonner';
+
 import { useCallback } from 'react';
 import Content_Card from '@/components/Content_Card';
 
@@ -35,6 +37,13 @@ export default function Content_Cards_Container({ data }) {
       dispatch(updateItem(responseData));
     } catch (e) {
       console.error('Could not save content:', e);
+      toast.error('Sentimos muito, mas houve um erro ao tentar guardar este conteúdo. Estamos a trabalhar para resolver isso. Por favor, tente novamente mais tarde.', {
+        style: {
+          background: '#f3b21b',
+          color: '#1c1c1c',
+          border: 'none',
+        },
+      });
       // Revert
       dispatch(updateItem({ ...item, saved: !saved })); // do it right away
     }

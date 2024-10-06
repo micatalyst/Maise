@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setVideoFormsReset } from '@/slicers/TempVideoContentSlice';
 import { useRouter } from 'next/navigation';
 
+import { toast } from 'sonner';
+
 import Video_Forms_Step1 from '@/components/Video/Video_Forms_Step1';
 import Video_Forms_Step2 from '@/components/Video/Video_Forms_Step2';
 
@@ -90,6 +92,13 @@ export default function Video() {
       router.push('/');
     } catch (e) {
       console.error('Could not send content:', e);
+      toast.error("Sentimos muito, mas houve um erro ao tentar criar o seu conteúdo. Estamos a trabalhar para resolver isso. Por favor, tente novamente mais tarde.", {
+        style: {
+          background: '#f3b21b',
+          color: '#1c1c1c',
+          border: 'none',
+        },
+      });
     }
   }); */
 

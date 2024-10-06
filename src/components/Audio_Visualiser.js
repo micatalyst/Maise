@@ -6,7 +6,7 @@ import { useWavesurfer } from '@wavesurfer/react';
 import throttle from 'lodash.throttle';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faPause, faStop, faRotateLeft, faRotateRight, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faPlay, faPause, faStop, faRotateLeft, faRotateRight, faTrashCan, faVolumeHigh } from '@fortawesome/free-solid-svg-icons';
 
 let didInit = false;
 
@@ -176,12 +176,9 @@ export default function Audio_Visualiser({ accessibleAudioFiles, activeSectionId
         <>
           {wavesurfer && (
             <div className="audio-controls-bar">
-              <div className="timestamp">
-                <p>{timestamp()}</p>
-              </div>
-              <div></div>
               {/* Controles para o player */}
               <div className="audio-controls">
+                <p>{timestamp()}</p>
                 <button onClick={onStop}>
                   <FontAwesomeIcon icon={faStop} />
                 </button>
@@ -192,14 +189,17 @@ export default function Audio_Visualiser({ accessibleAudioFiles, activeSectionId
                 <button onClick={() => quickJump(3)}>
                   <FontAwesomeIcon icon={faRotateRight} />
                 </button>
-                <input
-                  type="range"
-                  min="0"
-                  max="1"
-                  step="0.01"
-                  onChange={(e) => updateVolume(e.target.value)}
-                  value={volume}
-                />
+                <div className="volume-input">
+                  <FontAwesomeIcon icon={faVolumeHigh} />
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    onChange={(e) => updateVolume(e.target.value)}
+                    value={volume}
+                  />
+                </div>
               </div>
             </div>
           )}

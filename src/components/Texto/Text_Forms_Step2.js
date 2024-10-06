@@ -1,5 +1,7 @@
 import '@/styles/components/Forms_Text_Step2.scss';
 
+import { toast } from 'sonner';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faCaretDown, faFileArrowUp, faFilePen, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
@@ -200,8 +202,26 @@ export default function Text_Forms_Step2({ handlePreviousStep, handleSubmit, ori
   const onDrop = (acceptedFiles, rejectedFiles) => {
     // Verifica se o arquivo foi aceite
     if (rejectedFiles.length > 0) {
-      const errorMessage = rejectedFiles[0].errors[0].message;
-      setError(errorMessage);
+      const errorMessages = rejectedFiles.map((rejectedFile) => {
+        const error = rejectedFile.errors[0]; // Pega o primeiro erro
+        if (error.code === 'file-too-large') {
+          return `O arquivo ${rejectedFile.file.name} excede o tamanho máximo permitido.`;
+        } else if (error.code === 'file-invalid-type') {
+          return `O arquivo ${rejectedFile.file.name} possui um formato de arquivo inválido.`;
+        } else {
+          return `Erro no arquivo ${rejectedFile.file.name}: ${error.message}`;
+        }
+      });
+      // Exibe todos os erros encontrados
+      //alert(errorMessages.join('\n'));
+      toast.warning(errorMessages.join('\n'), {
+        style: {
+          background: '#f3b21b',
+          color: '#1c1c1c',
+          border: 'none',
+        },
+      });
+      setError(errorMessages.join(', '));
       return;
     }
 

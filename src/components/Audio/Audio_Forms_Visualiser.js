@@ -6,7 +6,7 @@ import { useWavesurfer } from '@wavesurfer/react';
 import throttle from 'lodash.throttle';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faPause, faStop, faRotateLeft, faRotateRight, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faPlay, faPause, faStop, faRotateLeft, faRotateRight, faVolumeHigh } from '@fortawesome/free-solid-svg-icons';
 
 export default function Audio_Forms_Visualiser({ original_content_file, globalAudioVolume, setAudioCurrentTime, setAudioDuration }) {
   const containerRef = useRef(null);
@@ -160,14 +160,17 @@ export default function Audio_Forms_Visualiser({ original_content_file, globalAu
                 <button onClick={() => quickJump(3)}>
                   <FontAwesomeIcon icon={faRotateRight} />
                 </button>
-                <input
-                  type="range"
-                  min="0"
-                  max="1"
-                  step="0.01"
-                  onChange={(e) => updateVolume(e.target.value)}
-                  value={volume}
-                />
+                <div className="volume-input">
+                  <FontAwesomeIcon icon={faVolumeHigh} />
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    onChange={(e) => updateVolume(e.target.value)}
+                    value={volume}
+                  />
+                </div>
               </div>
             </div>
           )}

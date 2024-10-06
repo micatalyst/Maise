@@ -3,6 +3,8 @@ import '@/styles/components/Forms_Video_Step2.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faCaretDown, faFileArrowUp, faFilePen, faTrashCan, faPlay, faPause, faStop, faRotateLeft, faRotateRight } from '@fortawesome/free-solid-svg-icons';
 
+import { toast } from 'sonner';
+
 import Horizontal_Tab_Video_Forms from '@/components/Horizontal_Tab_Video_Forms';
 
 import { useState, useEffect, useRef } from 'react';
@@ -71,7 +73,14 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
 
     // Verificar se o startTime é maior que o endTime
     if (newStartInSeconds > newEndInSeconds) {
-      alert('O tempo de início não pode ser maior que o tempo de término.');
+      //alert('O tempo de início não pode ser maior que o tempo de término.');
+      toast.warning('O tempo de início não pode ser maior que o tempo de término.', {
+        style: {
+          background: '#f3b21b',
+          color: '#1c1c1c',
+          border: 'none',
+        },
+      });
       return true; // Bloqueia a criação
     }
 
@@ -84,7 +93,14 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
     });
 
     if (isOverlapping) {
-      alert('O intervalo de tempo sobrepõe-se a uma legenda existente. Por favor, ajuste o tempo.');
+      //alert('O intervalo de tempo sobrepõe-se a uma legenda existente. Por favor, ajuste o tempo.');
+      toast.warning('O intervalo de tempo sobrepõe-se a uma secção existente. Por favor, ajuste o tempo.', {
+        style: {
+          background: '#f3b21b',
+          color: '#1c1c1c',
+          border: 'none',
+        },
+      });
     }
 
     return isOverlapping;

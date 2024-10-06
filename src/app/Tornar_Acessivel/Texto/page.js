@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setTextFormsReset } from '@/slicers/TempTextContentSlice';
 import { useRouter } from 'next/navigation';
 
+import { toast } from 'sonner';
+
 import Text_Forms_Step1 from '@/components/Texto/Text_Forms_Step1';
 import Text_Forms_Step2 from '@/components/Texto/Text_Forms_Step2';
 
@@ -91,6 +93,13 @@ export default function Texto() {
       router.push('/');
     } catch (e) {
       console.error('Could not send content:', e);
+      toast.error('Sentimos muito, mas houve um erro ao tentar criar o seu conteúdo. Estamos a trabalhar para resolver isso. Por favor, tente novamente mais tarde.', {
+        style: {
+          background: '#f3b21b',
+          color: '#1c1c1c',
+          border: 'none',
+        },
+      });
     }
   });
 
@@ -105,6 +114,7 @@ export default function Texto() {
             setOriginal_content_file={setOriginal_content_file}
             original_content_PreviewUrl={original_content_PreviewUrl}
             setOriginal_content_PreviewUrl={setOriginal_content_PreviewUrl}
+            setAccessibleAudioFiles={setAccessibleAudioFiles}
           />
         )}
         {step === 2 && ( // trocar os numeros dos steps novamente (apenas os troquei para facilitar a edição do step 2)
