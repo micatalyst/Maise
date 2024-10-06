@@ -154,10 +154,14 @@ export default function Image_Forms_Step1({ handleNextStep, original_content_fil
                 >
                   Especifica o Conteúdo...
                 </option>
-                <option value="Poster">Poster</option>
-                <option value="Banner">Banner</option>
-                <option value="Video">Video</option>
-                <option value="Outro">Outro</option>
+                <option value="Fotografia">Fotografia</option>
+                <option value="Ilustração">Ilustração</option>
+                <option value="Cartaz">Cartaz</option>
+                <option value="Slides">Slides</option>
+                <option value="Infográfico">Infográfico</option>
+                <option value="Diagrama">Diagrama</option>
+                <option value="Gráfico">Gráfico</option>
+                <option value="Documento académico">Documento académico</option>
               </select>
             </div>
           </div>

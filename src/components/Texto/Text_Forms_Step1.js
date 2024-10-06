@@ -146,10 +146,12 @@ export default function Text_Forms_Step1({ handleNextStep, original_content_file
                 >
                   Especifica o Conteúdo...
                 </option>
-                <option value="Poster">Poster</option>
-                <option value="Banner">Banner</option>
-                <option value="Video">Video</option>
-                <option value="Outro">Outro</option>
+                <option value="Livro">Livro</option>
+                <option value="Artigo">Artigo</option>
+                <option value="Tese/Dissertação">Tese/Dissertação</option>
+                <option value="Relatório">Relatório</option>
+                <option value="Slides">Slides</option>
+                <option value="Documento académico">Documento académico</option>
               </select>
             </div>
           </div>

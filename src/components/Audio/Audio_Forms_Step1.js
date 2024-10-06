@@ -148,10 +148,12 @@ export default function Audio_Forms_Step1({ handleNextStep, original_content_fil
                 >
                   Especifica o Conteúdo...
                 </option>
-                <option value="Poster">Poster</option>
-                <option value="Banner">Banner</option>
-                <option value="Video">Video</option>
-                <option value="Outro">Outro</option>
+                <option value="Podcast">Podcast</option>
+                <option value="Audiolivro">Audiolivro</option>
+                <option value="Entrevista">Entrevista</option>
+                <option value="Aula gravada">Aula gravada</option>
+                <option value="Apresentação">Apresentação</option>
+                <option value="Documento académico">Documento académico</option>
               </select>
             </div>
           </div>
