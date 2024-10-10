@@ -21,9 +21,9 @@ export default function Imagem() {
   const [accessibleAudioFiles, setAccessibleAudioFiles] = useState([]);
 
   const tempImageContentSliceData = useSelector((state) => state.TempImageContentSlice);
-  /* const { name, numMecan } = useSelector((state) => state.userSlice); */
+  const { name, numMecan } = useSelector((state) => state.userSlice);
 
-  /* const router = useRouter(); */
+  const router = useRouter();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export default function Imagem() {
     dispatch(removeSection(imageIdToDelete));
   };
 
-  /* const handleSubmit = useCallback(async (e) => {
+  const handleSubmit = useCallback(async (e) => {
     e && e.preventDefault(); // Este código é importante para evitar que o utilizador envie o formulário sem querer ao precionar "enter" enquanto prencher algum input dentro do forms.
     console.log(tempImageContentSliceData);
     console.log(original_content_file);
@@ -65,7 +65,7 @@ export default function Imagem() {
         original_content_language: tempImageContentSliceData.original_content_language,
         description: tempImageContentSliceData.description,
         title: tempImageContentSliceData.title,
-        content_typology: 'Texto',
+        content_typology: 'Imagem',
         numMecan,
         author: name,
       };
@@ -73,7 +73,6 @@ export default function Imagem() {
       for (const fieldName in fieldsToUploadStep1) {
         formData.append(fieldName, fieldsToUploadStep1[fieldName]);
       }
-      formData.append('file', original_content_file);
 
       //
       // Step 2
@@ -81,8 +80,10 @@ export default function Imagem() {
       formData.append('created_content_language', tempImageContentSliceData.created_content_language);
       tempImageContentSliceData.sections.forEach((section, index) => {
         const sectionAudio = accessibleAudioFiles.find((audio) => audio.id === section.id);
+        const sectionImage = original_content_file.find((file) => file.id === section.id);
         formData.append(`sections[${index}].id`, section.id);
-        formData.append(`sections[${index}].title`, section.title);
+        formData.append(`sections[${index}].description`, section.description);
+        formData.append(`sectionOriginalFiles[${index}]`, sectionImage.file);
         formData.append(`sectionFiles[${index}]`, sectionAudio.audioFile); // send the file on a separate array, to help multer on backend
       });
 
@@ -100,7 +101,7 @@ export default function Imagem() {
       router.push('/');
     } catch (e) {
       console.error('Could not send content:', e);
-      toast.error("Sentimos muito, mas houve um erro ao tentar criar o seu conteúdo. Estamos a trabalhar para resolver isso. Por favor, tente novamente mais tarde.", {
+      toast.error('Sentimos muito, mas houve um erro ao tentar criar o seu conteúdo. Estamos a trabalhar para resolver isso. Por favor, tente novamente mais tarde.', {
         style: {
           background: '#f3b21b',
           color: '#1c1c1c',
@@ -108,7 +109,7 @@ export default function Imagem() {
         },
       });
     }
-  }); */
+  });
 
   return (
     <main className="main">
@@ -127,7 +128,7 @@ export default function Imagem() {
         {step === 2 && ( // trocar os numeros dos steps novamente (apenas os troquei para facilitar a edição do step 2)
           <Image_Forms_Step2
             handlePreviousStep={handlePreviousStep}
-            /* handleSubmit={handleSubmit} */
+            handleSubmit={handleSubmit}
             original_content_file={original_content_file}
             setOriginal_content_file={setOriginal_content_file}
             accessibleAudioFiles={accessibleAudioFiles}

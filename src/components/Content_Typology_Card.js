@@ -49,30 +49,47 @@ export default function Content_Typology_Card(props) {
           <div className="type-examples-container">
             <span>Livros</span>
             <span>Artigos</span>
-            <span>Documentos Académicos</span>
+            <span>Relatórios</span>
+            <span>Teses</span>
+            <span>Dissertações</span>
+            <span>Slides</span>
+            <span>Documentos académicos</span>
           </div>
         );
       case 'Imagem':
         return (
           <div className="type-examples-container">
-            <span>Palestras</span>
-            <span>Apresentações (slides)</span>
+            <span>Fotografias</span>
+            <span>Ilustrações</span>
+            <span>Cartazes</span>
+            <span>Slides</span>
+            <span>Infográficos</span>
+            <span>Diagramas</span>
+            <span>Gráficos</span>
+            <span>Documentos académicos</span>
           </div>
         );
       case 'Áudio':
         return (
           <div className="type-examples-container">
-            <span>Fotografias</span>
-            <span>Slides</span>
-            <span>Cartazes</span>
+            <span>Podcasts</span>
+            <span>Audiolivros</span>
+            <span>Entrevistas</span>
+            <span>Aulas gravadas</span>
+            <span>Apresentações</span>
+            <span>Documentos académicos</span>
           </div>
         );
       case 'Vídeo':
         return (
           <div className="type-examples-container">
+            <span>Filmes</span>
+            <span>Animações</span>
+            <span>Apresentações</span>
+            <span>Seminários</span>
             <span>Palestras</span>
-            <span>Documentários</span>
-            <span>Tutoriais</span>
+            <span>Entrevistas</span>
+            <span>Documentos académicos</span>
           </div>
         );
     }

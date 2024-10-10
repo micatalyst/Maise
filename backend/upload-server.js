@@ -35,16 +35,32 @@ readDb();
 // Set up storage location and file naming
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
+    const parsedBody = qs.parse(req.body, { allowDots: true });
     let savePath = `uploads/${req.res.locals.newSectionId}`;
-    if (file.fieldname === 'file') {
-      // default path, already set
-      console.log(`Saving file (${file.originalname}) to ${savePath}`);
-    } else if (file.fieldname.startsWith('sectionFiles')) {
-      const sectionIndex = /sectionFiles\[(\d*)\]/.exec(file.fieldname)[1]; // regex to get the index
-      const sectionId = req.body[`sections[${sectionIndex}].id`];
-      savePath = `/uploads/${req.res.locals.newSectionId}/audios/${sectionId}`;
-      console.log(`Saving section ${sectionId} file (${file.originalname}) to ${savePath}`);
+    if (parsedBody.content_typology !== 'Imagem') {
+      if (file.fieldname === 'file') {
+        // default path, already set
+        console.log(`Saving file (${file.originalname}) to ${savePath}`);
+      } else if (file.fieldname.startsWith('sectionFiles')) {
+        const sectionIndex = /sectionFiles\[(\d*)\]/.exec(file.fieldname)[1]; // regex to get the index
+        const sectionId = req.body[`sections[${sectionIndex}].id`];
+        savePath = `/uploads/${req.res.locals.newSectionId}/audios/${sectionId}`;
+        console.log(`Saving section ${sectionId} file (${file.originalname}) to ${savePath}`);
+      }
+    } else {
+      if (file.fieldname.startsWith('sectionFiles')) {
+        const sectionIndex = /sectionFiles\[(\d*)\]/.exec(file.fieldname)[1]; // regex to get the index
+        const sectionId = req.body[`sections[${sectionIndex}].id`];
+        savePath = `/uploads/${req.res.locals.newSectionId}/sections/${sectionId}/audios`;
+        console.log(`Saving section ${sectionId} file (${file.originalname}) to ${savePath}`);
+      } else if (file.fieldname.startsWith('sectionOriginalFiles')) {
+        const sectionIndex = /sectionOriginalFiles\[(\d*)\]/.exec(file.fieldname)[1]; // regex to get the index
+        const sectionId = req.body[`sections[${sectionIndex}].id`];
+        savePath = `/uploads/${req.res.locals.newSectionId}/sections/${sectionId}/originalImage`;
+        console.log(`Saving section ${sectionId} file (${file.originalname}) to ${savePath}`);
+      }
     }
+
     const uploadPath = path.join(__dirname, savePath);
     if (!fs.existsSync(uploadPath)) {
       fs.mkdirSync(uploadPath, { recursive: true });
@@ -58,7 +74,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({
   storage,
-  limits: { fileSize: 50 * 1024 * 1024 }, // 50MB limit
+  limits: { fileSize: 500 * 1024 * 1024 }, // 500 MB limit
 });
 
 app.use((req, res, next) => {
@@ -87,14 +103,14 @@ app.get('/content', (req, res) => {
   res.send(db.data);
 });
 
-const getNewSectionId = (req, res, next) => {
+const getNewId = (req, res, next) => {
   res.locals.newSectionId = generateUniqueId();
   next();
 };
 
 // const contentFiles = upload.fields([{ name: 'file', maxCount: 1 }, { name: 'sectionFiles' }]); // not working: MulterError: Unexpected field
 const contentFiles = upload.any(); // accept any file (on any field)
-app.post('/content', getNewSectionId, contentFiles, async (req, res) => {
+app.post('/content', getNewId, contentFiles, async (req, res) => {
   const parsedBody = qs.parse(req.body, { allowDots: true });
   //console.log('parsed body', parsedBody);
   //console.log('File uploaded:', req.file && `/uploads/${res.locals.newSectionId}/${req.file.filename}`);
@@ -117,19 +133,41 @@ app.post('/content', getNewSectionId, contentFiles, async (req, res) => {
   const newContent = {
     ...parsedBody,
     id: res.locals.newSectionId,
-    originalFilePath: `/uploads/${res.locals.newSectionId}/${originalFilePath}`,
     publish_date: dateFormatter.format(new Date()),
     saved: false,
     numMecan: Number.parseInt(parsedBody.numMecan, 10),
   };
 
-  // Add audio files path to each section
-  newContent.sections.forEach((section, index) => {
-    const foundFile = req.files.find((file) => file.fieldname === `sectionFiles[${index}]`)?.filename;
-    if (foundFile) {
-      section.audioFilePath = `/uploads/${res.locals.newSectionId}/audios/${section.id}/${foundFile}`;
-    }
-  });
+  if (parsedBody.content_typology !== 'Imagem') {
+    newContent.originalFilePath = `/uploads/${res.locals.newSectionId}/${originalFilePath}`;
+  }
+
+  // Add audio files path to each Text section
+  if (parsedBody.content_typology === 'Texto') {
+    newContent.sections.forEach((section, index) => {
+      const foundFile = req.files.find((file) => file.fieldname === `sectionFiles[${index}]`)?.filename;
+      if (foundFile) {
+        section.audioFilePath = `/uploads/${res.locals.newSectionId}/audios/${section.id}/${foundFile}`;
+      }
+    });
+  }
+
+  // Add audio files path to each Image section
+  if (parsedBody.content_typology === 'Imagem') {
+    newContent.sections.forEach((section, index) => {
+      const foundFile = req.files.find((file) => file.fieldname === `sectionFiles[${index}]`)?.filename;
+      if (foundFile) {
+        section.audioFilePath = `/uploads/${res.locals.newSectionId}/sections/${section.id}/audios/${foundFile}`;
+      }
+    });
+
+    newContent.sections.forEach((section, index) => {
+      const foundOriginalFile = req.files.find((file) => file.fieldname === `sectionOriginalFiles[${index}]`)?.filename;
+      if (foundOriginalFile) {
+        section.ImageFilePath = `/uploads/${res.locals.newSectionId}/sections/${section.id}/originalImage/${foundOriginalFile}`;
+      }
+    });
+  }
   console.log(newContent);
 
   db.data.unshift(newContent); // add to the array of contents / local Memory

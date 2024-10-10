@@ -19,9 +19,9 @@ export default function Video() {
   /* const [accessibleAudioFiles, setAccessibleAudioFiles] = useState([]); */
 
   const tempVideoContentSliceData = useSelector((state) => state.TempVideoContentSlice);
-  /* const { name, numMecan } = useSelector((state) => state.userSlice); */
+  const { name, numMecan } = useSelector((state) => state.userSlice);
 
-  /* const router = useRouter(); */
+  const router = useRouter();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -36,12 +36,12 @@ export default function Video() {
     setStep(step - 1);
   };
 
-  /* const handleSubmit = useCallback(async (e) => {
+  const handleSubmit = useCallback(async (e) => {
     e && e.preventDefault(); // Este código é importante para evitar que o utilizador envie o formulário sem querer ao precionar "enter" enquanto prencher algum input dentro do forms.
     console.log(tempVideoContentSliceData);
     console.log(original_content_file);
 
-    console.log(accessibleAudioFiles);
+    // console.log(accessibleAudioFiles);
 
     try {
       const formData = new FormData();
@@ -57,7 +57,7 @@ export default function Video() {
         original_content_language: tempVideoContentSliceData.original_content_language,
         description: tempVideoContentSliceData.description,
         title: tempVideoContentSliceData.title,
-        content_typology: 'Texto',
+        content_typology: 'Vídeo',
         numMecan,
         author: name,
       };
@@ -70,12 +70,19 @@ export default function Video() {
       //
       // Step 2
       //
-      formData.append('created_content_language', tempVideoContentSliceData.created_content_language);
-      tempVideoContentSliceData.sections.forEach((section, index) => {
-        const sectionAudio = accessibleAudioFiles.find((audio) => audio.id === section.id);
-        formData.append(`sections[${index}].id`, section.id);
-        formData.append(`sections[${index}].title`, section.title);
-        formData.append(`sectionFiles[${index}]`, sectionAudio.audioFile); // send the file on a separate array, to help multer on backend
+      // formData.append('created_content_language', tempVideoContentSliceData.created_content_language);
+      tempVideoContentSliceData.videoSubtitles.forEach((videoSubtitle, index) => {
+        formData.append(`videoSubtitles[${index}].id`, videoSubtitle.id);
+        formData.append(`videoSubtitles[${index}].created_content_language`, videoSubtitle.language);
+        formData.append(`videoSubtitles[${index}].date`, videoSubtitle.date);
+        //formData.append(`videoSubtitles[${index}].subtitlesCues`, JSON.stringify(videoSubtitle.subtitlesCues));
+        videoSubtitle.subtitlesCues.forEach((cue, cueIndex) => {
+          formData.append(`videoSubtitles[${index}].subtitlesCues[${cueIndex}].id`, cue.id);
+          formData.append(`videoSubtitles[${index}].subtitlesCues[${cueIndex}].startTime`, cue.startTime);
+          formData.append(`videoSubtitles[${index}].subtitlesCues[${cueIndex}].endTime`, cue.endTime);
+          formData.append(`videoSubtitles[${index}].subtitlesCues[${cueIndex}].text`, cue.text);
+        });
+        // formData.append(`sectionFiles[${index}]`, sectionAudio.audioFile); // send the file on a separate array, to help multer on backend
       });
 
       // Debug formData:
@@ -92,7 +99,7 @@ export default function Video() {
       router.push('/');
     } catch (e) {
       console.error('Could not send content:', e);
-      toast.error("Sentimos muito, mas houve um erro ao tentar criar o seu conteúdo. Estamos a trabalhar para resolver isso. Por favor, tente novamente mais tarde.", {
+      toast.error('Sentimos muito, mas houve um erro ao tentar criar o seu conteúdo. Estamos a trabalhar para resolver isso. Por favor, tente novamente mais tarde.', {
         style: {
           background: '#f3b21b',
           color: '#1c1c1c',
@@ -100,7 +107,7 @@ export default function Video() {
         },
       });
     }
-  }); */
+  });
 
   return (
     <main className="main">
@@ -118,7 +125,7 @@ export default function Video() {
         {step === 2 && ( // trocar os numeros dos steps novamente (apenas os troquei para facilitar a edição do step 2)
           <Video_Forms_Step2
             handlePreviousStep={handlePreviousStep}
-            /* handleSubmit={handleSubmit} */
+            handleSubmit={handleSubmit}
             original_content_file={original_content_file}
             original_content_PreviewUrl={original_content_PreviewUrl}
           />

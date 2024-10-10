@@ -3,8 +3,8 @@
 .content-card {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: max-content 1fr max-content;
-  row-gap: 40px;
+  grid-template-rows: max-content 1fr max-content max-content;
+  row-gap: 20px;
 
   background-color: var(--cards-bg);
   min-width: min-content;
@@ -57,6 +57,14 @@
       text-overflow: ellipsis;
       //white-space: nowrap;
     }
+  }
+
+  .content-card-category {
+    font-size: $caption-text-size;
+    padding: 4px 8px;
+    background-color: var(--content-card-category-bg-color);
+    height: max-content;
+    width: max-content;
   }
 
   .content-card-date {

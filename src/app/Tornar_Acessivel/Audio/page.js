@@ -17,9 +17,9 @@ export default function Audio() {
   const [original_content_PreviewUrl, setOriginal_content_PreviewUrl] = useState('');
 
   const tempAudioContentSliceData = useSelector((state) => state.TempAudioContentSlice);
-  /* const { name, numMecan } = useSelector((state) => state.userSlice); */
+  const { name, numMecan } = useSelector((state) => state.userSlice);
 
-  /* const router = useRouter(); */
+  const router = useRouter();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -34,12 +34,10 @@ export default function Audio() {
     setStep(step - 1);
   };
 
-  /* const handleSubmit = useCallback(async (e) => {
+  const handleSubmit = useCallback(async (e) => {
     e && e.preventDefault(); // Este código é importante para evitar que o utilizador envie o formulário sem querer ao precionar "enter" enquanto prencher algum input dentro do forms.
     console.log(tempAudioContentSliceData);
     console.log(original_content_file);
-
-    console.log(accessibleAudioFiles);
 
     try {
       const formData = new FormData();
@@ -55,7 +53,7 @@ export default function Audio() {
         original_content_language: tempAudioContentSliceData.original_content_language,
         description: tempAudioContentSliceData.description,
         title: tempAudioContentSliceData.title,
-        content_typology: 'Texto',
+        content_typology: 'Áudio',
         numMecan,
         author: name,
       };
@@ -70,10 +68,12 @@ export default function Audio() {
       //
       formData.append('created_content_language', tempAudioContentSliceData.created_content_language);
       tempAudioContentSliceData.sections.forEach((section, index) => {
-        const sectionAudio = accessibleAudioFiles.find((audio) => audio.id === section.id);
         formData.append(`sections[${index}].id`, section.id);
         formData.append(`sections[${index}].title`, section.title);
-        formData.append(`sectionFiles[${index}]`, sectionAudio.audioFile); // send the file on a separate array, to help multer on backend
+        formData.append(`sections[${index}].description`, section.description);
+        formData.append(`sections[${index}].startTime`, section.startTime);
+        formData.append(`sections[${index}].endTime`, section.endTime);
+        // formData.append(`sectionFiles[${index}]`, sectionAudio.audioFile); // send the file on a separate array, to help multer on backend
       });
 
       // Debug formData:
@@ -90,7 +90,7 @@ export default function Audio() {
       router.push('/');
     } catch (e) {
       console.error('Could not send content:', e);
-      toast.error("Sentimos muito, mas houve um erro ao tentar criar o seu conteúdo. Estamos a trabalhar para resolver isso. Por favor, tente novamente mais tarde.", {
+      toast.error('Sentimos muito, mas houve um erro ao tentar criar o seu conteúdo. Estamos a trabalhar para resolver isso. Por favor, tente novamente mais tarde.', {
         style: {
           background: '#f3b21b',
           color: '#1c1c1c',
@@ -98,7 +98,7 @@ export default function Audio() {
         },
       });
     }
-  }); */
+  });
 
   return (
     <main className="main">
@@ -116,7 +116,7 @@ export default function Audio() {
         {step === 2 && ( // trocar os numeros dos steps novamente (apenas os troquei para facilitar a edição do step 2)
           <Audio_Forms_Step2
             handlePreviousStep={handlePreviousStep}
-            //handleSubmit={handleSubmit}
+            handleSubmit={handleSubmit}
             original_content_file={original_content_file}
           />
         )}

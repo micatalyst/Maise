@@ -7,13 +7,37 @@
   row-gap: 40px;
   justify-content: space-between;
 
+  padding: $content-cards-container-padding;
+
+  overflow: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+
+  &.ArquivoUA {
+    max-height: $content-cards-container-ArquivoUA-max-height;
+  }
+
+  &.AreaPessoal {
+    max-height: $content-cards-container-AreaPessoal-max-height;
+  }
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: var(--content-scrollbar-bg-color);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--content-scrollbar-color);
+  }
+
   /* display: grid;
   grid-template-columns: repeat(5, max-content);
   column-gap: 30px;
   row-gap: 50px; 
   justify-content: space-between; */
-
-  padding: $content-cards-container-padding;
 
   /* @media (min-width: 600px) {
     justify-content: space-between;

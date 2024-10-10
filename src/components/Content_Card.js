@@ -35,6 +35,7 @@ export default function Content_Card(props) {
           <h4>{props.title}</h4>
           {/* {props.sections && props.sections.length && <div>{props.sections.length} secções</div>} */}
         </div>
+        <span className="content-card-category">{props.category}</span>
         <div className="content-card-date">
           <span>{props.date}</span>
         </div>

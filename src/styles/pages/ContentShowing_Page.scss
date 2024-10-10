@@ -2,7 +2,7 @@
 
 .content-showing-container {
   display: grid;
-  grid-template-columns: 684px 1fr;
+  grid-template-columns: 1fr minmax(auto, 86ch);
   grid-template-rows: 1fr;
   gap: 40px;
 
@@ -82,7 +82,7 @@
   .created-content-visualization-container {
     display: grid;
     grid-template-columns: 1fr;
-
+    padding: 30px;
     background-color: var(--cards-bg);
   }
 }

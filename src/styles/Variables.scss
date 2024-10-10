@@ -64,6 +64,7 @@ $informative-Blue-20: #d0e1f5; // Dark_Gray (12.80)
   --tab-under-line-color: #{$light-gray};
 
   --content-card-date-text-color: #{$gray-2};
+  --content-card-category-bg-color: #{$informative-Blue-20};
 
   --content-typology-example-title: #{$dark-gray};
   --content-typology-examples-bg: #{$light-gray};
@@ -130,8 +131,9 @@ $informative-Blue-20: #d0e1f5; // Dark_Gray (12.80)
 } */
 
 // Spacing
-
 $header-padding: 40px 70px 0;
+$main-min-height: calc(100svh - #{nth($header-padding, 1)} - 48px);
+
 $main-padding: 40px 70px 70px;
 $tab-container-margin: 0 0 20px;
 $tab-padding-bottom: 10px;
@@ -139,12 +141,14 @@ $toolbar-margin: 0 0 40px;
 $input-padding: 12px 45px 12px 20px;
 $textarea-padding: 12px 20px;
 $input-forms-padding: 12px 20px;
+
 $content-cards-container-padding: 0 0 40px;
+$content-cards-container-ArquivoUA-max-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 46.5px - 40px);
+$content-cards-container-AreaPessoal-max-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 39px - 20px - 46.5px - 40px);
+
 $content-cards-padding: 15px;
 $content-typology-pre-info-margin: 0 0 40px;
 $content-typology-cards-padding: 30px;
-
-$main-min-height: calc(100svh - #{nth($header-padding, 1)} - 48px);
 
 $content-showing-description-paragraph-max-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 232px - 40px - 42px - 40px - 27px - 15px - 30px - 30px);
 

@@ -10,7 +10,7 @@ import Content_Card from '@/components/Content_Card';
 import { useDispatch } from 'react-redux';
 import { updateItem } from '@/slicers/dataSlice';
 
-export default function Content_Cards_Container({ data }) {
+export default function Content_Cards_Container({ site, data }) {
   const dispatch = useDispatch();
 
   const toggleSaved = useCallback(async (item) => {
@@ -51,12 +51,13 @@ export default function Content_Cards_Container({ data }) {
 
   return (
     <div className="content-cards-area">
-      <div className="content-cards-container">
+      <div className={site === "ArquivoUA" ? "content-cards-container ArquivoUA" : site === "AreaPessoal" ? "content-cards-container AreaPessoal" : "content-cards-container"}>
         {data.map((item, index) => (
           <Content_Card
             key={index}
             id={item.id}
             type={item.content_typology}
+            category={item.original_content_category}
             title={item.title}
             date={item.publish_date}
             saved={item.saved}

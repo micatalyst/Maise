@@ -21,7 +21,7 @@ import Modal_Image_forms from '@/components/Imagem/Modal_Image_forms';
 import Audio_Visualiser from '@/components/Audio_Visualiser';
 import StepValidationFeedback from '@/components/StepValidationFeedback';
 
-export default function Image_Forms_Step2({ handlePreviousStep, handleSubmit, original_content_file, setOriginal_content_file, accessibleAudioFiles, setAccessibleAudioFiles }) {
+export default function Image_Forms_Step2({ handlePreviousStep, handleSubmit, setOriginal_content_file, accessibleAudioFiles, setAccessibleAudioFiles }) {
   const created_content_language = useSelector((state) => state.TempImageContentSlice.created_content_language);
 
   const sections = useSelector((state) => state.TempImageContentSlice.sections);
@@ -225,7 +225,6 @@ export default function Image_Forms_Step2({ handlePreviousStep, handleSubmit, or
               <Image_Section
                 key={item.id}
                 item={item}
-                original_content_file={original_content_file}
                 handleSectionActivation={handleSectionActivation}
                 handleDragStart={handleDragStart}
                 handleDragEnd={handleDragEnd}
@@ -289,13 +288,13 @@ export default function Image_Forms_Step2({ handlePreviousStep, handleSubmit, or
         <div className="image-preview-description">
           {activeSection && (
             <>
-              <label htmlFor="title">Descrição alternativa</label>
+              <label htmlFor="description">Descrição alternativa</label>
               <input
-                id="title"
-                name="title"
+                id="description"
+                name="description"
                 type="text"
                 placeholder="Descrição pequena e direta..."
-                maxLength="57"
+                maxLength="150"
                 value={activeSection.description ? activeSection.description : ''}
                 onChange={(e) => handleUpdateSection(e.target.value)}
               />

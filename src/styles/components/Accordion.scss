@@ -1,0 +1,72 @@
+@import '../Variables.scss';
+
+.accordion-container {
+  display: grid;
+  border-bottom: 2px solid var(--content-creating-limit-border-color);
+  transition: height 0.5s ease-in-out;
+
+  .accordion-header {
+    display: grid;
+    grid-template-columns: 1fr;
+
+    .accordion-dropdown-button {
+      display: grid;
+      grid-template-columns: max-content 1fr;
+      gap: 20px;
+
+      align-items: center;
+      justify-items: start;
+
+      padding: 20px 0;
+
+      border: 0;
+      border-radius: $border-radius-2;
+      font-weight: $bold;
+      font-size: $nav-font-size;
+
+      background-color: $transparent;
+
+      svg {
+        color: var(--icons-1-color);
+        height: 17px;
+        stroke: var(--icons-1-color);
+        stroke-width: 10;
+      }
+
+      &.audio-time {
+        grid-template-columns: max-content 1fr max-content;
+      }
+    }
+
+    h3 {
+      margin: 0;
+    }
+
+    .section-time {
+      p {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--audio-section-time-bg-color);
+        color: var(--audio-section-time-text-color);
+        font-weight: $bold;
+        width: fit-content;
+        height: 100%;
+        border-radius: $border-radius-2;
+
+        padding: 5px 12px;
+        line-height: normal;
+      }
+    }
+  }
+
+  .accordion-body {
+    overflow: hidden;
+    max-height: 0;
+    padding: 0;
+
+    transition:
+      max-height 0.3s ease-in-out,
+      padding 0.3s ease-in-out;
+  }
+}

@@ -7,6 +7,8 @@ import { fetchContentById } from '@/slicers/dataSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
+import Accordion from '@/components/Accordion';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFile } from '@fortawesome/free-solid-svg-icons';
 
@@ -28,6 +30,49 @@ export default function Conteudo() {
       window.open(fileUrl, '_blank');
     } else {
       // trigger de feedback a dizer que o documento não está disponível
+    }
+  };
+
+  const typeExamples = (type) => {
+    switch (type) {
+      case 'Texto':
+        return (
+          <div className="Content-showing-text-container">
+            <Accordion type="Texto" />
+          </div>
+        );
+      case 'Imagem':
+        return (
+          <div className="Content-showing-image-container">
+            <span>Fotografias</span>
+            <span>Ilustrações</span>
+            <span>Cartazes</span>
+            <span>Slides</span>
+            <span>Infográficos</span>
+            <span>Diagramas</span>
+            <span>Gráficos</span>
+            <span>Documentos académicos</span>
+          </div>
+        );
+      case 'Áudio':
+        return (
+          <div className="Content-showing-audio-container">
+            <Accordion type="Áudio" />
+            <Accordion type="Áudio" />
+          </div>
+        );
+      case 'Vídeo':
+        return (
+          <div className="Content-showing-video-container">
+            <span>Filmes</span>
+            <span>Animações</span>
+            <span>Apresentações</span>
+            <span>Seminários</span>
+            <span>Palestras</span>
+            <span>Entrevistas</span>
+            <span>Documentos académicos</span>
+          </div>
+        );
     }
   };
 
@@ -75,7 +120,7 @@ export default function Conteudo() {
                   </div>
                 </div>
               </div>
-              <div class="created-content-visualization-container"></div>
+              <div class="created-content-visualization-container">{typeExamples(currentContent.content_typology)}</div>
             </div>
           )}
     </main>

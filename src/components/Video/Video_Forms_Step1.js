@@ -155,7 +155,6 @@ export default function Video_Forms_Step1({ handleNextStep, original_content_fil
                 <option value="Seminário">Seminário</option>
                 <option value="Palestra">Palestra</option>
                 <option value="Entrevista">Entrevista</option>
-                <option value="Aula gravada">Aula gravada</option>
                 <option value="Apresentação">Apresentação</option>
                 <option value="Documento académico">Documento académico</option>
               </select>
