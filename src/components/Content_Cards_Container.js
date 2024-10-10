@@ -51,7 +51,7 @@ export default function Content_Cards_Container({ site, data }) {
 
   return (
     <div className="content-cards-area">
-      <div className={site === "ArquivoUA" ? "content-cards-container ArquivoUA" : site === "AreaPessoal" ? "content-cards-container AreaPessoal" : "content-cards-container"}>
+      <div className={site === 'ArquivoUA' ? 'content-cards-container ArquivoUA' : site === 'AreaPessoal' ? 'content-cards-container AreaPessoal' : 'content-cards-container'}>
         {data.map((item, index) => (
           <Content_Card
             key={index}

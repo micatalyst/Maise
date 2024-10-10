@@ -101,7 +101,10 @@ export default function Arquivo_UA() {
         onFilterType={handleFilter}
         onSearch={handleSearch}
       />
-      <Content_Cards_Container site="ArquivoUA" data={finalData} />
+      <Content_Cards_Container
+        site="ArquivoUA"
+        data={finalData}
+      />
     </main>
   );
 }

@@ -96,7 +96,10 @@ export default function Area_Pessoal() {
             onSearch={handleSearch}
             onTabUpdate={filterTab}
           />
-          <Content_Cards_Container site="AreaPessoal" data={finalData} />
+          <Content_Cards_Container
+            site="AreaPessoal"
+            data={finalData}
+          />
         </div>
         <div>
           <Content_Typology_General_Card />
