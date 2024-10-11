@@ -1,0 +1,39 @@
+@import '../Variables.scss';
+
+.all-subtitles-table-body {
+  // todo o conteúdo do corpo da tabela
+  display: grid;
+
+  //height: 100%;
+  align-items: center;
+  padding: 10px 15px;
+  border-bottom: 1px solid var(--content-creating-limit-border-color);
+
+  &.first-body-component {
+    padding-left: 20px;
+  }
+}
+
+.subtitles-active {
+  font-size: $section-title-text-size;
+  font-weight: $bold;
+  padding: 4px 12px;
+  border-radius: $border-radius-5;
+  background-color: var(--content-detail-video-active-subtitles-mark-bg-color);
+  color: var(--content-detail-video-active-subtitles-mark-text-color);
+}
+
+.all-subtitles-table-section {
+  display: grid;
+  grid-template-columns: 1fr max-content max-content;
+
+  .all-subtitles-table-section-btns {
+    display: grid;
+    grid-template-columns: max-content;
+    gap: 20px;
+
+    padding-right: 20px;
+
+    align-content: center;
+  }
+}

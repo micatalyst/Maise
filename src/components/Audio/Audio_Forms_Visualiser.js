@@ -42,7 +42,7 @@ export default function Audio_Forms_Visualiser({ original_content_file, globalAu
       // Audio file decoded, set the time on wavesurfer
       wavesurferDecoded.current = true;
 
-      console.log(file);
+      //console.log(file);
 
       if (wavesurfer) {
         const time = 0;
@@ -94,7 +94,7 @@ export default function Audio_Forms_Visualiser({ original_content_file, globalAu
     } else {
       console.log('Nenhum arquivo ou Wavesurfer disponível.');
     }
-  }, [wavesurfer]);
+  }, [wavesurfer, original_content_file]);
 
   const onPlayPause = () => {
     wavesurfer && wavesurfer.playPause();

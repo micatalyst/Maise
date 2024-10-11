@@ -2,9 +2,13 @@
 
 .content-showing-container {
   display: grid;
-  grid-template-columns: 1fr minmax(auto, 86ch);
+  grid-template-columns: 1fr minmax(auto, 90ch);
   grid-template-rows: 1fr;
   gap: 40px;
+
+  &.video {
+    grid-template-columns: 1fr max-content;
+  }
 
   .original-content-general-info-container {
     display: grid;
@@ -42,6 +46,10 @@
       display: grid;
       grid-template-columns: 1fr max-content;
       gap: 40px;
+
+      &.image {
+        grid-template-columns: 1fr;
+      }
 
       .original-content-adicional-info-container {
         display: grid;
@@ -82,7 +90,142 @@
   .created-content-visualization-container {
     display: grid;
     grid-template-columns: 1fr;
-    padding: 30px;
+    //padding: 30px 30px 30px 50px;
     background-color: var(--cards-bg);
+
+    .Content-showing-container-audio-text {
+      margin: 30px 30px 30px 50px;
+      padding-right: 20px;
+      max-height: $content-showing-container-max-height;
+
+      overflow: auto;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+
+      &::-webkit-scrollbar {
+        width: 5px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background-color: var(--content-scrollbar-bg-color);
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: var(--content-scrollbar-color);
+      }
+    }
+
+    .Content-showing-container-image {
+      margin: 30px;
+
+      max-height: $content-showing-container-max-height;
+    }
+
+    .Content-showing-container-video {
+      margin: 30px;
+
+      max-height: $content-showing-container-max-height;
+
+      /* overflow: auto;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+
+      &::-webkit-scrollbar {
+        width: 5px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background-color: var(--content-scrollbar-bg-color);
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: var(--content-scrollbar-color);
+      } */
+
+      .video-display {
+        display: grid;
+        grid-template-columns: max-content;
+        position: relative;
+
+        /* overflow: auto;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+
+        &::-webkit-scrollbar {
+          width: 5px;
+        }
+
+        &::-webkit-scrollbar-track {
+          background-color: var(--content-scrollbar-bg-color);
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background-color: var(--content-scrollbar-color);
+        } */
+
+        .video {
+          aspect-ratio: 16 / 9;
+          //width: calc(90ch - 30px - 30px);
+          height: calc($content-showing-video-responsive-height);
+          //background-color: var(--video-bg-color);
+        }
+
+        .current-subtitles-showing {
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          bottom: 55px;
+
+          background-color: var(--video-current-subtitles-showing-bg-color);
+          color: var(--video-current-subtitles-showing-text-color);
+          padding: 5px 10px;
+
+          text-align: center;
+          max-width: 40ch;
+        }
+      }
+
+      .all-subtitles-table {
+        display: grid;
+        grid-template-columns: minmax(140px, max-content) 1fr;
+
+        margin-top: 20px;
+
+        overflow: auto;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+        max-height: $video-forms-step2-all-subtitles-table-content-max-height;
+
+        &::-webkit-scrollbar {
+          width: 5px;
+        }
+
+        &::-webkit-scrollbar-track {
+          background-color: var(--content-scrollbar-bg-color);
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background-color: var(--content-scrollbar-color);
+        }
+
+        .all-subtitles-table-header {
+          grid-row: 1; // Targets the first row
+
+          background-color: var(--video-all-subtitles-table-header-bg-color);
+          color: var(--video-all-subtitles-table-header-text-color);
+
+          padding: 8px 20px;
+
+          position: sticky;
+          top: 0;
+          //z-index: 5;
+
+          span {
+            font-size: $body-text-2;
+            font-weight: $bold;
+          }
+        }
+      }
+    }
   }
 }

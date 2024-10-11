@@ -124,6 +124,9 @@ $informative-Blue-20: #d0e1f5; // Dark_Gray (12.80)
 
   --audio-section-time-bg-color: #{$dark-gray};
   --audio-section-time-text-color: #{$white};
+
+  --content-detail-video-active-subtitles-mark-bg-color: #{$dark-gray};
+  --content-detail-video-active-subtitles-mark-text-color: #{$white};
 }
 
 /* [data-theme='dark'] {
@@ -151,6 +154,8 @@ $content-typology-pre-info-margin: 0 0 40px;
 $content-typology-cards-padding: 30px;
 
 $content-showing-description-paragraph-max-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 232px - 40px - 42px - 40px - 27px - 15px - 30px - 30px);
+$content-showing-container-max-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 30px - 30px);
+$content-showing-video-responsive-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 292px);
 
 $content-typology-card-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 48px - #{nth($content-typology-pre-info-margin, 3)});
 
