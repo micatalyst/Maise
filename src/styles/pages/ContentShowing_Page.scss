@@ -119,6 +119,64 @@
       margin: 30px;
 
       max-height: $content-showing-container-max-height;
+
+      display: grid;
+      grid-template-rows: max-content max-content 1fr;
+      gap: 20px;
+
+      .image-preview {
+        img {
+          object-fit: contain;
+          //height: 295px;
+          width: 100%;
+          border: 3px solid var(--image-uploaded-sections-border-color);
+          aspect-ratio: 16 / 9;
+        }
+      }
+
+      .image-preview-bottom-bar {
+        display: grid;
+        grid-template-columns: repeat(3, max-content) 1fr;
+        gap: 10px;
+
+        .imageSetBtn {
+          border-radius: $border-radius-5;
+          padding: 5px 12px;
+          min-width: 36px;
+          border: 0;
+
+          background-color: var(--audio-controls-buttons-bg-color);
+          color: var(--audio-controls-buttons-svg-color);
+          width: max-content;
+          height: max-content;
+
+          &:hover {
+            background-color: var(--audio-controls-buttons-bg-hover-color);
+          }
+        }
+
+        .imagesCountPreview {
+          font-size: $section-title-text-size;
+          font-weight: $bold;
+          padding: 5px 12px;
+          height: fit-content;
+          border-radius: $border-radius-5;
+          background-color: var(--content-detail-video-active-subtitles-mark-bg-color);
+          color: var(--content-detail-video-active-subtitles-mark-text-color);
+        }
+
+        .btnContentPreview {
+          justify-self: end;
+        }
+      }
+
+      .image-preview-audio {
+        align-self: end;
+
+        input {
+          width: 100%;
+        }
+      }
     }
 
     .Content-showing-container-video {
@@ -194,7 +252,7 @@
         overflow: auto;
         overflow-x: hidden;
         scroll-behavior: smooth;
-        max-height: $video-forms-step2-all-subtitles-table-content-max-height;
+        max-height: $content-showing-all-subtitles-table-content-max-height;
 
         &::-webkit-scrollbar {
           width: 5px;

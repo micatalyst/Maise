@@ -11,6 +11,9 @@ import { toast } from 'sonner';
 
 import { motion } from 'framer-motion';
 
+import Image from 'next/image';
+import Content_Showing_Image_AudioDescription from '@/components/Content_Showing_Image_AudioDescription';
+
 import Accordion from '@/components/Accordion';
 import Audio_Forms_Visualiser from '@/components/Audio/Audio_Forms_Visualiser';
 
@@ -18,7 +21,7 @@ import Video from 'next-video/player';
 import Content_Showing_Video_Subtitles_Section from '@/components/Content_Showing_Video_Subtitles_Section';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFile } from '@fortawesome/free-solid-svg-icons';
+import { faAngleLeft, faAngleRight, faFile } from '@fortawesome/free-solid-svg-icons';
 
 export default function Conteudo() {
   const searchParams = useSearchParams();
@@ -34,10 +37,35 @@ export default function Conteudo() {
   const [originalContentFile, setOriginalContentFile] = useState(null);
   const [originalFileUrl, setOriginalFileUrl] = useState(null);
 
+  // Audio variables
+
+  const [audioCurrentTime, setAudioCurrentTime] = useState(0);
+  const [audioDuration, setAudioDuration] = useState(0);
+  const globalAudioVolume = useRef(0.5);
+
+  // Image variables
+
+  const [imageTotalContent, setImageTotalContent] = useState(1);
+  const [imageSelectedContent, setImageSelectedContent] = useState(1);
+
+  const [audioFileUrlPath, setAudioFileUrlPath] = useState(null);
+
+  // Video variables
+
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [firstPlay, setFirstPlay] = useState(false);
+  const videoRef = useRef(null); // Para os controlos do video
+
+  const [videoCurrentTime, setVideoCurrentTime] = useState(0);
+
+  const [atualVideoSubtitles, setAtualVideoSubtitles] = useState(0);
+  const [isSubtitlesOn, setIsSubtitlesOn] = useState(false);
+  const [currentSubtitle, setCurrentSubtitle] = useState('');
+
   useEffect(() => {
     const createBlobFromUrl = async () => {
-      if (currentContent && currentContent.originalFilePath) {
-        const baseServerUrl = 'http://localhost:3001';
+      const baseServerUrl = 'http://localhost:3001';
+      if (currentContent && currentContent.originalFilePath && currentContent.content_typology !== 'Imagem') {
         const fileUrl = `${baseServerUrl}${currentContent.originalFilePath}`;
         setOriginalFileUrl(fileUrl);
         if (currentContent.content_typology === 'Áudio') {
@@ -57,6 +85,32 @@ export default function Conteudo() {
             console.error('Erro ao criar Blob do conteúdo original:', error);
           }
         }
+      } else if (currentContent) {
+        setImageTotalContent(currentContent.sections.length);
+
+        const fileUrl = `${baseServerUrl}${currentContent.sections[imageSelectedContent - 1].ImageFilePath}`; // imageSelectedContent - 1 (numero do slide ativo - 1 para obter o index)
+        setOriginalFileUrl(fileUrl);
+
+        //const audioFileUrlpath = `${baseServerUrl}${currentContent.sections[imageSelectedContent - 1].audioFilePath}`;
+        console.log(currentContent.sections[imageSelectedContent - 1].id);
+        setAudioFileUrlPath(`${baseServerUrl}${currentContent.sections[imageSelectedContent - 1].audioFilePath}`);
+        //console.log(audioFileUrl);
+        /*  try {
+          // Fazendo fetch do arquivo para obter os dados binários
+          const response = await fetch(audioFileUrl);
+          console.log(response);
+          const blob = await response.blob();
+
+          const fileName = currentContent.originalFilePath.split('/').pop();
+
+          // Cria um objeto File a partir do Blob, como se fosse o arquivo carregado
+          const file = new File([blob], fileName, { type: blob.type });
+          console.log(file);
+          // Passa o arquivo para o estado
+          
+        } catch (error) {
+          console.error('Erro ao criar Blob do conteúdo original:', error);
+        } */
       } else {
         // trigger de feedback a dizer que o documento não está disponível
         /*  toast.error('Sentimos muito, mas houve um erro ao tentar abrir o conteúdo original. Estamos a trabalhar para resolver isso. Por favor, tente novamente mais tarde.', {
@@ -70,7 +124,7 @@ export default function Conteudo() {
     };
 
     createBlobFromUrl();
-  }, [currentContent]);
+  }, [currentContent, imageSelectedContent]);
 
   const handleOriginalContentPreview = () => {
     if (originalFileUrl) {
@@ -78,23 +132,21 @@ export default function Conteudo() {
     }
   };
 
-  // Audio variables
+  // Image
 
-  const [audioCurrentTime, setAudioCurrentTime] = useState(0);
-  const [audioDuration, setAudioDuration] = useState(0);
-  const globalAudioVolume = useRef(0.5);
+  const handleNextImage = () => {
+    if (imageSelectedContent + 1 <= imageTotalContent) {
+      console.log('está a aumentar');
+      setImageSelectedContent((prevValue) => prevValue + 1);
+    }
+  };
 
-  // Video variables
-
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
-  const [firstPlay, setFirstPlay] = useState(false);
-  const videoRef = useRef(null); // Para os controlos do video
-
-  const [videoCurrentTime, setVideoCurrentTime] = useState(0);
-
-  const [atualVideoSubtitles, setAtualVideoSubtitles] = useState(0);
-  const [isSubtitlesOn, setIsSubtitlesOn] = useState(false);
-  const [currentSubtitle, setCurrentSubtitle] = useState('');
+  const handlePreviousImage = () => {
+    if (imageSelectedContent - 1 > 0) {
+      console.log('está a diminuir');
+      setImageSelectedContent((prevValue) => prevValue - 1);
+    }
+  };
 
   // Video
 
@@ -174,14 +226,56 @@ export default function Conteudo() {
       case 'Imagem':
         return (
           <div className="Content-showing-container-image">
-            <span>Fotografias</span>
-            <span>Ilustrações</span>
-            <span>Cartazes</span>
-            <span>Slides</span>
-            <span>Infográficos</span>
-            <span>Diagramas</span>
-            <span>Gráficos</span>
-            <span>Documentos académicos</span>
+            <div className="image-preview">
+              {currentContent && originalFileUrl && (
+                <Image
+                  src={originalFileUrl}
+                  //priority={true}
+                  alt="imagem não acessível"
+                  width={100}
+                  height={100}
+                  layout="responsive"
+                />
+              )}
+            </div>
+            <div className="image-preview-bottom-bar">
+              <button
+                className="imageSetBtn"
+                onClick={handlePreviousImage}
+              >
+                <FontAwesomeIcon icon={faAngleLeft} />
+              </button>
+              <button
+                className="imageSetBtn"
+                onClick={handleNextImage}
+              >
+                <FontAwesomeIcon icon={faAngleRight} />
+              </button>
+              <p className="imagesCountPreview">
+                {imageSelectedContent} / {imageTotalContent}
+              </p>
+              <button
+                className="primary-button btnContentPreview"
+                type="button"
+                onClick={handleOriginalContentPreview}
+              >
+                Abrir Imagem
+              </button>
+            </div>
+            <div className="image-preview-audio">
+              <Content_Showing_Image_AudioDescription
+                audioFilePath={audioFileUrlPath}
+                setAudioCurrentTime={setAudioCurrentTime}
+                setAudioDuration={setAudioDuration}
+                globalAudioVolume={globalAudioVolume}
+              />
+              {/* <Audio_Forms_Visualiser
+                setAudioCurrentTime={setAudioCurrentTime}
+                setAudioDuration={setAudioDuration}
+                globalAudioVolume={globalAudioVolume}
+                original_content_file={audioFile}
+              /> */}
+            </div>
           </div>
         );
       case 'Áudio':
@@ -296,8 +390,4 @@ export default function Conteudo() {
           )}
     </main>
   );
-}
-
-{
-  /* <p>{currentContent.title}</p> */
 }

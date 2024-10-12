@@ -65,7 +65,7 @@ export default function Accordion({ type, setAudioCurrentTime, setAudioDuration,
           onClick={handleOpenDropDown}
           aria-label="Botão para revelar o conteúdo da section neste accordion"
         >
-          {isDropDownOpen ? <FontAwesomeIcon icon={faAngleDown} /> : <FontAwesomeIcon icon={faAngleUp} />}
+          {isDropDownOpen ? <FontAwesomeIcon icon={faAngleUp} /> : <FontAwesomeIcon icon={faAngleDown} />}
 
           <h3> {title} </h3>
           {type === 'Áudio' && (

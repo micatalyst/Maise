@@ -22,7 +22,7 @@ export default function Audio_Forms_Step1({ handleNextStep, original_content_fil
 
   const dispatch = useDispatch();
 
-  const maxSize = 50 * 1024 * 1024; // 50 MB
+  const maxSize = 200 * 1024 * 1024; // 200 MB
   const [error, setError] = useState('');
 
   const [stepValidations, setStepValidations] = useState([]);

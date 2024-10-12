@@ -22,7 +22,7 @@ export default function Text_Forms_Step1({ handleNextStep, original_content_file
 
   const dispatch = useDispatch();
 
-  const maxSize = 25 * 1024 * 1024; // 25 MB
+  const maxSize = 100 * 1024 * 1024; // 100 MB
   const [error, setError] = useState('');
 
   const [stepValidations, setStepValidations] = useState([]);

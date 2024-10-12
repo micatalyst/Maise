@@ -146,8 +146,8 @@ $textarea-padding: 12px 20px;
 $input-forms-padding: 12px 20px;
 
 $content-cards-container-padding: 0 0 40px;
-$content-cards-container-ArquivoUA-max-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 46.5px - 40px);
-$content-cards-container-AreaPessoal-max-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 39px - 20px - 46.5px - 40px);
+$content-cards-container-ArquivoUA-max-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 46.5008px - 40px);
+$content-cards-container-AreaPessoal-max-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 39px - 20px - 46.5008px - 40px);
 
 $content-cards-padding: 15px;
 $content-typology-pre-info-margin: 0 0 40px;
@@ -156,6 +156,7 @@ $content-typology-cards-padding: 30px;
 $content-showing-description-paragraph-max-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 232px - 40px - 42px - 40px - 27px - 15px - 30px - 30px);
 $content-showing-container-max-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 30px - 30px);
 $content-showing-video-responsive-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 292px);
+$content-showing-all-subtitles-table-content-max-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - #{$content-showing-video-responsive-height} - 30px - 30px - 20px);
 
 $content-typology-card-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 48px - #{nth($content-typology-pre-info-margin, 3)});
 
@@ -167,24 +168,24 @@ $modal-padding: 30px;
 
 $forms-step2-language-container-padding: 20px 30px 30px;
 
-$text-forms-step2-main-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 42px - 40px - 46.5px - 30px - 89px - 20px);
+$text-forms-step2-main-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 42px - 40px - 46.5008px - 30px - 89px - 20px);
 $image-forms-step2-main-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 42px - 40px - 89px - 20px);
 $video-forms-step2-main-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 42px - 40px - 89px - 20px);
 $audio-forms-step2-main-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 42px - 40px - 89px - 20px);
 
-$text-forms-step2-work-space-max-height: calc(#{$text-forms-step2-main-min-height} - #{nth($forms-step2-content-creation-top-bar-padding, 1)} - #{nth($forms-step2-content-creation-top-bar-padding, 1)} - 40.5px - 5px);
+$text-forms-step2-work-space-max-height: calc(#{$text-forms-step2-main-min-height} - #{nth($forms-step2-content-creation-top-bar-padding, 1)} - #{nth($forms-step2-content-creation-top-bar-padding, 1)} - 40.5008px - 5px);
 
 $text-forms-step2-sections-container-min-height: calc(
-  #{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 42px - 40px - 46.5px - 30px - 89px - 20px - #{nth($forms-step2-language-container-padding, 1)} - #{nth($forms-step2-language-container-padding, 3)} - 27px - 10px - 48.5px - 5px
+  #{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 42px - 40px - 46.5008px - 30px - 89px - 20px - #{nth($forms-step2-language-container-padding, 1)} - #{nth($forms-step2-language-container-padding, 3)} - 27px - 10px - 48.5008px - 5px
 );
-$Image-forms-step2-sections-container-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 42px - 40px - 89px - 20px - #{nth($forms-step2-language-container-padding, 1)} - #{nth($forms-step2-language-container-padding, 3)} - 27px - 10px - 48.5px - 5px);
+$Image-forms-step2-sections-container-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 42px - 40px - 89px - 20px - #{nth($forms-step2-language-container-padding, 1)} - #{nth($forms-step2-language-container-padding, 3)} - 27px - 10px - 48.5008px - 5px);
 
 $image-uploaded-container: 8px 12px;
 $image-preview-container: 30px;
 
 $video-size-responsive-height: calc(#{$video-forms-step2-main-min-height} - 30px - 30px - 39px - 20px);
-$video-forms-step2-all-subtitles-table-content-max-height: calc(#{$video-size-responsive-height} - 85.5px - 30px);
-$video-forms-step2-subtitles-cues-table-content-max-height: calc(#{$video-size-responsive-height} - 48.5px - 30px - 20px - 40.5px);
+$video-forms-step2-all-subtitles-table-content-max-height: calc(#{$video-size-responsive-height} - 85.5008px - 30px);
+$video-forms-step2-subtitles-cues-table-content-max-height: calc(#{$video-size-responsive-height} - 48.5008px - 30px - 20px - 40.5008px);
 
 $audio-sections-padding: 30px;
 $audio-sections-header-padding: 20px 30px;

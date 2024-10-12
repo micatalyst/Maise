@@ -23,7 +23,7 @@ export default function Video_Subtitles_Section({ id, language, date, setIsEditi
               dispatch(setOnEditingSubtitleId(id));
             }}
           >
-            Editar Legendas
+            Editar legendas
           </button>
           <button
             className="primary-button"

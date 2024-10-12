@@ -260,7 +260,7 @@ export default function Image_Forms_Step2({ handlePreviousStep, handleSubmit, se
             <Image
               src={activeSection.preview}
               //priority={true}
-              alt=""
+              alt="imagem não acessível"
               width={100}
               height={100}
             />
