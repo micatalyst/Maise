@@ -8,7 +8,7 @@ import throttle from 'lodash.throttle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faPause, faStop, faRotateLeft, faRotateRight, faVolumeHigh } from '@fortawesome/free-solid-svg-icons';
 
-export default function Audio_Forms_Visualiser({ original_content_file, globalAudioVolume, setAudioCurrentTime, setAudioDuration }) {
+export default function Audio_Forms_Visualiser({ isDropDownOpen, original_content_file, globalAudioVolume, setAudioCurrentTime, setAudioDuration }) {
   const containerRef = useRef(null);
   const [file, setFile] = useState(null);
 
@@ -150,19 +150,34 @@ export default function Audio_Forms_Visualiser({ original_content_file, globalAu
               {/* Controles para o player */}
               <div className="audio-controls">
                 <p>{timestamp()}</p>
-                <button onClick={onStop}>
+                <button
+                  tabIndex={isDropDownOpen ? 0 : -1}
+                  onClick={onStop}
+                >
                   <FontAwesomeIcon icon={faStop} />
                 </button>
-                <button onClick={onPlayPause}>{isPlaying ? <FontAwesomeIcon icon={faPause} /> : <FontAwesomeIcon icon={faPlay} />}</button>
-                <button onClick={() => quickJump(-3)}>
+                <button
+                  tabIndex={isDropDownOpen ? 0 : -1}
+                  onClick={onPlayPause}
+                >
+                  {isPlaying ? <FontAwesomeIcon icon={faPause} /> : <FontAwesomeIcon icon={faPlay} />}
+                </button>
+                <button
+                  tabIndex={isDropDownOpen ? 0 : -1}
+                  onClick={() => quickJump(-3)}
+                >
                   <FontAwesomeIcon icon={faRotateLeft} />
                 </button>
-                <button onClick={() => quickJump(3)}>
+                <button
+                  tabIndex={isDropDownOpen ? 0 : -1}
+                  onClick={() => quickJump(3)}
+                >
                   <FontAwesomeIcon icon={faRotateRight} />
                 </button>
                 <div className="volume-input">
                   <FontAwesomeIcon icon={faVolumeHigh} />
                   <input
+                    tabIndex={isDropDownOpen ? 0 : -1}
                     type="range"
                     min="0"
                     max="1"

@@ -50,6 +50,8 @@ export default function Conteudo() {
 
   const [audioFileUrlPath, setAudioFileUrlPath] = useState(null);
 
+  const [imageAltText, setImageAltText] = useState('');
+
   // Video variables
 
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
@@ -94,23 +96,8 @@ export default function Conteudo() {
         //const audioFileUrlpath = `${baseServerUrl}${currentContent.sections[imageSelectedContent - 1].audioFilePath}`;
         console.log(currentContent.sections[imageSelectedContent - 1].id);
         setAudioFileUrlPath(`${baseServerUrl}${currentContent.sections[imageSelectedContent - 1].audioFilePath}`);
-        //console.log(audioFileUrl);
-        /*  try {
-          // Fazendo fetch do arquivo para obter os dados binários
-          const response = await fetch(audioFileUrl);
-          console.log(response);
-          const blob = await response.blob();
 
-          const fileName = currentContent.originalFilePath.split('/').pop();
-
-          // Cria um objeto File a partir do Blob, como se fosse o arquivo carregado
-          const file = new File([blob], fileName, { type: blob.type });
-          console.log(file);
-          // Passa o arquivo para o estado
-          
-        } catch (error) {
-          console.error('Erro ao criar Blob do conteúdo original:', error);
-        } */
+        setImageAltText(currentContent.sections[imageSelectedContent - 1].description);
       } else {
         // trigger de feedback a dizer que o documento não está disponível
         /*  toast.error('Sentimos muito, mas houve um erro ao tentar abrir o conteúdo original. Estamos a trabalhar para resolver isso. Por favor, tente novamente mais tarde.', {
@@ -231,7 +218,7 @@ export default function Conteudo() {
                 <Image
                   src={originalFileUrl}
                   //priority={true}
-                  alt="imagem não acessível"
+                  alt={imageAltText}
                   width={100}
                   height={100}
                   layout="responsive"
@@ -317,21 +304,20 @@ export default function Conteudo() {
               />
               {isSubtitlesOn && <p className="current-subtitles-showing">{currentSubtitle}</p>}
             </div>
-            {isVideoLoaded && (
+            {currentContent && isVideoLoaded && currentContent.videoSubtitles && (
               <div className="all-subtitles-table">
                 <span className="all-subtitles-table-header">Idioma</span>
                 <span className="all-subtitles-table-header">Data</span>
-                {currentContent &&
-                  currentContent.videoSubtitles.map((item, index) => (
-                    <Content_Showing_Video_Subtitles_Section
-                      key={item.id}
-                      index={index}
-                      language={item.created_content_language}
-                      date={item.date}
-                      setAtualVideoSubtitles={setAtualVideoSubtitles}
-                      atualVideoSubtitles={atualVideoSubtitles}
-                    />
-                  ))}
+                {currentContent.videoSubtitles.map((item, index) => (
+                  <Content_Showing_Video_Subtitles_Section
+                    key={item.id}
+                    index={index}
+                    language={item.created_content_language}
+                    date={item.date}
+                    setAtualVideoSubtitles={setAtualVideoSubtitles}
+                    atualVideoSubtitles={atualVideoSubtitles}
+                  />
+                ))}
               </div>
             )}
           </div>

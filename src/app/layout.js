@@ -7,8 +7,8 @@ import { Toaster } from 'sonner';
 import Header from '@/components/Header';
 
 export const metadata = {
-  title: 'MAISE',
-  description: 'Projeto Final do Mestrado MCTW',
+  title: 'Arquivo UA',
+  description: 'Arquivo UA, página com todos os conteúdos e as suas vertentes mais acessíveis',
 };
 
 export default function RootLayout({ children }) {

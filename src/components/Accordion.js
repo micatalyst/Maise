@@ -60,6 +60,9 @@ export default function Accordion({ type, setAudioCurrentTime, setAudioDuration,
     <div className="accordion-container">
       <div className="accordion-header">
         <button
+          id={`accordion-button-${textId}`}
+          aria-expanded={isDropDownOpen}
+          aria-controls={`accordion-content-${textId}`}
           className={type === 'Áudio' ? 'accordion-dropdown-button audio-time' : 'accordion-dropdown-button'}
           type="button"
           onClick={handleOpenDropDown}
@@ -78,6 +81,9 @@ export default function Accordion({ type, setAudioCurrentTime, setAudioDuration,
         </button>
       </div>
       <div
+        id={`accordion-content-${textId}`}
+        role="region"
+        //tabIndex={isDropDownOpen ? 0 : -1}
         className="accordion-body"
         ref={contentRef}
         style={{
@@ -89,6 +95,7 @@ export default function Accordion({ type, setAudioCurrentTime, setAudioDuration,
           audioDescription
         ) : (
           <Audio_Forms_Visualiser
+            isDropDownOpen={isDropDownOpen}
             setAudioCurrentTime={setAudioCurrentTime}
             setAudioDuration={setAudioDuration}
             globalAudioVolume={globalAudioVolume}

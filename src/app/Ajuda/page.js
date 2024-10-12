@@ -1,3 +1,3 @@
 export default function Ajuda() {
-  return <main className="main">Ajuda</main>;
+  return <main className="main">Em construção...</main>;
 }

@@ -6,6 +6,7 @@
   padding: 0 20px;
   height: max-content;
   width: max-content;
+
   ul {
     list-style: none;
     display: flex;
@@ -32,13 +33,18 @@
       font-size: $nav-font-size;
       color: var(--navbar-elements-color);
 
-      border-radius: $border-radius-2;
+      //border-radius: $border-radius-2;
 
       padding: 12px 0;
       text-decoration: none;
       display: flex;
       //align-items: center;
       //justify-content: center;
+
+      &.active {
+        border-bottom: 3px solid var(--navbar-elements-active-border-bottom-color);
+        padding: 12px 0 1px;
+      }
     }
   }
 }
