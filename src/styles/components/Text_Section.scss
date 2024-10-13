@@ -18,14 +18,14 @@ button.btn-section {
   background-color: var(--section-bg-color);
 
   &.selected {
-    border-left: 3px solid var(--section-select-border-color);
+    border-left: 4px solid var(--section-select-border-color);
     background-color: var(--section-select-bg-color);
-    padding-left: 27px;
+    padding-left: 26px;
   }
 
   .text-section-title {
     display: grid;
-    grid-template-columns: max-content max-content;
+    grid-template-columns: max-content;
     gap: 5px;
 
     align-items: center;

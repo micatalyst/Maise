@@ -28,7 +28,7 @@ export default function Text_Forms_Step2({ handlePreviousStep, handleSubmit, ori
 
   const dispatch = useDispatch();
 
-  const maxSize = 50 * 1024 * 1024; // 50 MB
+  const maxSize = 150 * 1024 * 1024; // 150 MB
   const [error, setError] = useState('');
 
   const [sectionOnChangeInputValue, setSectionOnChangeInputValue] = useState(''); // value do input de criação de sections
@@ -40,6 +40,12 @@ export default function Text_Forms_Step2({ handlePreviousStep, handleSubmit, ori
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState('');
+
+  const sectionsInputRef = useRef(null);
+
+  useEffect(() => {
+    sectionsInputRef.current?.focus(); // Ativa o foco assim que o componente é renderizado
+  }, []);
 
   useEffect(() => {
     if (sections.length === 1) {
@@ -142,7 +148,7 @@ export default function Text_Forms_Step2({ handlePreviousStep, handleSubmit, ori
   // Section Input
 
   const handleInputChange = (event) => {
-    setSectionOnChangeInputValue(event.target.value);
+    setSectionOnChangeInputValue(event.target.value.trimStart());
   };
 
   // Adição de novas sections
@@ -157,12 +163,12 @@ export default function Text_Forms_Step2({ handlePreviousStep, handleSubmit, ori
 
   // Função para adicionar sections (pelo botão)
   const handleAddSection = () => {
-    if (sectionOnChangeInputValue) {
+    if (sectionOnChangeInputValue.trim()) {
       // Garante que existe um nome para section (previne a criação de sections sem nome)
       dispatch(
         addSection({
           id: sections.length ? handleAddSectionId : 1 /* sections.length ? sections[sections.length - 1].id + 1 : 1, */,
-          title: sectionOnChangeInputValue,
+          title: sectionOnChangeInputValue.trim(),
         }),
       );
       if (sections.length) {
@@ -172,6 +178,14 @@ export default function Text_Forms_Step2({ handlePreviousStep, handleSubmit, ori
       }
 
       setSectionOnChangeInputValue('');
+    } else {
+      toast.warning('A secção precisa de um titulo para ser criada', {
+        style: {
+          background: '#f3b21b',
+          color: '#1c1c1c',
+          border: 'none',
+        },
+      });
     }
   };
 
@@ -266,24 +280,6 @@ export default function Text_Forms_Step2({ handlePreviousStep, handleSubmit, ori
 
   const contentCreationDisplay = (
     <div className="content-creation-container">
-      {/*  */}
-      {/*  */}
-      {/* debug */}
-      {/*  */}
-      {/*  */}
-      {/* <div style={{ position: 'absolute', top: '10vh', left: '10rem', border: '1px solid red', backgroundColor: 'yellowgreen' }}>
-        {JSON.stringify(sectionsCurrentAudioTime)}
-        {sections.map((item, index) => (
-          <div key={index}>
-            {index + 1}: {sectionsCurrentAudioTime[item.id]}
-          </div>
-        ))}
-      </div> */}
-      {/*  */}
-      {/*  */}
-      {/* /debug */}
-      {/*  */}
-      {/*  */}
       <div className="content-creation-left-side-bar">
         <motion.div
           className="sections-container"
@@ -452,8 +448,9 @@ export default function Text_Forms_Step2({ handlePreviousStep, handleSubmit, ori
     <div className="forms-step2-text">
       <div className="input-add-sections-container">
         <input
+          ref={sectionsInputRef}
           type="text"
-          placeholder="Adicionar secções..."
+          placeholder="Título da secção..."
           value={sectionOnChangeInputValue}
           aria-label="Campo de inserção de novas secções"
           aria-keyshortcuts="Enter"

@@ -150,8 +150,8 @@ export default function Audio_Forms_Step2({ handlePreviousStep, handleSubmit, or
       dispatch(
         addSection({
           id: sections.length ? handleAddSectionId : 1,
-          title: titleOnChangeInputValue,
-          description: descriptionOnChangeInputValue,
+          title: titleOnChangeInputValue.trim(),
+          description: descriptionOnChangeInputValue.trim(),
           startTime: startTimeOnChangeInputValue,
           endTime: endTimeOnChangeInputValue,
         }),
@@ -242,7 +242,7 @@ export default function Audio_Forms_Step2({ handlePreviousStep, handleSubmit, or
               placeholder="Titulo da secção..."
               maxLength="60"
               value={titleOnChangeInputValue}
-              onChange={(e) => setTitleOnChangeInputValue(e.target.value)}
+              onChange={(e) => setTitleOnChangeInputValue(e.target.value.trimStart())}
             />
           </div>
           <div className="time-inputs">
@@ -265,9 +265,9 @@ export default function Audio_Forms_Step2({ handlePreviousStep, handleSubmit, or
           <textarea
             id="description"
             name="description"
-            placeholder="Descrição do conteúdo..."
+            placeholder="Descrição da secção..."
             value={descriptionOnChangeInputValue}
-            onChange={(e) => setDescriptionOnChangeInputValue(e.target.value)}
+            onChange={(e) => setDescriptionOnChangeInputValue(e.target.value.trimStart())}
           />
         </div>
       </div>

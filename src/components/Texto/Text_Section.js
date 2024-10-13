@@ -33,14 +33,14 @@ export default function Text_Section({ item, handleSectionActivation, handleDrag
       >
         <div className={item.id === activeSectionId ? 'text-section selected' : 'text-section'}>
           <div className="text-section-title">
-            {item.id === activeSectionId ? (
+            {/* {item.id === activeSectionId ? (
               <FontAwesomeIcon
                 className="selected"
                 icon={faAngleRight}
               />
             ) : (
               ''
-            )}
+            )} */}
             <p className={item.id === activeSectionId ? 'selected' : ''}>{item.title}</p>
           </div>
           <div

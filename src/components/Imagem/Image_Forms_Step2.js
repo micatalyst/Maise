@@ -30,7 +30,7 @@ export default function Image_Forms_Step2({ handlePreviousStep, handleSubmit, se
 
   const dispatch = useDispatch();
 
-  const maxSize = 50 * 1024 * 1024; // 50 MB
+  const maxSize = 150 * 1024 * 1024; // 150 MB
   const [error, setError] = useState('');
 
   const [isDragging, setIsDragging] = useState(false);
@@ -152,7 +152,7 @@ export default function Image_Forms_Step2({ handlePreviousStep, handleSubmit, se
 
   // Atualiza a descrição da imagem
   const handleUpdateSection = (inputDescription) => {
-    dispatch(updateSectionDescription({ id: activeSectionId, description: inputDescription }));
+    dispatch(updateSectionDescription({ id: activeSectionId, description: inputDescription.trimStart() }));
   };
 
   // Carregamento da vertente mais acessivel (Áudio)

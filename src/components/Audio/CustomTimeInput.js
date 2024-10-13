@@ -8,15 +8,10 @@ const CustomTimeInput = ({ label, audioDuration, audioCurrentTime, setStartTimeO
 
   const showHours = audioDuration >= 3600; // 3600 seconds = 1 hour
 
-  /*  useEffect(() => {
-    // Adiciona o listener de eventos de teclado quando o componente é montado
-    window.addEventListener('keydown', handleKeyDown);
-
-    // Remove o listener de eventos de teclado quando o componente é desmontado
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [audioCurrentTime]); */
+  useEffect(() => {
+    // Serve para dar um default value de 00:00 aos inputs
+    handleBlur();
+  }, []);
 
   // Function to format the time in seconds into HH:MM:SS or MM:SS
   const formatTime = (secondsTotal) => {

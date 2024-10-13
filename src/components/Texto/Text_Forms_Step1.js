@@ -30,8 +30,8 @@ export default function Text_Forms_Step1({ handleNextStep, original_content_file
   useEffect(() => {
     setStepValidations([
       {
-        title: 'Nome',
-        isValid: Boolean(title),
+        title: 'Título',
+        isValid: Boolean(title.trim()),
       },
       {
         title: 'Conteúdo',
@@ -43,7 +43,7 @@ export default function Text_Forms_Step1({ handleNextStep, original_content_file
       },
       {
         title: 'Descrição',
-        isValid: Boolean(description),
+        isValid: Boolean(description.trim()),
       },
       {
         title: 'Conteúdo original',
@@ -122,15 +122,15 @@ export default function Text_Forms_Step1({ handleNextStep, original_content_file
               id="title"
               name="title"
               type="text"
-              placeholder="Título do Conteúdo..."
+              placeholder="Título do conteúdo original..."
               maxLength="80"
               value={title}
-              onChange={(e) => dispatch(setTitle(e.target.value))}
+              onChange={(e) => dispatch(setTitle(e.target.value.trimStart()))}
               required
             />
           </div>
           <div>
-            <label htmlFor="content_category">Conteúdo</label>
+            <label htmlFor="content_category">Categoria</label>
             <div className="forms-select">
               <FontAwesomeIcon icon={faCaretDown} />
               <select
@@ -144,7 +144,7 @@ export default function Text_Forms_Step1({ handleNextStep, original_content_file
                   value=""
                   disabled
                 >
-                  Especifica o Conteúdo...
+                  Categoria do conteúdo original...
                 </option>
                 <option value="Livro">Livro</option>
                 <option value="Artigo">Artigo</option>
@@ -183,9 +183,9 @@ export default function Text_Forms_Step1({ handleNextStep, original_content_file
           <textarea
             id="description"
             name="description"
-            placeholder="Nome do Conteúdo..."
+            placeholder="Descrição do conteúdo original..."
             value={description}
-            onChange={(e) => dispatch(setDescription(e.target.value))}
+            onChange={(e) => dispatch(setDescription(e.target.value.trimStart()))}
             required
           />
         </div>

@@ -9,6 +9,11 @@ const CustomTimeInput = ({ label, videoDuration, videoCurrentTime, setStartTimeO
   const showHours = videoDuration >= 3600; // 3600 seconds = 1 hour
 
   useEffect(() => {
+    // Serve para dar um default value de 00:00 aos inputs
+    handleBlur();
+  }, []);
+
+  useEffect(() => {
     // Adiciona o listener de eventos de teclado quando o componente é montado
     window.addEventListener('keydown', handleKeyDown);
 

@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'Conteúdo',
-  description: 'Veja aqui os Detalhes do conteúdo que abriu.',
+  title: 'Sobre',
+  description: 'Veja aqui informações gerais sobre esta plataforma',
 };
 
 export default function ProdutoLayout({ children }) {

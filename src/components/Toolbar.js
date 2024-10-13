@@ -14,7 +14,7 @@ export default function Toolbar({ onFilterType, onSearch, onTabUpdate }) {
   const [hasSearched, setHasSearched] = useState(false);
 
   const handleInputChange = (event) => {
-    setSearchValue(event.target.value);
+    setSearchValue(event.target.value.trimStart());
   };
 
   // Função para a pesquisa dos conteúdos (pelo teclado) por input recebido pelo utilizador

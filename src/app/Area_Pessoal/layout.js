@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'Conteúdo',
-  description: 'Veja aqui os Detalhes do conteúdo que abriu.',
+  title: 'Área Pessoal',
+  description: 'Veja aqui os conteúdos criados e guardados por si.',
 };
 
 export default function ProdutoLayout({ children }) {

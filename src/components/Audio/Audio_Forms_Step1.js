@@ -22,7 +22,7 @@ export default function Audio_Forms_Step1({ handleNextStep, original_content_fil
 
   const dispatch = useDispatch();
 
-  const maxSize = 200 * 1024 * 1024; // 200 MB
+  const maxSize = 150 * 1024 * 1024; // 150 MB
   const [error, setError] = useState('');
 
   const [stepValidations, setStepValidations] = useState([]);
@@ -30,8 +30,8 @@ export default function Audio_Forms_Step1({ handleNextStep, original_content_fil
   useEffect(() => {
     setStepValidations([
       {
-        title: 'Nome',
-        isValid: Boolean(title),
+        title: 'Título',
+        isValid: Boolean(title.trim()),
       },
       {
         title: 'Conteúdo',
@@ -43,7 +43,7 @@ export default function Audio_Forms_Step1({ handleNextStep, original_content_fil
       },
       {
         title: 'Descrição',
-        isValid: Boolean(description),
+        isValid: Boolean(description.trim()),
       },
       {
         title: 'Conteúdo original',
@@ -124,15 +124,15 @@ export default function Audio_Forms_Step1({ handleNextStep, original_content_fil
               id="title"
               name="title"
               type="text"
-              placeholder="Título do Conteúdo..."
+              placeholder="Título do conteúdo original..."
               maxLength="80"
               value={title}
-              onChange={(e) => dispatch(setTitle(e.target.value))}
+              onChange={(e) => dispatch(setTitle(e.target.value.trimStart()))}
               required
             />
           </div>
           <div>
-            <label htmlFor="content_category">Conteúdo</label>
+            <label htmlFor="content_category">Categoria</label>
             <div className="forms-select">
               <FontAwesomeIcon icon={faCaretDown} />
               <select
@@ -146,7 +146,7 @@ export default function Audio_Forms_Step1({ handleNextStep, original_content_fil
                   value=""
                   disabled
                 >
-                  Especifica o Conteúdo...
+                  Categoria do conteúdo original...
                 </option>
                 <option value="Podcast">Podcast</option>
                 <option value="Audiolivro">Audiolivro</option>
@@ -185,9 +185,9 @@ export default function Audio_Forms_Step1({ handleNextStep, original_content_fil
           <textarea
             id="description"
             name="description"
-            placeholder="Nome do Conteúdo..."
+            placeholder="Descrição do conteúdo original..."
             value={description}
-            onChange={(e) => dispatch(setDescription(e.target.value))}
+            onChange={(e) => dispatch(setDescription(e.target.value.trimStart()))}
             required
           />
         </div>
@@ -211,7 +211,7 @@ export default function Audio_Forms_Step1({ handleNextStep, original_content_fil
                     type="button"
                     onClick={handleRemoveFile}
                   >
-                    Apagar documento
+                    Apagar áudio
                   </button>
                 </div>
                 <div className="file-side-info">
@@ -237,7 +237,7 @@ export default function Audio_Forms_Step1({ handleNextStep, original_content_fil
                     type="button"
                     onClick={handlePreview}
                   >
-                    Ver documento
+                    Ver áudio
                   </button>
                 </div>
               </div>

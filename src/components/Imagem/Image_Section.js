@@ -37,14 +37,14 @@ export default function Image_Section({ item, handleSectionActivation, handleDra
       >
         <div className={item.id === activeSectionId ? 'image-section selected' : 'image-section'}>
           <div className="image-section-order">
-            {item.id === activeSectionId ? (
+            {/* {item.id === activeSectionId ? (
               <FontAwesomeIcon
                 className="selected"
                 icon={faAngleRight}
               />
             ) : (
               ''
-            )}
+            )} */}
             <p className={item.id === activeSectionId ? 'selected' : ''}>{sectionIndex + 1}</p>
           </div>
           <div className="image-section-file">

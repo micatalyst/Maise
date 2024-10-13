@@ -25,7 +25,7 @@ export default function Image_Forms_Step1({ handleNextStep, original_content_fil
 
   const dispatch = useDispatch();
 
-  const maxSize = 25 * 1024 * 1024; // 25 MB
+  const maxSize = 25 * 1024 * 1024; // 25 MB (conta como um valor de tamanho individual por imagem e não o valor máximo de todas as imagens juntas)
   const [error, setError] = useState('');
 
   const [stepValidations, setStepValidations] = useState([]);
@@ -33,8 +33,8 @@ export default function Image_Forms_Step1({ handleNextStep, original_content_fil
   useEffect(() => {
     setStepValidations([
       {
-        title: 'Nome',
-        isValid: Boolean(title),
+        title: 'Título',
+        isValid: Boolean(title.trim()),
       },
       {
         title: 'Conteúdo',
@@ -46,7 +46,7 @@ export default function Image_Forms_Step1({ handleNextStep, original_content_fil
       },
       {
         title: 'Descrição',
-        isValid: Boolean(description),
+        isValid: Boolean(description.trim()),
       },
       {
         title: 'Conteúdo original',
@@ -130,15 +130,15 @@ export default function Image_Forms_Step1({ handleNextStep, original_content_fil
               id="title"
               name="title"
               type="text"
-              placeholder="Título do Conteúdo..."
+              placeholder="Título do conteúdo original..."
               maxLength="80"
               value={title}
-              onChange={(e) => dispatch(setTitle(e.target.value))}
+              onChange={(e) => dispatch(setTitle(e.target.value.trimStart()))}
               required
             />
           </div>
           <div>
-            <label htmlFor="content_category">Conteúdo</label>
+            <label htmlFor="content_category">Categoria</label>
             <div className="forms-select">
               <FontAwesomeIcon icon={faCaretDown} />
               <select
@@ -152,7 +152,7 @@ export default function Image_Forms_Step1({ handleNextStep, original_content_fil
                   value=""
                   disabled
                 >
-                  Especifica o Conteúdo...
+                  Categoria do conteúdo original...
                 </option>
                 <option value="Fotografia">Fotografia</option>
                 <option value="Ilustração">Ilustração</option>
@@ -193,9 +193,9 @@ export default function Image_Forms_Step1({ handleNextStep, original_content_fil
           <textarea
             id="description"
             name="description"
-            placeholder="Nome do Conteúdo..."
+            placeholder="Descrição do conteúdo original..."
             value={description}
-            onChange={(e) => dispatch(setDescription(e.target.value))}
+            onChange={(e) => dispatch(setDescription(e.target.value.trimStart()))}
             required
           />
         </div>

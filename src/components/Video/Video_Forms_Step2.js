@@ -198,7 +198,7 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
           id: videoSubtitleObj.subtitlesCues.length > 0 ? handleAddSubtitleCueId : 1,
           startTime: startTimeOnChangeInputValue,
           endTime: endTimeOnChangeInputValue,
-          text: subtitleTextOnChangeInputValue ? subtitleTextOnChangeInputValue : 'Preencha a legenda...',
+          text: subtitleTextOnChangeInputValue ? subtitleTextOnChangeInputValue.trim() : 'Preencha a legenda...',
           haveTextValue: subtitleTextOnChangeInputValue ? true : false,
         }),
       );
@@ -257,9 +257,10 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
       <span className="all-subtitles-table-header">Idioma</span>
       <span className="all-subtitles-table-header">Data</span>
       {videoSubtitles &&
-        videoSubtitles.map((item) => (
+        videoSubtitles.map((item, index) => (
           <Video_Subtitles_Section
             key={item.id}
+            index={index}
             id={item.id}
             language={item.language}
             date={item.date}
@@ -322,7 +323,7 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
           type="button"
           onClick={handleAddSubtitle}
         >
-          Criar legendas
+          Criar grupo de legendas
         </button>
       </div>
       {AllSubtitlesTable}
@@ -336,10 +337,10 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
           id="subtitle"
           type="text"
           className="subtitle"
-          placeholder="Adicionar legenda..."
+          placeholder="Legenda..."
           maxLength="80"
           value={subtitleTextOnChangeInputValue}
-          onChange={(e) => setSubtitleTextOnChangeInputValue(e.target.value)}
+          onChange={(e) => setSubtitleTextOnChangeInputValue(e.target.value.trimStart())}
         />
         <CustomTimeInput
           label="Início"
@@ -368,7 +369,7 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
           type="button"
           onClick={() => setIsEditingCreatingSubtitleCues(false)}
         >
-          Guardar legendas / Voltar
+          Guardar e Voltar
         </button>
       </div>
     </div>
