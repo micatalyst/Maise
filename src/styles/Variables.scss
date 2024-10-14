@@ -28,6 +28,18 @@ $informative-Blue: #1167d3; // White (5.38) | Dark_Gray (3.17) // Será usado co
 $informative-Blue-20: #d0e1f5; // Dark_Gray (12.80)
 
 :root {
+  // MediaQueries breakpoints
+
+  --mobile: '320px';
+  --mobileM: '375px';
+  --mobileL: '425px';
+  --tablet: '768px';
+  --laptop: '1066px';
+  --laptopL: '1440px';
+  --desktop: '2560px';
+
+  // Cores
+
   --bg-color: #{$light-blue};
   --base-text-color: #{$dark-gray};
 
@@ -47,6 +59,9 @@ $informative-Blue-20: #d0e1f5; // Dark_Gray (12.80)
 
   /* --captions-text-color: #{$gray-2}; */
   --additional-text-color: #{$gray-2};
+
+  --headerMobile-bg: #{$dark-gray};
+  --headerMobile-text-color: #{$white};
 
   --navbar-bg: #{$dark-gray};
   --navbar-elements-color: #{$white};
@@ -135,87 +150,94 @@ $informative-Blue-20: #d0e1f5; // Dark_Gray (12.80)
 } */
 
 // Spacing
-$header-padding: 40px 70px 0;
-$main-min-height: calc(100svh - #{nth($header-padding, 1)} - 48px);
+$header-desktop-padding: 2.5rem 4.375rem 0;
+$header-mobile-padding: 0.625rem 1.5625rem;
+$header-mobile-height: 4.25rem;
 
-$main-padding: 40px 70px 70px;
-$tab-container-margin: 0 0 20px;
-$tab-padding-bottom: 10px;
-$toolbar-margin: 0 0 40px;
-$input-padding: 12px 45px 12px 20px;
-$textarea-padding: 12px 20px;
-$input-forms-padding: 12px 20px;
+$main-min-height: calc(100svh - #{nth($header-desktop-padding, 1)} - 3rem);
+$main-mobile-min-height: calc(100svh - #{$header-mobile-height});
 
-$content-cards-container-padding: 0 0 40px;
-$content-cards-container-ArquivoUA-max-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 46.5008px - 40px);
-$content-cards-container-AreaPessoal-max-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 39px - 20px - 46.5008px - 40px);
+$main-padding: 2.5rem 4.375rem 4.375rem;
+$tab-container-margin: 0 0 1.25rem;
+$tab-padding-bottom: 0.625rem;
+$toolbar-margin: 0 0 2.5rem;
+$input-padding: 0.75rem 2.8125rem 0.75rem 1.25rem;
+$textarea-padding: 0.75rem 1.25rem;
+$input-forms-padding: 0.75rem 1.25rem;
 
-$content-cards-padding: 15px;
-$content-typology-pre-info-margin: 0 0 40px;
-$content-typology-cards-padding: 30px;
+$content-cards-container-padding: 0 0 2.5rem;
+$content-cards-container-ArquivoUA-max-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 2.9063rem - 2.5rem);
+$content-cards-container-AreaPessoal-max-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 2.4375rem - 1.25rem - 2.9063rem - 2.5rem);
 
-$content-showing-description-paragraph-max-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 232px - 40px - 42px - 40px - 27px - 15px - 30px - 30px);
-$content-showing-container-max-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 30px - 30px);
-$content-showing-video-responsive-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 292px);
-$content-showing-all-subtitles-table-content-max-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - #{$content-showing-video-responsive-height} - 30px - 30px - 20px);
+$content-cards-padding: 0.9375rem;
+$content-typology-pre-info-margin: 0 0 2.5rem;
+$content-typology-cards-padding: 1.875rem;
 
-$content-typology-card-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 48px - #{nth($content-typology-pre-info-margin, 3)});
+$content-showing-description-paragraph-max-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 14.5rem - 2.5rem - 2.625rem - 2.5rem - 1.6875rem - 0.9375rem - 1.875rem - 1.875rem);
+$content-showing-container-max-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 1.875rem - 1.875rem);
+$content-showing-video-responsive-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 18.25rem);
+$content-showing-all-subtitles-table-content-max-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - #{$content-showing-video-responsive-height} - 1.875rem - 1.875rem - 1.25rem);
 
-$content-typology-general-card-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 37px - 2px - #{nth($tab-container-margin, 3)});
+$content-typology-card-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 3rem - #{nth($content-typology-pre-info-margin, 3)});
 
-$forms-step1-padding: 30px 40px;
-$forms-step2-content-creation-top-bar-padding: 20px 30px;
-$modal-padding: 30px;
+$content-typology-general-card-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 2.3125rem - 0.125rem - #{nth($tab-container-margin, 3)});
 
-$forms-step2-language-container-padding: 20px 30px 30px;
+$forms-step1-padding: 1.875rem 2.5rem;
+$forms-step2-content-creation-top-bar-padding: 1.25rem 1.875rem;
+$modal-padding: 1.875rem;
 
-$text-forms-step2-main-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 42px - 40px - 46.5008px - 30px - 89px - 20px);
-$image-forms-step2-main-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 42px - 40px - 89px - 20px);
-$video-forms-step2-main-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 42px - 40px - 89px - 20px);
-$audio-forms-step2-main-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 42px - 40px - 89px - 20px);
+$forms-step2-language-container-padding: 1.25rem 1.875rem 1.875rem;
 
-$text-forms-step2-work-space-max-height: calc(#{$text-forms-step2-main-min-height} - #{nth($forms-step2-content-creation-top-bar-padding, 1)} - #{nth($forms-step2-content-creation-top-bar-padding, 1)} - 40.5008px - 5px);
+$text-forms-step2-main-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 2.625rem - 2.5rem - 2.9063rem - 1.875rem - 5.5625rem - 1.25rem);
+$image-forms-step2-main-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 2.625rem - 2.5rem - 5.5625rem - 1.25rem);
+$video-forms-step2-main-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 2.625rem - 2.5rem - 5.5625rem - 1.25rem);
+$audio-forms-step2-main-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 2.625rem - 2.5rem - 5.5625rem - 1.25rem);
+
+$text-forms-step2-work-space-max-height: calc(#{$text-forms-step2-main-min-height} - #{nth($forms-step2-content-creation-top-bar-padding, 1)} - #{nth($forms-step2-content-creation-top-bar-padding, 1)} - 2.5313rem - 0.3125rem);
 
 $text-forms-step2-sections-container-min-height: calc(
-  #{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 42px - 40px - 46.5008px - 30px - 89px - 20px - #{nth($forms-step2-language-container-padding, 1)} - #{nth($forms-step2-language-container-padding, 3)} - 27px - 10px - 48.5008px - 5px
+  #{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 2.625rem - 2.5rem - 2.9063rem - 1.875rem - 5.5625rem - 1.25rem - #{nth($forms-step2-language-container-padding, 1)} - #{nth($forms-step2-language-container-padding, 3)} - 1.6875rem - 0.625rem - 3.0313rem - 0.3125rem
 );
-$Image-forms-step2-sections-container-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 42px - 40px - 89px - 20px - #{nth($forms-step2-language-container-padding, 1)} - #{nth($forms-step2-language-container-padding, 3)} - 27px - 10px - 48.5008px - 5px);
+$Image-forms-step2-sections-container-min-height: calc(
+  #{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 2.625rem - 2.5rem - 5.5625rem - 1.25rem - #{nth($forms-step2-language-container-padding, 1)} - #{nth($forms-step2-language-container-padding, 3)} - 1.6875rem - 0.625rem - 3.0313rem - 0.3125rem
+);
 
-$image-uploaded-container: 8px 12px;
-$image-preview-container: 30px;
+$image-uploaded-container: 0.5rem 0.75rem;
+$image-preview-container: 1.875rem;
 
-$video-size-responsive-height: calc(#{$video-forms-step2-main-min-height} - 30px - 30px - 39px - 20px);
-$video-forms-step2-all-subtitles-table-content-max-height: calc(#{$video-size-responsive-height} - 85.5008px - 30px);
-$video-forms-step2-subtitles-cues-table-content-max-height: calc(#{$video-size-responsive-height} - 48.5008px - 30px - 20px - 40.5008px);
+$video-size-responsive-height: calc(#{$video-forms-step2-main-min-height} - 1.875rem - 1.875rem - 2.4375rem - 1.25rem);
+$video-forms-step2-all-subtitles-table-content-max-height: calc(#{$video-size-responsive-height} - 5.3438rem - 1.875rem);
+$video-forms-step2-subtitles-cues-table-content-max-height: calc(#{$video-size-responsive-height} - 3.0313rem - 1.875rem - 1.25rem - 2.5313rem);
 
-$audio-sections-padding: 30px;
-$audio-sections-header-padding: 20px 30px;
-$audio-forms-step2-sections-min-height: calc(#{$audio-forms-step2-main-min-height} - 33px - 20px - 20px - 20px - #{$audio-sections-padding} - #{$audio-sections-padding});
+$audio-sections-padding: 1.875rem;
+$audio-sections-header-padding: 1.25rem 1.875rem;
+$audio-forms-step2-sections-min-height: calc(#{$audio-forms-step2-main-min-height} - 2.0625rem - 1.25rem - 1.25rem - 1.25rem - #{$audio-sections-padding} - #{$audio-sections-padding});
 
 /* quando for trocar estes valores por valores calculados mesmo para fazer o sizing em rem da pagina, saber que é font-size * line-height */
 
 // Border
 
-$border-radius-2: 2px;
-$border-radius-5: 5px;
+$border-radius-2: 0.125rem;
+$border-radius-5: 0.3125rem;
 
 // Nav
 
-$nav-font-size: 16px;
-$nav-padding: 12px 20px;
+$nav-desktop-font-size: 1rem;
+$nav-mobile-font-size: 1.375rem;
+$nav-padding: 0.75rem 1.25rem;
 
 // Tab
 
-$tab-font-size: 18px;
+$tab-font-size: 1.125rem;
 
 // Content Cards
 
-$content-cards-width: 210px;
-$content-cards-height: 250px;
+$content-cards-width: 13.125rem;
+$content-cards-height: 15.625rem;
 
 // Typology Cards
 
-$typology-cards-width: 374px;
+$typology-cards-width: 23.375rem;
 
 // Typography
 
@@ -228,63 +250,39 @@ $semi-bold: 600;
 $bold: 700;
 $extra-bold: 800;
 
-$heading-1: 28px;
-$heading-2: 22px;
-$heading-3: 18px;
-$heading-4: 16px;
-$heading-5: 15px;
+$heading-1: 1.75rem;
+$heading-2: 1.375rem;
+$heading-3: 1.125rem;
+$heading-4: 1rem;
+$heading-5: 0.9375rem;
 
-$heading-1-margin-bottom: 40px;
-$heading-2-margin-bottom: 20px;
-$heading-3-margin-bottom: 15px;
-$heading-4-margin-bottom: 15px; // Em alguns casos não se aplicam as margens (Ex: titulos dos cards de conteúdo no Arquivo UA)
-$heading-5-margin-bottom: 15px;
+$heading-1-margin-bottom: 2.5rem;
+$heading-2-margin-bottom: 1.25rem;
+$heading-3-margin-bottom: 0.9375rem;
+$heading-4-margin-bottom: 0.9375rem; // Em alguns casos não se aplicam as margens (Ex: titulos dos cards de conteúdo no Arquivo UA)
+$heading-5-margin-bottom: 0.9375rem;
 
-$body-text-1: 16px;
-$body-text-2: 15px;
+$body-text-1: 1rem;
+$body-text-2: 0.9375rem;
 
-$overline-text-size: 15px;
-$caption-text-size: 12px;
+$overline-text-size: 0.9375rem;
+$caption-text-size: 0.75rem;
 
-$primary-button-text-size: 15px;
-$negative-button-text-size: 15px;
+$primary-button-text-size: 0.9375rem;
+$negative-button-text-size: 0.9375rem;
 
-$forms-button-text-size: 22px;
-$forms-label-text-size: 18px;
-$forms-input-file-p: 22px;
-$forms-input-file-video-p: 18px;
+$forms-button-text-size: 1.375rem;
+$forms-label-text-size: 1.125rem;
+$forms-input-file-p: 1.375rem;
+$forms-input-file-video-p: 1.125rem;
 
-$dropzone-file-type-text-size: 57px;
-$dropzone-file-type-video-text-size: 38px;
+$dropzone-file-type-text-size: 3.5625rem;
+$dropzone-file-type-video-text-size: 2.375rem;
 
-$no-content-placeholder-text-size: 57px;
-$no-audio-content-placeholder-text-size: 48px;
+$no-content-placeholder-text-size: 3.5625rem;
+$no-audio-content-placeholder-text-size: 3rem;
 
-$section-title-text-size: 16px;
+$section-title-text-size: 1rem;
 
-$image-uploaded-container-p-text-size: 14px;
-$image-uploaded-container-span-text-size: 12px;
-
-// MediaQueries
-
-$mobileS: (
-  min-width: '320px',
-);
-$mobileM: (
-  min-width: '375px',
-);
-$mobileL: (
-  min-width: '425px',
-);
-$tablet: (
-  min-width: '768px',
-);
-$laptop: (
-  min-width: '1024px',
-);
-$laptopL: (
-  min-width: '1440px',
-);
-$desktop: (
-  min-width: '2560px',
-);
+$image-uploaded-container-p-text-size: 0.875rem;
+$image-uploaded-container-span-text-size: 0.75rem;

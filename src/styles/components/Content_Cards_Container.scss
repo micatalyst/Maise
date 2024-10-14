@@ -3,8 +3,8 @@
 .content-cards-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax($content-cards-width, $content-cards-width));
-  column-gap: 30px;
-  row-gap: 40px;
+  column-gap: 1.875rem;
+  row-gap: 2.5rem;
   justify-content: space-between;
 
   padding: $content-cards-container-padding;
@@ -22,7 +22,7 @@
   }
 
   &::-webkit-scrollbar {
-    width: 5px;
+    width: 0.3125rem;
   }
 
   &::-webkit-scrollbar-track {
@@ -35,11 +35,11 @@
 
   /* display: grid;
   grid-template-columns: repeat(5, max-content);
-  column-gap: 30px;
-  row-gap: 50px; 
+  column-gap: 1.875rem;
+  row-gap: 3.125rem; 
   justify-content: space-between; */
 
-  /* @media (min-width: 600px) {
+  /* @media (min-width: 37.5rem) {
     justify-content: space-between;
   } */
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import '@/styles/components/Navbar.scss';
+import '@/styles/components/Navbar_Desktop.scss';
 
 import Link from 'next/link';
 
@@ -11,19 +11,18 @@ import { usePathname } from 'next/navigation';
 
 import { useState, useEffect } from 'react';
 
-export default function Navbar() {
+export default function Navbar_Desktop() {
   const pathname = usePathname(); // Get current pathname
 
   const [activePath, setActivePath] = useState(pathname);
 
   useEffect(() => {
     setActivePath(pathname);
-    console.log(pathname);
   }, [pathname]);
 
   return (
     <nav
-      className="nav"
+      className="nav-desktop"
       aria-label="Navegação principal"
     >
       <ul>

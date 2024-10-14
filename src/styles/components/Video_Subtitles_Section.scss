@@ -6,11 +6,11 @@
 
   //height: 100%;
   align-items: center;
-  padding: 10px 15px;
-  border-bottom: 1px solid var(--content-creating-limit-border-color);
+  padding: 0.625rem 0.9375rem;
+  border-bottom: 0.0625rem solid var(--content-creating-limit-border-color);
 
   &.first-body-component {
-    padding-left: 20px;
+    padding-left: 1.25rem;
   }
 }
 
@@ -21,9 +21,9 @@
   .all-subtitles-table-section-btns {
     display: grid;
     grid-template-columns: repeat(3, max-content);
-    gap: 20px;
+    gap: 1.25rem;
 
-    padding-right: 20px;
+    padding-right: 1.25rem;
 
     align-content: center;
   }

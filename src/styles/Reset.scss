@@ -47,7 +47,7 @@ a:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-  outline: 2px solid $notice-Yellow;
+  outline: 0.125rem solid $notice-Yellow;
   outline-offset: 0;
 }
 

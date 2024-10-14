@@ -1,16 +1,16 @@
 @import '../Variables.scss';
 
-.nav {
+.nav-desktop {
   background-color: var(--navbar-bg);
   border-radius: $border-radius-5;
-  padding: 0 20px;
+  padding: 0 1.25rem;
   height: max-content;
   width: max-content;
 
   ul {
     list-style: none;
     display: flex;
-    gap: 30px;
+    gap: 1.875rem;
 
     button {
       display: flex;
@@ -20,30 +20,30 @@
       background-color: var(--navbar-bg);
       border-radius: $border-radius-2; //Necessário mesmo que a border = 0 por causa do outline focus (motivos de coerência)
       border: 0;
-      padding: 12px 0;
+      padding: 0.75rem 0;
 
       svg {
-        height: 22px;
+        height: 1.375rem;
       }
     }
 
     a {
       cursor: pointer;
       font-weight: $bold;
-      font-size: $nav-font-size;
+      font-size: $nav-desktop-font-size;
       color: var(--navbar-elements-color);
 
       //border-radius: $border-radius-2;
 
-      padding: 12px 0;
+      padding: 0.75rem 0;
       text-decoration: none;
       display: flex;
       //align-items: center;
       //justify-content: center;
 
       &.active {
-        border-bottom: 3px solid var(--navbar-elements-active-border-bottom-color);
-        padding: 12px 0 0;
+        border-bottom: 0.1875rem solid var(--navbar-elements-active-border-bottom-color);
+        padding: 0.75rem 0 0;
       }
     }
   }

@@ -17,8 +17,8 @@
   .content-typology-card-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax($typology-cards-width, $typology-cards-width));
-    column-gap: 30px;
-    row-gap: 40px;
+    column-gap: 1.875rem;
+    row-gap: 2.5rem;
 
     justify-content: space-between;
 

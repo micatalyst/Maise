@@ -14,21 +14,21 @@
     position: relative;
     display: inline-block;
 
-    //margin-bottom: 20px;
+    //margin-bottom: 1.25rem;
 
     &::before {
       content: '';
       position: absolute;
-      bottom: -5px;
+      bottom: -0.3125rem;
       left: 0;
-      width: 37px;
-      height: 3px;
+      width: 2.3125rem;
+      height: 0.1875rem;
       background-color: var(--base-text-color);
     }
   }
 
   p.content-typology-general-info {
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
 
     span {
       font-weight: $extra-bold;

@@ -9,48 +9,48 @@ button.btn-section {
 .image-section {
   display: grid;
   grid-template-columns: 1fr 2fr max-content;
-  gap: 20px;
+  gap: 1.25rem;
 
   align-items: center;
 
-  padding: 15px 30px;
+  padding: 0.9375rem 1.875rem;
 
-  border-bottom: 1px solid var(--content-creating-limit-border-color);
+  border-bottom: 0.0625rem solid var(--content-creating-limit-border-color);
 
   background-color: var(--section-bg-color);
 
   &.selected {
-    border-left: 4px solid var(--section-select-border-color);
+    border-left: 0.25rem solid var(--section-select-border-color);
     background-color: var(--section-select-bg-color);
-    padding-left: 26px;
+    padding-left: 1.625rem;
   }
 
   img {
     object-fit: cover;
-    height: 60px;
-    border: 2px solid var(--image-uploaded-sections-border-color);
+    height: 3.75rem;
+    border: 0.125rem solid var(--image-uploaded-sections-border-color);
     aspect-ratio: 16 / 9;
   }
 
   .image-section-order {
     display: grid;
     grid-template-columns: max-content;
-    gap: 10px;
+    gap: 0.625rem;
 
     align-items: center;
 
     p {
       font-size: $section-title-text-size;
       font-weight: $bold;
-      padding: 4px 12px;
+      padding: 0.25rem 0.75rem;
       border-radius: $border-radius-5;
       background-color: var(--image-uploaded-sections-slide-number-bg-color);
       color: var(--image-uploaded-sections-slide-number-text-color);
-      margin-right: 5px;
+      margin-right: 0.3125rem;
     }
 
     svg.selected {
-      height: 20px;
+      height: 1.25rem;
       width: auto;
       color: var(--icons-1-color);
       pointer-events: none;
@@ -67,7 +67,7 @@ button.btn-section {
     align-items: center;
 
     svg {
-      height: 26px;
+      height: 1.625rem;
       width: auto;
       color: var(--section-drag-color);
       pointer-events: none;

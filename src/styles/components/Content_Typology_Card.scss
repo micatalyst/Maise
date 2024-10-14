@@ -12,29 +12,29 @@
   padding: $content-typology-cards-padding;
 
   &:hover {
-    border: 3px solid var(--button-primary-border-color);
-    padding: calc($content-typology-cards-padding - 3px);
+    border: 0.1875rem solid var(--button-primary-border-color);
+    padding: calc($content-typology-cards-padding - 0.1875rem);
   }
 
   h2 {
     position: relative;
     display: inline-block;
 
-    //margin-bottom: 20px;
+    //margin-bottom: 1.25rem;
 
     &::before {
       content: '';
       position: absolute;
-      bottom: -5px;
+      bottom: -0.3125rem;
       left: 0;
-      width: 37px;
-      height: 3px;
+      width: 2.3125rem;
+      height: 0.1875rem;
       background-color: var(--base-text-color);
     }
   }
 
   p.content-typology-info {
-    margin-bottom: 40px;
+    margin-bottom: 2.5rem;
 
     span {
       font-weight: $extra-bold;
@@ -46,7 +46,7 @@
     font-weight: $medium;
     color: var(--content-typology-example-title);
 
-    margin-bottom: 10px;
+    margin-bottom: 0.625rem;
 
     height: max-content;
   }
@@ -54,14 +54,14 @@
   .type-examples-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 15px;
+    gap: 0.9375rem;
     justify-content: flex-start;
 
-    margin-bottom: 50px;
+    margin-bottom: 3.125rem;
 
     span {
       font-size: $body-text-2;
-      padding: 4px 8px;
+      padding: 0.25rem 0.5rem;
       background-color: var(--content-typology-examples-bg);
       height: max-content;
     }

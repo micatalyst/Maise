@@ -3,14 +3,14 @@
 .uploaded-image-container {
   display: grid;
   grid-template-columns: max-content 1fr max-content;
-  gap: 10px;
+  gap: 0.625rem;
 
   align-items: center;
 
   width: 100%;
 
   padding: $image-uploaded-container;
-  border: 2px solid var(--image-uploaded-container-border-color);
+  border: 0.125rem solid var(--image-uploaded-container-border-color);
   border-radius: $border-radius-5;
 
   svg {
@@ -23,14 +23,14 @@
     height: 100%;
     border: none;
     background: none;
-    //margin-left: 10px;
+    //margin-left: .625rem;
   }
 
   .image-info {
     display: grid;
     grid-template-rows: repeat(2, 1fr);
 
-    margin-right: 10px;
+    margin-right: 0.625rem;
 
     p {
       font-size: $image-uploaded-container-p-text-size;

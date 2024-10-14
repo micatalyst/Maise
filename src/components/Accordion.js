@@ -56,6 +56,8 @@ export default function Accordion({ type, setAudioCurrentTime, setAudioDuration,
     createBlobFromUrl();
   }, [textTypeAudioFilePath]);
 
+  const pxToRem = (px) => px / parseFloat(getComputedStyle(document.documentElement).fontSize);
+
   return (
     <div className="accordion-container">
       <div className="accordion-header">
@@ -87,8 +89,8 @@ export default function Accordion({ type, setAudioCurrentTime, setAudioDuration,
         className="accordion-body"
         ref={contentRef}
         style={{
-          maxHeight: isDropDownOpen ? `${contentRef.current.scrollHeight + 20}px` : '0px',
-          padding: isDropDownOpen ? '0 0 20px' : '0',
+          maxHeight: isDropDownOpen ? `${pxToRem(contentRef.current.scrollHeight) + 1.25}rem` : '0rem',
+          padding: isDropDownOpen ? '0 0 1.25rem' : '0',
         }}
       >
         {type === 'Áudio' ? (

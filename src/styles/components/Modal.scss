@@ -9,7 +9,7 @@ dialog {
   overflow: hidden;
 
   padding: $modal-padding;
-  width: 420px;
+  width: 26.25rem;
 
   /* display: grid;
   grid-template-columns: max-content; */
@@ -23,21 +23,21 @@ dialog {
   }
 
   textarea {
-    height: 200px !important;
+    height: 12.5rem !important;
   }
 
   .input-time-group {
     display: grid;
     grid-template-columns: repeat(2, max-content);
-    gap: 20px;
+    gap: 1.25rem;
 
-    margin: 20px 0;
+    margin: 1.25rem 0;
   }
 
   .input-time-container {
     display: grid;
     grid-template-columns: repeat(2, max-content);
-    gap: 10px;
+    gap: 0.625rem;
 
     align-items: center;
 
@@ -50,7 +50,7 @@ dialog {
 
       input {
         width: fit-content;
-        padding: 12px 20px;
+        padding: 0.75rem 1.25rem;
       }
     }
   }
@@ -61,8 +61,8 @@ dialog {
     svg {
       position: absolute;
       height: auto;
-      width: 18px;
-      right: 14px;
+      width: 1.125rem;
+      right: 0.875rem;
       top: 50%;
       transform: translateY(-50%);
       color: var(--icons-1-color);
@@ -73,28 +73,28 @@ dialog {
   .btn-placement {
     display: grid;
     grid-template-columns: max-content max-content;
-    gap: 20px;
+    gap: 1.25rem;
 
     justify-content: end;
 
-    margin-top: 30px;
+    margin-top: 1.875rem;
   }
 
   &.primary {
-    border: 3px solid var(--modal-primary-border-color);
+    border: 0.1875rem solid var(--modal-primary-border-color);
   }
 
   &.negative {
-    border: 3px solid var(--modal-negative-border-color);
+    border: 0.1875rem solid var(--modal-negative-border-color);
 
     p {
-      margin-bottom: 10px;
+      margin-bottom: 0.625rem;
     }
 
     .section-name {
       display: grid;
       grid-template-columns: max-content max-content;
-      gap: 5px;
+      gap: 0.3125rem;
 
       align-items: center;
 

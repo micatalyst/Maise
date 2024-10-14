@@ -1,0 +1,66 @@
+@import '../Variables.scss';
+
+.nav-mobile {
+  display: grid;
+
+  background-color: var(--navbar-bg);
+  width: 100%;
+
+  position: absolute;
+  bottom: 0.3125rem;
+  transform: translateY(100%);
+  z-index: 5;
+
+  overflow: hidden;
+  height: 0;
+  padding: 0;
+
+  transition: height 0.3s ease-in-out;
+
+  &.open {
+    height: calc($main-mobile-min-height + 0.3125rem);
+  }
+
+  ul {
+    display: grid;
+    justify-items: center;
+
+    list-style: none;
+    grid-template-rows: repeat(6, max-content);
+    gap: 1.875rem;
+    padding: 3.125rem 1.5625rem;
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-items: center;
+      height: 100%;
+      background-color: var(--navbar-bg);
+      border-radius: $border-radius-2; //Necessário mesmo que a border = 0 por causa do outline focus (motivos de coerência)
+      border: 0;
+      padding: 0.75rem 0;
+
+      svg {
+        height: 1.375rem;
+      }
+    }
+
+    a {
+      cursor: pointer;
+      font-weight: $bold;
+      font-size: $nav-mobile-font-size;
+      color: var(--navbar-elements-color);
+
+      //border-radius: $border-radius-2;
+
+      padding: 0.75rem 0 0.1875rem;
+      text-decoration: none;
+      display: flex;
+
+      &.active {
+        border-bottom: 0.1875rem solid var(--navbar-elements-active-border-bottom-color);
+        padding: 0.75rem 0 0;
+      }
+    }
+  }
+}

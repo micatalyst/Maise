@@ -365,7 +365,7 @@ export default function Conteudo() {
                         type="button"
                         onClick={handleOriginalContentPreview}
                       >
-                        Abrir / Transferir
+                        Abrir conteúdo
                       </button>
                     </div>
                   )}

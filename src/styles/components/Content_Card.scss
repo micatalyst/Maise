@@ -4,7 +4,7 @@
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: max-content 1fr max-content max-content;
-  row-gap: 20px;
+  row-gap: 1.25rem;
 
   background-color: var(--cards-bg);
   min-width: min-content;
@@ -14,8 +14,8 @@
   padding: $content-cards-padding;
 
   &:hover {
-    border: 3px solid var(--button-primary-border-color);
-    padding: calc($content-cards-padding - 3px);
+    border: 0.1875rem solid var(--button-primary-border-color);
+    padding: calc($content-cards-padding - 0.1875rem);
   }
 
   overflow: hidden;
@@ -29,7 +29,7 @@
     .content-type {
       display: grid;
       grid-template-columns: max-content max-content;
-      column-gap: 4px;
+      column-gap: 0.25rem;
 
       align-items: center;
 
@@ -61,7 +61,7 @@
 
   .content-card-category {
     font-size: $caption-text-size;
-    padding: 4px 8px;
+    padding: 0.25rem 0.5rem;
     background-color: var(--content-card-category-bg-color);
     height: max-content;
     width: max-content;

@@ -2,18 +2,18 @@
 
 .tab-container {
   display: flex;
-  gap: 30px;
+  gap: 1.875rem;
 
   margin: $tab-container-margin;
 
-  border-bottom: 2px solid var(--tab-under-line-color);
+  border-bottom: 0.125rem solid var(--tab-under-line-color);
 
   button {
     border: 0;
-    padding-bottom: $tab-padding-bottom;
+    padding-bottom: $tab-padding-bottom; //
 
     // serve para alinhar a borda da "tab" com a linha do "tab container"
-    transform: translateY(2px);
+    transform: translateY(0.125rem);
 
     background-color: $transparent;
     color: var(--tab-text-color);
@@ -22,13 +22,13 @@
     font-weight: $bold;
 
     &:hover {
-      border-bottom: 2px solid var(--tab-border-color);
-      padding-bottom: calc($tab-padding-bottom - 2px);
+      border-bottom: 0.125rem solid var(--tab-border-color);
+      padding-bottom: calc($tab-padding-bottom - 0.125rem);
     }
 
     &.active {
-      border-bottom: 2px solid var(--tab-border-color);
-      padding-bottom: calc($tab-padding-bottom - 2px);
+      border-bottom: 0.125rem solid var(--tab-border-color);
+      padding-bottom: calc($tab-padding-bottom - 0.125rem);
     }
   }
 }

@@ -97,10 +97,10 @@ export default function Arquivo_UA() {
             )}
       </div> */}
 
-      <Toolbar
+      {/* <Toolbar
         onFilterType={handleFilter}
         onSearch={handleSearch}
-      />
+      /> */}
       <Content_Cards_Container
         site="ArquivoUA"
         data={finalData}

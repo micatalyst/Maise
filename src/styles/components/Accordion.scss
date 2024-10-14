@@ -2,7 +2,7 @@
 
 .accordion-container {
   display: grid;
-  border-bottom: 2px solid var(--content-creating-limit-border-color);
+  border-bottom: 0.125rem solid var(--content-creating-limit-border-color);
   transition: height 0.5s ease-in-out;
 
   .accordion-header {
@@ -12,23 +12,23 @@
     .accordion-dropdown-button {
       display: grid;
       grid-template-columns: max-content 1fr;
-      gap: 20px;
+      gap: 1.25rem;
 
       align-items: center;
       justify-items: start;
 
-      padding: 20px 0;
+      padding: 1.25rem 0;
 
       border: 0;
       border-radius: $border-radius-2;
       font-weight: $bold;
-      font-size: $nav-font-size;
+      font-size: $nav-desktop-font-size;
 
       background-color: $transparent;
 
       svg {
         color: var(--icons-1-color);
-        height: 17px;
+        height: 1.0625rem;
         stroke: var(--icons-1-color);
         stroke-width: 10;
       }
@@ -54,7 +54,7 @@
         height: 100%;
         border-radius: $border-radius-2;
 
-        padding: 5px 12px;
+        padding: 0.3125rem 0.75rem;
         line-height: normal;
       }
     }

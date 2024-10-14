@@ -3,7 +3,7 @@
 .forms-step1 {
   display: grid;
   grid-template-rows: max-content max-content;
-  gap: 40px;
+  gap: 2.5rem;
 
   width: 100%;
   background-color: var(--forms-container-bg);
@@ -13,12 +13,12 @@
   .forms-step1-container {
     display: grid;
     grid-template-columns: max-content 1fr max-content;
-    gap: 40px;
+    gap: 2.5rem;
 
     .forms-triple-input {
       display: grid;
       grid-template-columns: max-content;
-      gap: 40px;
+      gap: 2.5rem;
 
       .forms-select {
         position: relative;
@@ -26,8 +26,8 @@
         svg {
           position: absolute;
           height: auto;
-          width: 18px;
-          right: 14px;
+          width: 1.125rem;
+          right: 0.875rem;
           top: 50%;
           transform: translateY(-50%);
           color: var(--icons-1-color);
@@ -40,7 +40,7 @@
   .forms-step-feedback-bar {
     display: grid;
     grid-template-columns: 1fr max-content;
-    gap: 30px;
+    gap: 1.875rem;
 
     justify-items: space-between;
     align-items: center;
@@ -48,14 +48,14 @@
     background-color: var(--forms-container-bg);
 
     &.with-padding {
-      padding: 20px 30px;
+      padding: 1.25rem 1.875rem;
     }
   }
 }
 
 label {
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 0.625rem;
 
   font-size: $forms-label-text-size;
   font-weight: bold;
@@ -63,9 +63,9 @@ label {
 
 input {
   border-radius: $border-radius-5;
-  border: 1px solid var(--input-border-color);
+  border: 0.0625rem solid var(--input-border-color);
   //outline: none;
-  width: 384px;
+  width: 24rem;
   padding: $input-forms-padding;
 
   background-color: var(--input-bg-color);
@@ -78,7 +78,7 @@ input {
   }
 
   &:focus {
-    border: 1px solid $transparent;
+    border: 0.0625rem solid $transparent;
   }
 
   /* &[type="range"] {
@@ -94,9 +94,9 @@ select {
   -moz-appearance: none;
 
   border-radius: $border-radius-5;
-  border: 1px solid var(--input-border-color);
+  border: 0.0625rem solid var(--input-border-color);
   //outline: none;
-  width: 384px;
+  width: 24rem;
   padding: $input-padding;
 
   background-color: var(--input-bg-color);
@@ -109,7 +109,7 @@ select {
   }
 
   &:focus {
-    border: 1px solid $transparent;
+    border: 0.0625rem solid $transparent;
   }
 }
 
@@ -122,7 +122,7 @@ textarea {
   resize: none;
 
   border-radius: $border-radius-5;
-  border: 1px solid var(--input-border-color);
+  border: 0.0625rem solid var(--input-border-color);
   //outline: none;
   width: 100%;
   padding: $textarea-padding;
@@ -137,7 +137,7 @@ textarea {
   }
 
   &:focus {
-    border: 1px solid $transparent;
+    border: 0.0625rem solid $transparent;
   }
 }
 
@@ -152,14 +152,14 @@ textarea {
     //align-items: center;
 
     border-radius: $border-radius-5;
-    border: 1px solid var(--input-border-color);
+    border: 0.0625rem solid var(--input-border-color);
 
-    width: 600px;
+    width: 37.5rem;
 
     &:focus {
-      outline: 2px solid $notice-Yellow;
+      outline: 0.125rem solid $notice-Yellow;
       outline-offset: 0;
-      border: 1px solid $transparent;
+      border: 0.0625rem solid $transparent;
     }
 
     .images-uploaded-dropzone {
@@ -175,15 +175,15 @@ textarea {
 
       justify-items: center;
 
-      border-right: 1px solid var(--input-border-color);
-      width: 226px;
+      border-right: 0.0625rem solid var(--input-border-color);
+      width: 14.125rem;
       height: max-content;
 
       svg {
-        width: 65px;
+        width: 4.0625rem;
         height: auto;
 
-        margin-bottom: 15px;
+        margin-bottom: 0.9375rem;
       }
 
       p {
@@ -191,42 +191,42 @@ textarea {
         font-weight: $bold;
         color: var(--base-text-color);
 
-        margin-bottom: 2px;
+        margin-bottom: 0.125rem;
       }
 
       span {
-        margin-bottom: 10px;
+        margin-bottom: 0.625rem;
       }
     }
 
     .dropzone-file-list {
       display: grid;
       grid-template-rows: repeat(2, max-content);
-      padding: 20px 20px;
+      padding: 1.25rem 1.25rem;
 
       justify-items: center;
 
       .uploaded-content-header {
         font-size: $body-text-1;
         font-weight: $medium;
-        margin-bottom: 20px;
+        margin-bottom: 1.25rem;
       }
 
       .uploaded-content-list {
         display: grid;
         grid-template-rows: 1fr;
-        gap: 10px;
+        gap: 0.625rem;
 
-        padding-right: 10px;
+        padding-right: 0.625rem;
 
         width: 100%;
 
-        max-height: 190px;
+        max-height: 11.875rem;
         overflow: auto;
         scroll-behavior: smooth;
 
         &::-webkit-scrollbar {
-          width: 5px;
+          width: 0.3125rem;
         }
 
         &::-webkit-scrollbar-track {
@@ -247,14 +247,14 @@ textarea {
     align-items: center;
 
     border-radius: $border-radius-5;
-    border: 1px solid var(--input-border-color);
+    border: 0.0625rem solid var(--input-border-color);
 
-    width: 600px;
+    width: 37.5rem;
 
     &:focus {
-      outline: 2px solid $notice-Yellow;
+      outline: 0.125rem solid $notice-Yellow;
       outline-offset: 0;
-      border: 1px solid $transparent;
+      border: 0.0625rem solid $transparent;
     }
 
     .dropzone-info {
@@ -265,14 +265,14 @@ textarea {
 
       justify-items: center;
 
-      border-right: 1px solid var(--input-border-color);
-      width: 226px;
+      border-right: 0.0625rem solid var(--input-border-color);
+      width: 14.125rem;
 
       svg {
-        width: 65px;
+        width: 4.0625rem;
         height: auto;
 
-        margin-bottom: 15px;
+        margin-bottom: 0.9375rem;
       }
 
       p {
@@ -280,11 +280,11 @@ textarea {
         font-weight: $bold;
         color: var(--base-text-color);
 
-        margin-bottom: 2px;
+        margin-bottom: 0.125rem;
       }
 
       span {
-        margin-bottom: 10px;
+        margin-bottom: 0.625rem;
       }
     }
 
@@ -303,11 +303,11 @@ textarea {
         font-size: $dropzone-file-type-text-size;
         font-weight: $bold;
         color: var(--input-file-type-color);
-        margin-top: -10px;
+        margin-top: -0.625rem;
 
         &.video {
           font-size: $dropzone-file-type-video-text-size;
-          margin-top: -5px;
+          margin-top: -0.3125rem;
         }
       }
     }
@@ -320,9 +320,9 @@ textarea {
     align-items: center;
 
     border-radius: $border-radius-5;
-    border: 1px solid var(--input-border-color);
+    border: 0.0625rem solid var(--input-border-color);
 
-    width: 600px;
+    width: 37.5rem;
   }
 
   .file-uploaded-zone {
@@ -332,9 +332,9 @@ textarea {
     align-items: center;
 
     &:focus {
-      outline: 2px solid $notice-Yellow;
+      outline: 0.125rem solid $notice-Yellow;
       outline-offset: 0;
-      border: 1px solid $transparent;
+      border: 0.0625rem solid $transparent;
     }
 
     .file-side-bar {
@@ -345,14 +345,14 @@ textarea {
 
       height: 100%;
 
-      border-right: 1px solid var(--input-border-color);
-      width: 226px;
+      border-right: 0.0625rem solid var(--input-border-color);
+      width: 14.125rem;
 
       svg {
-        width: 65px;
+        width: 4.0625rem;
         height: auto;
 
-        margin-bottom: 15px;
+        margin-bottom: 0.9375rem;
       }
 
       p {
@@ -360,7 +360,7 @@ textarea {
         font-weight: $bold;
         color: var(--base-text-color);
 
-        margin-bottom: 15px;
+        margin-bottom: 0.9375rem;
 
         &.video {
           font-size: $forms-input-file-video-p;
@@ -371,25 +371,25 @@ textarea {
     .file-side-info {
       display: grid;
       grid-template-rows: repeat(3, max-content);
-      gap: 20px;
+      gap: 1.25rem;
 
       align-content: space-between;
       justify-items: start;
 
       height: 100%;
 
-      padding-left: 40px;
+      padding-left: 2.5rem;
 
       .file-side-info-row {
         display: grid;
         grid-template-columns: repeat(2, max-content);
-        gap: 40px;
+        gap: 2.5rem;
       }
 
       span {
         font-size: $body-text-1;
         font-weight: $regular;
-        margin-bottom: 5px;
+        margin-bottom: 0.3125rem;
       }
 
       p:first-of-type {
