@@ -95,7 +95,7 @@ export default function Toolbar({ onFilterType, filter, onSearch, onTabUpdate, m
       aria-label="Filtragem por tipos de conteúdo"
     >
       <label htmlFor="filter">Filtrar por:</label>
-      
+
       <div className="forms-select">
         <FontAwesomeIcon icon={faCaretDown} />
         <select
