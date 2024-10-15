@@ -23,6 +23,33 @@
       .forms-select {
         position: relative;
 
+        select {
+          //cursor: pointer;
+
+          appearance: none;
+          -webkit-appearance: none;
+          -moz-appearance: none;
+
+          border-radius: $border-radius-5;
+          border: 0.0625rem solid var(--input-border-color);
+          //outline: none;
+          width: 100%;
+          padding: $input-padding;
+
+          background-color: var(--input-bg-color);
+          font-size: $body-text-2;
+
+          color: var(--base-text-color);
+
+          &:invalid {
+            color: var(--placeholders-text-color);
+          }
+
+          &:focus {
+            border: 0.0625rem solid $transparent;
+          }
+        }
+
         svg {
           position: absolute;
           height: auto;
@@ -84,33 +111,6 @@ input {
   /* &[type="range"] {
     padding: 0;
   } */
-}
-
-select {
-  //cursor: pointer;
-
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-
-  border-radius: $border-radius-5;
-  border: 0.0625rem solid var(--input-border-color);
-  //outline: none;
-  width: 24rem;
-  padding: $input-padding;
-
-  background-color: var(--input-bg-color);
-  font-size: $body-text-2;
-
-  color: var(--base-text-color);
-
-  &:invalid {
-    color: var(--placeholders-text-color);
-  }
-
-  &:focus {
-    border: 0.0625rem solid $transparent;
-  }
 }
 
 .forms-text-area {

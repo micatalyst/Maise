@@ -236,14 +236,12 @@ export default function Audio_Forms_Visualiser({ isDropDownOpen, original_conten
         <>
           {wavesurfer && (
             <div className="audio-controls-bar">
-              <div className="audio-controls-bar">
-                {/* Controles para o player */}
-                <div className="audio-controls">
-                  <p>{timestamp()}</p>
+              {/* Controles para o player */}
+              <div className="audio-controls">
+                <p>{timestamp()}</p>
 
-                  {/* Controles para o player */}
-                  {mediaQueryMatches === undefined && !wavesurfer ? '' : mediaQueryMatches ? DesktopAudio : MobileAudio}
-                </div>
+                {/* Controles para o player */}
+                {mediaQueryMatches === undefined && !wavesurfer ? '' : mediaQueryMatches ? DesktopAudio : MobileAudio}
               </div>
             </div>
           )}

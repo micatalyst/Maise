@@ -13,31 +13,6 @@
     font-weight: bold;
   }
 
-  select {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-
-    border-radius: $border-radius-5;
-    border: 0.0625rem solid var(--input-border-color);
-
-    width: 16.125rem;
-    padding: $input-padding;
-
-    background-color: var(--input-bg-color);
-    font-size: $body-text-2;
-
-    color: var(--base-text-color);
-
-    &:invalid {
-      color: var(--placeholders-text-color);
-    }
-
-    &:focus {
-      border: 0.0625rem solid $transparent;
-    }
-  }
-
   .video-display {
     display: grid;
     grid-template-columns: max-content;
@@ -126,6 +101,31 @@
 
             .forms-select {
               position: relative;
+
+              select {
+                appearance: none;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+
+                border-radius: $border-radius-5;
+                border: 0.0625rem solid var(--input-border-color);
+
+                width: 16.125rem;
+                padding: $input-padding;
+
+                background-color: var(--input-bg-color);
+                font-size: $body-text-2;
+
+                color: var(--base-text-color);
+
+                &:invalid {
+                  color: var(--placeholders-text-color);
+                }
+
+                &:focus {
+                  border: 0.0625rem solid $transparent;
+                }
+              }
 
               svg {
                 position: absolute;

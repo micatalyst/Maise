@@ -13,33 +13,6 @@
     font-weight: bold;
   }
 
-  select {
-    //cursor: pointer;
-
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-
-    border-radius: $border-radius-5;
-    border: 0.0625rem solid var(--input-border-color);
-    //outline: none;
-    width: 16.125rem;
-    padding: $input-padding;
-
-    background-color: var(--input-bg-color);
-    font-size: $body-text-2;
-
-    color: var(--base-text-color);
-
-    &:invalid {
-      color: var(--placeholders-text-color);
-    }
-
-    &:focus {
-      border: 0.0625rem solid $transparent;
-    }
-  }
-
   .input-add-sections-container {
     display: grid;
     grid-template-columns: max-content;
@@ -119,7 +92,7 @@
     background-color: var(--forms-container-bg);
 
     height: 100%;
-    max-height: $text-forms-step2-main-min-height;
+    //max-height: $text-forms-step2-main-min-height;
 
     .content-creation-left-side-bar {
       display: grid;
@@ -133,7 +106,7 @@
         overflow: scroll;
         overflow-x: hidden;
         scroll-behavior: smooth;
-        max-height: $text-forms-step2-sections-container-min-height;
+        max-height: 19.0613rem;
 
         &::-webkit-scrollbar {
           width: 0.3125rem;
@@ -154,6 +127,33 @@
 
         .forms-select {
           position: relative;
+
+          select {
+            //cursor: pointer;
+
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+
+            border-radius: $border-radius-5;
+            border: 0.0625rem solid var(--input-border-color);
+            //outline: none;
+            width: 16.125rem;
+            padding: $input-padding;
+
+            background-color: var(--input-bg-color);
+            font-size: $body-text-2;
+
+            color: var(--base-text-color);
+
+            &:invalid {
+              color: var(--placeholders-text-color);
+            }
+
+            &:focus {
+              border: 0.0625rem solid $transparent;
+            }
+          }
 
           svg {
             position: absolute;
@@ -209,7 +209,7 @@
 
         padding: 1.875rem;
 
-        height: $text-forms-step2-work-space-max-height;
+        //height: $text-forms-step2-work-space-max-height;
         overflow: hidden;
 
         .dropzone {

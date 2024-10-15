@@ -13,33 +13,6 @@
     font-weight: bold;
   }
 
-  select {
-    //cursor: pointer;
-
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-
-    border-radius: $border-radius-5;
-    border: 0.0625rem solid var(--input-border-color);
-    //outline: none;
-    width: 16.125rem;
-    padding: $input-padding;
-
-    background-color: var(--input-bg-color);
-    font-size: $body-text-2;
-
-    color: var(--base-text-color);
-
-    &:invalid {
-      color: var(--placeholders-text-color);
-    }
-
-    &:focus {
-      border: 0.0625rem solid $transparent;
-    }
-  }
-
   .content-creation-container {
     display: grid;
     grid-template-columns: max-content max-content 1fr;
@@ -61,7 +34,7 @@
         overflow: scroll;
         overflow-x: hidden;
         scroll-behavior: smooth;
-        max-height: $Image-forms-step2-sections-container-min-height;
+        max-height: 23.8425rem;
 
         &::-webkit-scrollbar {
           width: 0.3125rem;
@@ -82,6 +55,33 @@
 
         .forms-select {
           position: relative;
+
+          select {
+            //cursor: pointer;
+
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+
+            border-radius: $border-radius-5;
+            border: 0.0625rem solid var(--input-border-color);
+            //outline: none;
+            width: 16.125rem;
+            padding: $input-padding;
+
+            background-color: var(--input-bg-color);
+            font-size: $body-text-2;
+
+            color: var(--base-text-color);
+
+            &:invalid {
+              color: var(--placeholders-text-color);
+            }
+
+            &:focus {
+              border: 0.0625rem solid $transparent;
+            }
+          }
 
           svg {
             position: absolute;

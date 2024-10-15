@@ -79,6 +79,33 @@
       position: relative;
       justify-self: end;
 
+      select {
+        //cursor: pointer;
+
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+
+        border-radius: $border-radius-5;
+        border: none !important;
+        //outline: none;
+        width: 100% !important;
+        padding: $input-padding;
+
+        background-color: var(--input-bg-color);
+        font-size: $body-text-2;
+
+        color: var(--base-text-color);
+
+        &:invalid {
+          color: var(--placeholders-text-color);
+        }
+
+        &:focus {
+          border: 0.0625rem solid $transparent;
+        }
+      }
+
       svg {
         position: absolute;
         height: auto;
@@ -127,61 +154,7 @@
   }
 }
 
-select {
-  //cursor: pointer;
-
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-
-  border-radius: $border-radius-5;
-  border: none !important;
-  //outline: none;
-  width: 100% !important;
-  padding: $input-padding;
-
-  background-color: var(--input-bg-color);
-  font-size: $body-text-2;
-
-  color: var(--base-text-color);
-
-  &:invalid {
-    color: var(--placeholders-text-color);
-  }
-
-  &:focus {
-    border: 0.0625rem solid $transparent;
-  }
-}
-
 @media screen and (min-width: #{$laptop}) {
-  select {
-    //cursor: pointer;
-
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-
-    border-radius: $border-radius-5;
-    border: 0.0625rem solid var(--input-border-color) !important;
-    //outline: none;
-    width: 24rem !important;
-    padding: $input-padding;
-
-    background-color: var(--input-bg-color);
-    font-size: $body-text-2;
-
-    color: var(--base-text-color);
-
-    &:invalid {
-      color: var(--placeholders-text-color);
-    }
-
-    &:focus {
-      border: 0.0625rem solid $transparent;
-    }
-  }
-
   .toolbar {
     gap: 2.5rem;
     grid-template-columns: max-content max-content;
@@ -207,6 +180,34 @@ select {
 
     .filter {
       display: flex;
+      .forms-select {
+        select {
+          //cursor: pointer;
+
+          appearance: none;
+          -webkit-appearance: none;
+          -moz-appearance: none;
+
+          border-radius: $border-radius-5;
+          border: 0.0625rem solid var(--input-border-color) !important;
+          //outline: none;
+          width: 24rem !important;
+          padding: $input-padding;
+
+          background-color: var(--input-bg-color);
+          font-size: $body-text-2;
+
+          color: var(--base-text-color);
+
+          &:invalid {
+            color: var(--placeholders-text-color);
+          }
+
+          &:focus {
+            border: 0.0625rem solid $transparent;
+          }
+        }
+      }
     }
   }
 }
