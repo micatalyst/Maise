@@ -86,19 +86,42 @@ export default function Area_Pessoal() {
     }
   }, [filterTab, filterType, searchParam, data, filterLevel2]);
 
+  const desktopBreakpoint = '(min-width: 1066px)';
+  const isMatching = window.matchMedia(desktopBreakpoint).matches;
+  const [mediaQueryMatches, setMediaQueryMatches] = useState(isMatching);
+
+  useEffect(() => {
+    // Define a função de verificação da media query
+    const checkMediaQuery = () => {
+      const isMatching = window.matchMedia(desktopBreakpoint).matches;
+      setMediaQueryMatches(isMatching);
+    };
+
+    // Adiciona um listener de eventos para mudanças na media query
+    const mediaQueryList = window.matchMedia(desktopBreakpoint);
+    mediaQueryList.addEventListener('change', checkMediaQuery);
+
+    // Limpeza ao desmontar o componente
+    return () => mediaQueryList.removeEventListener('change', checkMediaQuery);
+  }, []); // Não depende de nada, roda apenas na montagem do componente
+
   return (
     <main className="main">
+      {mediaQueryMatches !== undefined && !mediaQueryMatches && <h1>Área Pessoal</h1>}
       <Horizontal_Tab_Area_Pessoal onActiveTab={handleTab} />
       <div className="RightSide-Grid-Container">
         <div>
           <Toolbar
             onFilterType={handleFilter}
+            filter={filterType}
             onSearch={handleSearch}
             onTabUpdate={filterTab}
+            mediaQueryMatches={mediaQueryMatches}
           />
           <Content_Cards_Container
             site="AreaPessoal"
             data={finalData}
+            mediaQueryMatches={mediaQueryMatches}
           />
         </div>
         <div>

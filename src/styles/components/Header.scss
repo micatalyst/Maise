@@ -46,7 +46,9 @@
 
   color: var(--headerMobile-text-color);
 
-  position: relative;
+  position: fixed;
+  top: 0;
+  width: 100svw;
   z-index: 10;
 
   .logotipo-text {

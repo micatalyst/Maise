@@ -137,6 +137,95 @@ export default function Audio_Forms_Visualiser({ isDropDownOpen, original_conten
     wavesurfer.setTime(currentTime + offset);
   };
 
+  const MobileAudio = (
+    <div className="audio-btn-group-mobile">
+      <button
+        tabIndex={isDropDownOpen ? 0 : -1}
+        onClick={onStop}
+      >
+        <FontAwesomeIcon icon={faStop} />
+      </button>
+      <button
+        tabIndex={isDropDownOpen ? 0 : -1}
+        onClick={onPlayPause}
+      >
+        {isPlaying ? <FontAwesomeIcon icon={faPause} /> : <FontAwesomeIcon icon={faPlay} />}
+      </button>
+      <button
+        tabIndex={isDropDownOpen ? 0 : -1}
+        onClick={() => quickJump(-3)}
+      >
+        <FontAwesomeIcon icon={faRotateLeft} />
+      </button>
+      <button
+        tabIndex={isDropDownOpen ? 0 : -1}
+        onClick={() => quickJump(3)}
+      >
+        <FontAwesomeIcon icon={faRotateRight} />
+      </button>
+    </div>
+  );
+
+  const DesktopAudio = (
+    <>
+      <button
+        tabIndex={isDropDownOpen ? 0 : -1}
+        onClick={onStop}
+      >
+        <FontAwesomeIcon icon={faStop} />
+      </button>
+      <button
+        tabIndex={isDropDownOpen ? 0 : -1}
+        onClick={onPlayPause}
+      >
+        {isPlaying ? <FontAwesomeIcon icon={faPause} /> : <FontAwesomeIcon icon={faPlay} />}
+      </button>
+      <button
+        tabIndex={isDropDownOpen ? 0 : -1}
+        onClick={() => quickJump(-3)}
+      >
+        <FontAwesomeIcon icon={faRotateLeft} />
+      </button>
+      <button
+        tabIndex={isDropDownOpen ? 0 : -1}
+        onClick={() => quickJump(3)}
+      >
+        <FontAwesomeIcon icon={faRotateRight} />
+      </button>
+      <div className="volume-input">
+        <FontAwesomeIcon icon={faVolumeHigh} />
+        <input
+          tabIndex={isDropDownOpen ? 0 : -1}
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          onChange={(e) => updateVolume(e.target.value)}
+          value={volume}
+        />
+      </div>
+    </>
+  );
+
+  const desktopBreakpoint = '(min-width: 1066px)';
+  const isMatching = window.matchMedia(desktopBreakpoint).matches;
+  const [mediaQueryMatches, setMediaQueryMatches] = useState(isMatching);
+
+  useEffect(() => {
+    // Define a função de verificação da media query
+    const checkMediaQuery = () => {
+      const isMatching = window.matchMedia(desktopBreakpoint).matches;
+      setMediaQueryMatches(isMatching);
+    };
+
+    // Adiciona um listener de eventos para mudanças na media query
+    const mediaQueryList = window.matchMedia(desktopBreakpoint);
+    mediaQueryList.addEventListener('change', checkMediaQuery);
+
+    // Limpeza ao desmontar o componente
+    return () => mediaQueryList.removeEventListener('change', checkMediaQuery);
+  }, []); // Não depende de nada, roda apenas na montagem do componente
+
   return (
     <div className="audio-container">
       <div
@@ -147,44 +236,13 @@ export default function Audio_Forms_Visualiser({ isDropDownOpen, original_conten
         <>
           {wavesurfer && (
             <div className="audio-controls-bar">
-              {/* Controles para o player */}
-              <div className="audio-controls">
-                <p>{timestamp()}</p>
-                <button
-                  tabIndex={isDropDownOpen ? 0 : -1}
-                  onClick={onStop}
-                >
-                  <FontAwesomeIcon icon={faStop} />
-                </button>
-                <button
-                  tabIndex={isDropDownOpen ? 0 : -1}
-                  onClick={onPlayPause}
-                >
-                  {isPlaying ? <FontAwesomeIcon icon={faPause} /> : <FontAwesomeIcon icon={faPlay} />}
-                </button>
-                <button
-                  tabIndex={isDropDownOpen ? 0 : -1}
-                  onClick={() => quickJump(-3)}
-                >
-                  <FontAwesomeIcon icon={faRotateLeft} />
-                </button>
-                <button
-                  tabIndex={isDropDownOpen ? 0 : -1}
-                  onClick={() => quickJump(3)}
-                >
-                  <FontAwesomeIcon icon={faRotateRight} />
-                </button>
-                <div className="volume-input">
-                  <FontAwesomeIcon icon={faVolumeHigh} />
-                  <input
-                    tabIndex={isDropDownOpen ? 0 : -1}
-                    type="range"
-                    min="0"
-                    max="1"
-                    step="0.01"
-                    onChange={(e) => updateVolume(e.target.value)}
-                    value={volume}
-                  />
+              <div className="audio-controls-bar">
+                {/* Controles para o player */}
+                <div className="audio-controls">
+                  <p>{timestamp()}</p>
+
+                  {/* Controles para o player */}
+                  {mediaQueryMatches === undefined && !wavesurfer ? '' : mediaQueryMatches ? DesktopAudio : MobileAudio}
                 </div>
               </div>
             </div>

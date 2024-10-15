@@ -14,14 +14,11 @@
 }
 
 .audio-controls-bar {
-  display: grid;
-  grid-template-columns: 1fr;
-
   margin: 1.25rem 0 0.9375rem;
 
   .audio-controls {
     display: grid;
-    grid-template-columns: repeat(5, max-content) 1fr;
+    grid-template-columns: max-content;
     gap: 0.625rem;
 
     align-items: center;
@@ -30,13 +27,19 @@
 
     p {
       //margin-right: .625rem;
-
+      width: max-content;
       background-color: var(--audio-section-time-bg-color);
       color: var(--audio-section-time-text-color);
       font-weight: $bold;
       padding: 0.3125rem 0.75rem;
 
       border-radius: $border-radius-5;
+    }
+
+    .audio-btn-group-mobile {
+      display: grid;
+      grid-template-columns: repeat(4, max-content);
+      gap: 0.625rem;
     }
 
     button {
@@ -89,6 +92,14 @@
         width: 0;
         box-shadow: -6.25rem 0 0 6.25rem rgba(#d0e1f5, 1);
       }
+    }
+  }
+}
+
+@media screen and (min-width: #{$laptop}) {
+  .audio-controls-bar {
+    .audio-controls {
+      grid-template-columns: repeat(5, max-content) 1fr;
     }
   }
 }

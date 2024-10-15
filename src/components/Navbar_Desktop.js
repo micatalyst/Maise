@@ -11,7 +11,7 @@ import { usePathname } from 'next/navigation';
 
 import { useState, useEffect } from 'react';
 
-export default function Navbar_Desktop() {
+export default function Navbar_Desktop({ toggleTheme }) {
   const pathname = usePathname(); // Get current pathname
 
   const [activePath, setActivePath] = useState(pathname);
@@ -67,7 +67,10 @@ export default function Navbar_Desktop() {
           </Link>
         </li>
         <li>
-          <button type="button">
+          <button
+            type="button"
+            onClick={toggleTheme}
+          >
             <FontAwesomeIcon icon={faCircleHalfStroke} />
           </button>
         </li>

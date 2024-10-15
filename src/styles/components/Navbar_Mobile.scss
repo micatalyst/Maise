@@ -18,7 +18,7 @@
   transition: height 0.3s ease-in-out;
 
   &.open {
-    height: calc($main-mobile-min-height + 0.3125rem);
+    height: 100svh /* calc($main-mobile-min-height + 0.3125rem) */;
   }
 
   ul {

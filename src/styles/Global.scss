@@ -9,7 +9,7 @@
 }
 
 html {
-  //font-size: 80%;
+  font-size: 95%;
 }
 
 a {
@@ -21,7 +21,7 @@ body {
   //overflow: hidden;
   background-color: var(--bg-color);
   color: var(--base-text-color);
-  min-height: 100svh;
+  //min-height: 100svh;
   /* height: 100%; */
 
   overflow-x: hidden;
@@ -32,15 +32,24 @@ body {
 } */
 
 .main {
-  padding: $main-padding;
+  margin-top: $header-mobile-height;
+  padding: $main-mobile-padding;
   display: grid;
   grid-template-columns: 1fr; // Estas 2 grids (columns & rows) para garantir que eu possa expandir qualquer grid com (1fr) para o tamanho da página
   grid-template-rows: max-content;
-  min-height: $main-min-height;
+  //min-height: $main-mobile-min-height;
 
-  &.grid-template-columns-1fr {
+  &.grid-template-rows-1fr {
     grid-template-rows: 1fr;
   }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  text-align: left;
 }
 
 h1 {
@@ -75,8 +84,7 @@ h5 {
 
 .RightSide-Grid-Container {
   display: grid;
-  gap: 3.125rem;
-  grid-template-columns: 1fr max-content;
+  grid-template-columns: 1fr;
 }
 
 .save-button {
@@ -173,4 +181,41 @@ h5 {
   align-items: center;
   height: 100svh;
   width: 100svw;
+}
+
+// $header-mobile-height
+
+@media screen and (min-width: #{$laptop}) {
+  html {
+    font-size: 80%;
+  }
+
+  body {
+    min-height: 100svh;
+  }
+
+  .main {
+    margin-top: 0;
+    padding: $main-desktop-padding;
+    min-height: $main-desktop-min-height;
+  }
+
+  .RightSide-Grid-Container {
+    grid-template-columns: 1fr max-content;
+    gap: 3.125rem;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    text-align: left;
+  }
+}
+
+@media screen and (min-width: #{$desktop}) {
+  html {
+    font-size: 100%;
+  }
 }

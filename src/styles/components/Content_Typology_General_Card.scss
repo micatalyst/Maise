@@ -5,8 +5,8 @@
   grid-template-rows: repeat(3, max-content) 1fr;
 
   background-color: var(--cards-bg);
-  width: $typology-cards-width;
-  min-height: $content-typology-general-card-min-height;
+  width: 100%;
+  //min-height: $content-typology-general-card-min-height;
 
   padding: $content-typology-cards-padding;
 
@@ -35,8 +35,27 @@
     }
   }
 
+  a {
+    margin-bottom: 1.25rem;
+  }
+
   .type-image-container {
     display: grid;
     align-items: end;
+
+    img {
+      width: 100%;
+    }
+  }
+}
+
+@media screen and (min-width: #{$laptop}) {
+  .content-typology-general-card {
+    width: $typology-cards-width;
+    min-height: $content-typology-general-card-min-height;
+  }
+
+  img {
+    width: auto;
   }
 }

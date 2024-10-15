@@ -2,11 +2,11 @@
 
 import '@/styles/components/Toolbar.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass, faXmark, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 import { useState, useEffect } from 'react';
 
-export default function Toolbar({ onFilterType, onSearch, onTabUpdate }) {
+export default function Toolbar({ onFilterType, filter, onSearch, onTabUpdate, mediaQueryMatches }) {
   const [activeFilter, setActiveFilter] = useState('Tudo');
 
   const [searchValue, setSearchValue] = useState('');
@@ -89,12 +89,108 @@ export default function Toolbar({ onFilterType, onSearch, onTabUpdate }) {
     </button>
   );
 
+  const MobileToolbar = (
+    <div
+      className="filter"
+      aria-label="Filtragem por tipos de conteúdo"
+    >
+      <label htmlFor="filter">Filtrar por:</label>
+      
+      <div className="forms-select">
+        <FontAwesomeIcon icon={faCaretDown} />
+        <select
+          id="filter"
+          name="filter"
+          value={filter}
+          onChange={(e) => {
+            onFilterType(e.target.value);
+            setActiveFilter(e.target.value);
+          }}
+          required
+        >
+          <option value="Tudo">Tudo</option>
+          <option value="Texto">Texto</option>
+          <option value="Imagem">Imagem</option>
+          <option value="Áudio">Áudio</option>
+          <option value="Vídeo">Vídeo</option>
+        </select>
+      </div>
+    </div>
+  );
+
+  const DesktopToolbar = (
+    <div
+      className="filter"
+      aria-label="Filtragem por tipos de conteúdo"
+    >
+      <span>Filtrar por:</span>
+      <div>
+        <button
+          type="button"
+          className={activeFilter === 'Tudo' ? 'active' : ''}
+          aria-pressed={activeFilter === 'Tudo'}
+          onClick={() => {
+            onFilterType('Tudo');
+            setActiveFilter('Tudo');
+          }}
+        >
+          Tudo
+        </button>
+        <button
+          type="button"
+          className={activeFilter === 'Texto' ? 'active' : ''}
+          aria-pressed={activeFilter === 'Texto'}
+          onClick={() => {
+            onFilterType('Texto');
+            setActiveFilter('Texto');
+          }}
+        >
+          Textos
+        </button>
+        <button
+          type="button"
+          className={activeFilter === 'Imagem' ? 'active' : ''}
+          aria-pressed={activeFilter === 'Imagem'}
+          onClick={() => {
+            onFilterType('Imagem');
+            setActiveFilter('Imagem');
+          }}
+        >
+          Imagens
+        </button>
+        <button
+          type="button"
+          className={activeFilter === 'Áudio' ? 'active' : ''}
+          aria-pressed={activeFilter === 'Áudio'}
+          onClick={() => {
+            onFilterType('Áudio');
+            setActiveFilter('Áudio');
+          }}
+        >
+          Áudios
+        </button>
+        <button
+          type="button"
+          className={activeFilter === 'Vídeo' ? 'active' : ''}
+          aria-pressed={activeFilter === 'Vídeo'}
+          onClick={() => {
+            onFilterType('Vídeo');
+            setActiveFilter('Vídeo');
+          }}
+        >
+          Vídeos
+        </button>
+      </div>
+    </div>
+  );
+
   return (
     <div className="toolbar">
       <div className="search">
         <input
           type="text"
-          placeholder="Pesquise por documentos e/ou autores..."
+          inputMode="search"
+          placeholder="Pesquise por conteúdos..."
           value={searchValue}
           aria-label="Campo de pesquisa de conteúdos"
           aria-keyshortcuts="Enter" // ponderar em fazer um sistema que realmente distribui automaticamente os aria-keyshortcuts (em caso da existência de keyshortcuts).
@@ -110,69 +206,7 @@ export default function Toolbar({ onFilterType, onSearch, onTabUpdate }) {
         {/* Ternary Operator com as condições para a renderização dos botões */}
         {!isFocused && !searchValue ? SearchButton : isFocused ? SearchButton : !isFocused && searchValue && !hasSearched ? SearchButton : ClearSearchButton}
       </div>
-      <div
-        className="filter"
-        aria-label="Filtragem por tipos de conteúdo"
-      >
-        <span>Filtrar por:</span>
-        <div>
-          <button
-            type="button"
-            className={activeFilter === 'Tudo' ? 'active' : ''}
-            aria-pressed={activeFilter === 'Tudo'}
-            onClick={() => {
-              onFilterType('Tudo');
-              setActiveFilter('Tudo');
-            }}
-          >
-            Tudo
-          </button>
-          <button
-            type="button"
-            className={activeFilter === 'Texto' ? 'active' : ''}
-            aria-pressed={activeFilter === 'Texto'}
-            onClick={() => {
-              onFilterType('Texto');
-              setActiveFilter('Texto');
-            }}
-          >
-            Textos
-          </button>
-          <button
-            type="button"
-            className={activeFilter === 'Imagem' ? 'active' : ''}
-            aria-pressed={activeFilter === 'Imagem'}
-            onClick={() => {
-              onFilterType('Imagem');
-              setActiveFilter('Imagem');
-            }}
-          >
-            Imagens
-          </button>
-          <button
-            type="button"
-            className={activeFilter === 'Áudio' ? 'active' : ''}
-            aria-pressed={activeFilter === 'Áudio'}
-            onClick={() => {
-              onFilterType('Áudio');
-              setActiveFilter('Áudio');
-            }}
-          >
-            Áudios
-          </button>
-          <button
-            type="button"
-            className={activeFilter === 'Vídeo' ? 'active' : ''}
-            aria-pressed={activeFilter === 'Vídeo'}
-            onClick={() => {
-              onFilterType('Vídeo');
-              setActiveFilter('Vídeo');
-            }}
-          >
-            Vídeos
-          </button>
-        </div>
-      </div>
+      {mediaQueryMatches === undefined ? '' : mediaQueryMatches ? DesktopToolbar : MobileToolbar}
     </div>
   );
 }

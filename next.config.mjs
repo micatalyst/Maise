@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['localhost'],
+    unoptimized: true, // Desativa a otimização para permitir qualquer origem
   },
 };
 

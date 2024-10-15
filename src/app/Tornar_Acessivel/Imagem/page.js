@@ -111,31 +111,61 @@ export default function Imagem() {
     }
   });
 
+  const desktopBreakpoint = '(min-width: 1066px)';
+  const isMatching = window.matchMedia(desktopBreakpoint).matches;
+  const [mediaQueryMatches, setMediaQueryMatches] = useState(isMatching);
+
+  useEffect(() => {
+    // Define a função de verificação da media query
+    const checkMediaQuery = () => {
+      const isMatching = window.matchMedia(desktopBreakpoint).matches;
+      setMediaQueryMatches(isMatching);
+    };
+
+    // Adiciona um listener de eventos para mudanças na media query
+    const mediaQueryList = window.matchMedia(desktopBreakpoint);
+    mediaQueryList.addEventListener('change', checkMediaQuery);
+
+    // Limpeza ao desmontar o componente
+    return () => mediaQueryList.removeEventListener('change', checkMediaQuery);
+  }, []); // Não depende de nada, roda apenas na montagem do componente
+
   return (
     <main className="main">
-      <h1>Conteúdo de Imagem</h1>
-      <form onSubmit={(e) => e.preventDefault()}>
-        {step === 1 && (
-          <Image_Forms_Step1
-            handleNextStep={handleNextStep}
-            original_content_file={original_content_file}
-            setOriginal_content_file={setOriginal_content_file}
-            original_content_PreviewUrl={original_content_PreviewUrl}
-            setOriginal_content_PreviewUrl={setOriginal_content_PreviewUrl}
-            handleRemoveFile={handleRemoveImageFile}
-          />
-        )}
-        {step === 2 && ( // trocar os numeros dos steps novamente (apenas os troquei para facilitar a edição do step 2)
-          <Image_Forms_Step2
-            handlePreviousStep={handlePreviousStep}
-            handleSubmit={handleSubmit}
-            original_content_file={original_content_file}
-            setOriginal_content_file={setOriginal_content_file}
-            accessibleAudioFiles={accessibleAudioFiles}
-            setAccessibleAudioFiles={setAccessibleAudioFiles}
-          />
-        )}
-      </form>
+      {mediaQueryMatches === undefined ? (
+        ''
+      ) : mediaQueryMatches ? (
+        <>
+          <h1>Conteúdo de Imagem</h1>
+          <form onSubmit={(e) => e.preventDefault()}>
+            {step === 1 && (
+              <Image_Forms_Step1
+                handleNextStep={handleNextStep}
+                original_content_file={original_content_file}
+                setOriginal_content_file={setOriginal_content_file}
+                original_content_PreviewUrl={original_content_PreviewUrl}
+                setOriginal_content_PreviewUrl={setOriginal_content_PreviewUrl}
+                handleRemoveFile={handleRemoveImageFile}
+              />
+            )}
+            {step === 2 && ( // trocar os numeros dos steps novamente (apenas os troquei para facilitar a edição do step 2)
+              <Image_Forms_Step2
+                handlePreviousStep={handlePreviousStep}
+                handleSubmit={handleSubmit}
+                original_content_file={original_content_file}
+                setOriginal_content_file={setOriginal_content_file}
+                accessibleAudioFiles={accessibleAudioFiles}
+                setAccessibleAudioFiles={setAccessibleAudioFiles}
+              />
+            )}
+          </form>
+        </>
+      ) : (
+        <>
+          <h1>Conteúdo de Imagem</h1>
+          <h3>Pedimos desculpa mas a criação de conteúdos não está disponível para o seu dispositivo</h3>
+        </>
+      )}
     </main>
   );
 }

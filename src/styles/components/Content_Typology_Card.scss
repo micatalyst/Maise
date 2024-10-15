@@ -5,8 +5,8 @@
   grid-template-rows: repeat(4, max-content) 1fr;
 
   background-color: var(--cards-bg);
-  width: $typology-cards-width;
-  min-height: $content-typology-card-min-height;
+  width: 100%;
+  //min-height: $content-typology-card-min-height;
   height: 100%;
 
   padding: $content-typology-cards-padding;
@@ -70,5 +70,20 @@
   .type-image-container {
     display: grid;
     align-items: end;
+
+    img {
+      width: 100%;
+    }
+  }
+}
+
+@media screen and (min-width: #{$laptop}) {
+  .content-typology-card {
+    width: $typology-cards-width;
+    min-height: $content-typology-card-min-height;
+  }
+
+  img {
+    width: auto;
   }
 }

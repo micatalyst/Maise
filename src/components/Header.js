@@ -8,7 +8,7 @@ import { faBars, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 
 import { useState, useEffect } from 'react';
 
-import { usePathname } from 'next/navigation';
+//import { usePathname } from 'next/navigation';
 
 //import { useMediaQuery } from '@/hooks/useMediaQuery';
 
@@ -18,7 +18,7 @@ import Navbar_Mobile from '@/components/Navbar_Mobile';
 export default function Header() {
   //const mediaQueryMatches = useMediaQuery('--laptop');
 
-  const path = usePathname();
+  /* const path = usePathname();
 
   const [pathName, setPathName] = useState('');
 
@@ -35,7 +35,7 @@ export default function Header() {
       case '/Sobre':
         return setPathName('Sobre');
     }
-  }, [path]);
+  }, [path]); */
 
   const desktopBreakpoint = '(min-width: 1066px)';
   const isMatching = window.matchMedia(desktopBreakpoint).matches;
@@ -68,12 +68,25 @@ export default function Header() {
     setIsDropDownOpen(!isDropDownOpen); // set true if false / set false if true
   };
 
+  const [isDarkMode, setIsDarkMode] = useState(false); // Estado para dark mode
+
+  // Alterna entre temas
+  const toggleTheme = () => {
+    const newTheme = isDarkMode ? 'light' : 'dark'; // Alterna entre light e dark
+    document.documentElement.setAttribute('data-theme', newTheme); // Define o atributo data-theme
+    setIsDarkMode(!isDarkMode); // Atualiza o estado
+  };
+
   const MobileHeader = (
     <header className="header-mobile">
       <div className="logotipo-text">
-        <Link href="/">MAISE</Link>
+        <Link
+          href="/"
+          onClick={() => setIsDropDownOpen(false)}
+        >
+          MAISE
+        </Link>
       </div>
-      {/* <div>{pathName}</div> */}
       <button
         type="button"
         onClick={handleOpenDropDown}
@@ -84,6 +97,7 @@ export default function Header() {
         <Navbar_Mobile
           isDropDownOpen={isDropDownOpen}
           setIsDropDownOpen={setIsDropDownOpen}
+          toggleTheme={toggleTheme}
         />
       }
     </header>
@@ -94,7 +108,7 @@ export default function Header() {
       <div className="logotipo-text">
         <Link href="/">MAISE</Link>
       </div>
-      <Navbar_Desktop />
+      <Navbar_Desktop toggleTheme={toggleTheme} />
       <button type="button">
         <FontAwesomeIcon icon={faRightFromBracket} /> Sair
       </button>

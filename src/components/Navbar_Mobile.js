@@ -11,7 +11,7 @@ import { usePathname } from 'next/navigation';
 
 import { useState, useEffect } from 'react';
 
-export default function Navbar_Mobile({ isDropDownOpen, setIsDropDownOpen }) {
+export default function Navbar_Mobile({ isDropDownOpen, setIsDropDownOpen, toggleTheme }) {
   const pathname = usePathname(); // Get current pathname
 
   //const pxToRem = (px) => px / parseFloat(getComputedStyle(document.documentElement).fontSize);
@@ -74,7 +74,10 @@ export default function Navbar_Mobile({ isDropDownOpen, setIsDropDownOpen }) {
           </Link>
         </li>
         <li>
-          <button type="button">
+          <button
+            type="button"
+            onClick={toggleTheme}
+          >
             <FontAwesomeIcon icon={faCircleHalfStroke} />
           </button>
         </li>

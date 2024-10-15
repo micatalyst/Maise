@@ -2,13 +2,8 @@
 
 .content-showing-container {
   display: grid;
-  grid-template-columns: 1fr minmax(auto, 90ch);
-  grid-template-rows: 1fr;
+  grid-template-columns: 1fr;
   gap: 2.5rem;
-
-  &.video {
-    grid-template-columns: 1fr max-content;
-  }
 
   .original-content-general-info-container {
     display: grid;
@@ -22,7 +17,7 @@
       background-color: var(--cards-bg);
       padding: 1.875rem;
 
-      p {
+      /* p {
         max-height: $content-showing-description-paragraph-max-height;
         overflow: auto;
 
@@ -39,12 +34,12 @@
         &::-webkit-scrollbar-thumb {
           background-color: var(--content-scrollbar-color);
         }
-      }
+      } */
     }
 
     .original-content-general-info-footer {
       display: grid;
-      grid-template-columns: 1fr max-content;
+      grid-template-columns: 1fr;
       gap: 2.5rem;
 
       &.image {
@@ -78,6 +73,7 @@
         svg {
           height: auto;
           width: 2.75rem;
+          margin-bottom: 1.125rem;
         }
 
         button {
@@ -94,31 +90,13 @@
     background-color: var(--cards-bg);
 
     .Content-showing-container-audio-text {
-      margin: 1.875rem 1.875rem 1.875rem 3.125rem;
-      padding-right: 1.25rem;
-      max-height: $content-showing-container-max-height;
-
-      overflow: auto;
-      overflow-x: hidden;
-      scroll-behavior: smooth;
-
-      &::-webkit-scrollbar {
-        width: 0.3125rem;
-      }
-
-      &::-webkit-scrollbar-track {
-        background-color: var(--content-scrollbar-bg-color);
-      }
-
-      &::-webkit-scrollbar-thumb {
-        background-color: var(--content-scrollbar-color);
-      }
+      margin: 1.875rem;
     }
 
     .Content-showing-container-image {
       margin: 1.875rem;
 
-      max-height: $content-showing-container-max-height;
+      //max-height: $content-showing-container-max-height;
 
       display: grid;
       grid-template-rows: max-content max-content 1fr;
@@ -136,37 +114,51 @@
 
       .image-preview-bottom-bar {
         display: grid;
-        grid-template-columns: repeat(3, max-content) 1fr;
-        gap: 0.625rem;
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
 
-        .imageSetBtn {
-          border-radius: $border-radius-5;
-          padding: 0.3125rem 0.75rem;
-          min-width: 2.25rem;
-          border: 0;
+        .image-preview-set {
+          display: grid;
+          grid-template-columns: 1fr max-content max-content;
+          gap: 0.625rem;
 
-          background-color: var(--audio-controls-buttons-bg-color);
-          color: var(--audio-controls-buttons-svg-color);
-          width: max-content;
-          height: max-content;
+          .imageSetBtn {
+            border-radius: $border-radius-5;
+            padding: 0.3125rem 0.75rem;
+            min-width: 2.25rem;
+            border: 0;
 
-          &:hover {
-            background-color: var(--audio-controls-buttons-bg-hover-color);
+            background-color: var(--audio-controls-buttons-bg-color);
+            color: var(--audio-controls-buttons-svg-color);
+            width: max-content;
+            height: max-content;
+
+            &:hover {
+              background-color: var(--audio-controls-buttons-bg-hover-color);
+            }
+          }
+
+          .imagesCountPreview {
+            width: max-content;
+            font-size: $section-title-text-size;
+            font-weight: $bold;
+            padding: 0.3125rem 0.75rem;
+            height: fit-content;
+            border-radius: $border-radius-5;
+            background-color: var(--content-detail-video-active-subtitles-mark-bg-color);
+            color: var(--content-detail-video-active-subtitles-mark-text-color);
           }
         }
 
-        .imagesCountPreview {
-          font-size: $section-title-text-size;
-          font-weight: $bold;
-          padding: 0.3125rem 0.75rem;
-          height: fit-content;
-          border-radius: $border-radius-5;
-          background-color: var(--content-detail-video-active-subtitles-mark-bg-color);
-          color: var(--content-detail-video-active-subtitles-mark-text-color);
-        }
-
         .btnContentPreview {
-          justify-self: end;
+          display: grid;
+          grid-template-columns: 1fr;
+          justify-items: end;
+          width: 100%;
+
+          button {
+            width: 100%;
+          }
         }
       }
 
@@ -180,52 +172,20 @@
     }
 
     .Content-showing-container-video {
+      display: grid;
+      grid-template-rows: repeat(2, max-content);
+
       margin: 1.875rem;
 
-      max-height: $content-showing-container-max-height;
-
-      /* overflow: auto;
-      overflow-x: hidden;
-      scroll-behavior: smooth;
-
-      &::-webkit-scrollbar {
-        width: .3125rem;
-      }
-
-      &::-webkit-scrollbar-track {
-        background-color: var(--content-scrollbar-bg-color);
-      }
-
-      &::-webkit-scrollbar-thumb {
-        background-color: var(--content-scrollbar-color);
-      } */
+      //max-height: $content-showing-container-max-height;
 
       .video-display {
-        display: grid;
-        grid-template-columns: max-content;
+        margin-bottom: 15px;
         position: relative;
-
-        /* overflow: auto;
-        overflow-x: hidden;
-        scroll-behavior: smooth;
-
-        &::-webkit-scrollbar {
-          width: .3125rem;
-        }
-
-        &::-webkit-scrollbar-track {
-          background-color: var(--content-scrollbar-bg-color);
-        }
-
-        &::-webkit-scrollbar-thumb {
-          background-color: var(--content-scrollbar-color);
-        } */
 
         .video {
           aspect-ratio: 16 / 9;
-          //width: calc(90ch - 1.875rem - 1.875rem);
-          height: calc($content-showing-video-responsive-height);
-          //background-color: var(--video-bg-color);
+          width: 100%;
         }
 
         .current-subtitles-showing {
@@ -240,6 +200,35 @@
 
           text-align: center;
           max-width: 40ch;
+        }
+      }
+
+      .subtitle-options-mobile-container {
+        display: flex;
+        //grid-template-columns: max-content 1fr;
+        gap: 1.875rem;
+        align-items: center;
+        font-size: $body-text-2;
+
+        .forms-select {
+          position: relative;
+          justify-self: end;
+
+          svg {
+            position: absolute;
+            height: auto;
+            width: 1.125rem;
+            right: 0.875rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--icons-1-color);
+            pointer-events: none;
+          }
+        }
+
+        label {
+          font-weight: $bold;
+          width: min-content;
         }
       }
 
@@ -281,6 +270,159 @@
           span {
             font-size: $body-text-2;
             font-weight: $bold;
+          }
+        }
+      }
+    }
+  }
+}
+
+select {
+  //cursor: pointer;
+
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  border-radius: $border-radius-5;
+  border: 0.0625rem solid var(--input-border-color) !important;
+  //outline: none;
+  width: 100% !important;
+  padding: $input-padding;
+
+  background-color: var(--input-bg-color);
+  font-size: $body-text-2;
+
+  color: var(--base-text-color);
+
+  &:invalid {
+    color: var(--placeholders-text-color);
+  }
+
+  &:focus {
+    border: 0.0625rem solid $transparent;
+  }
+}
+
+@media screen and (min-width: #{$laptop}) {
+  select {
+    //cursor: pointer;
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    border-radius: $border-radius-5;
+    border: 0.0625rem solid var(--input-border-color) !important;
+    //outline: none;
+    width: 24rem !important;
+    padding: $input-padding;
+
+    background-color: var(--input-bg-color);
+    font-size: $body-text-2;
+
+    color: var(--base-text-color);
+
+    &:invalid {
+      color: var(--placeholders-text-color);
+    }
+
+    &:focus {
+      border: 0.0625rem solid $transparent;
+    }
+  }
+
+  .content-showing-container {
+    grid-template-columns: 1fr minmax(auto, 87ch);
+    grid-template-rows: 1fr;
+
+    &.video {
+      grid-template-columns: 1fr max-content;
+    }
+
+    .original-content-general-info-container {
+      .original-content-description-container {
+        p {
+          max-height: 257px /* $content-showing-description-paragraph-max-height */;
+          overflow: auto;
+
+          padding-right: 0.625rem;
+
+          &::-webkit-scrollbar {
+            width: 0.3125rem;
+          }
+
+          &::-webkit-scrollbar-track {
+            background-color: var(--content-scrollbar-bg-color);
+          }
+
+          &::-webkit-scrollbar-thumb {
+            background-color: var(--content-scrollbar-color);
+          }
+        }
+      }
+
+      .original-content-general-info-footer {
+        grid-template-columns: 1fr max-content;
+      }
+    }
+
+    .created-content-visualization-container {
+      .Content-showing-container-audio-text {
+        margin: 1.875rem 1.875rem 1.875rem 3.125rem;
+        padding-right: 1.25rem;
+
+        max-height: $content-showing-container-max-height;
+
+        overflow: auto;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+
+        &::-webkit-scrollbar {
+          width: 0.3125rem;
+        }
+
+        &::-webkit-scrollbar-track {
+          background-color: var(--content-scrollbar-bg-color);
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background-color: var(--content-scrollbar-color);
+        }
+      }
+
+      .Content-showing-container-image {
+        //max-height: $content-showing-container-max-height;
+
+        .image-preview-bottom-bar {
+          grid-template-columns: max-content 1fr;
+          .image-preview-set {
+            grid-template-columns: repeat(3, max-content);
+          }
+          .btnContentPreview {
+            justify-items: end;
+            grid-template-columns: 1fr;
+
+            button {
+              width: max-content;
+            }
+          }
+        }
+      }
+
+      .Content-showing-container-video {
+        margin: 1.875rem;
+
+        max-height: $content-showing-container-max-height;
+
+        .video-display {
+          display: grid;
+          grid-template-columns: max-content;
+          margin: 0;
+
+          .video {
+            width: auto;
+            height: calc($content-showing-video-responsive-height);
           }
         }
       }

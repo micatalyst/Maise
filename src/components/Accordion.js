@@ -22,7 +22,7 @@ export default function Accordion({ type, setAudioCurrentTime, setAudioDuration,
   useEffect(() => {
     const createBlobFromUrl = async () => {
       if (textTypeAudioFilePath && type === 'Texto') {
-        const baseServerUrl = 'http://localhost:3001';
+        const baseServerUrl = `${window.location.protocol}//${window.location.hostname}:3001`;
         const fileUrl = `${baseServerUrl}${textTypeAudioFilePath}`;
         if (type === 'Texto') {
           try {
@@ -65,21 +65,24 @@ export default function Accordion({ type, setAudioCurrentTime, setAudioDuration,
           id={`accordion-button-${textId}`}
           aria-expanded={isDropDownOpen}
           aria-controls={`accordion-content-${textId}`}
-          className={type === 'Áudio' ? 'accordion-dropdown-button audio-time' : 'accordion-dropdown-button'}
+          className="accordion-dropdown-button"
           type="button"
           onClick={handleOpenDropDown}
           aria-label="Botão para revelar o conteúdo da section neste accordion"
         >
           {isDropDownOpen ? <FontAwesomeIcon icon={faAngleUp} /> : <FontAwesomeIcon icon={faAngleDown} />}
-
-          <h3> {title} </h3>
-          {type === 'Áudio' && (
-            <div className="section-time">
-              <p>
-                {audioStartTime} - {audioEndTime}
-              </p>
+          <div className={type === 'Áudio' ? 'accordion-dropdown-button-header audio-time' : 'accordion-dropdown-button-header'}>
+            <div>
+              <h3> {title} </h3>
             </div>
-          )}
+            {type === 'Áudio' && (
+              <div className="section-time">
+                <p>
+                  {audioStartTime} - {audioEndTime}
+                </p>
+              </div>
+            )}
+          </div>
         </button>
       </div>
       <div

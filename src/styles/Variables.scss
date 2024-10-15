@@ -28,16 +28,6 @@ $informative-Blue: #1167d3; // White (5.38) | Dark_Gray (3.17) // Será usado co
 $informative-Blue-20: #d0e1f5; // Dark_Gray (12.80)
 
 :root {
-  // MediaQueries breakpoints
-
-  --mobile: '320px';
-  --mobileM: '375px';
-  --mobileL: '425px';
-  --tablet: '768px';
-  --laptop: '1066px';
-  --laptopL: '1440px';
-  --desktop: '2560px';
-
   // Cores
 
   --bg-color: #{$light-blue};
@@ -145,19 +135,234 @@ $informative-Blue-20: #d0e1f5; // Dark_Gray (12.80)
   --content-detail-video-active-subtitles-mark-text-color: #{$white};
 }
 
-/* [data-theme='dark'] {
-  
-} */
+[data-theme='dark'] {
+  // Cores principais
+
+  // Cores
+
+  --bg-color: #1c1c1c; // Original
+  --base-text-color: #ffffff; // Original
+
+  --content-scrollbar-bg-color: #444444; // Original
+  --content-scrollbar-color: #1167d3; // Original
+
+  --level-1-content-bg: #444444; // Original
+  --level-2-content-bg: #1c1c1c; // Original
+  --level-3-content-bg: #141414; // #141414
+
+  --icons-1-color: #d9d9d9; // Original
+
+  --placeholders-text-color: $gray-2; // Variável
+  --input-bg-color: #2a2a2a; // Original
+  --input-border-color: #444444; // Original
+  --input-file-type-color: $gray-1; // Variável
+
+  /* --captions-text-color: $gray-2; */
+  --additional-text-color: $gray-2; // Variável
+
+  --headerMobile-bg: $gray-3; // Variável
+  --headerMobile-text-color: #ffffff; // Original
+
+  --navbar-bg: #1c1c1c; // Original
+  --navbar-elements-color: #d9d9d9; // Original
+  --navbar-elements-active-border-bottom-color: #86cc3f; // Original
+
+  --main-container: #2a2a2a; // Original
+  --cards-bg: #2a2a2a; // Original
+  --forms-container-bg: #2a2a2a; // Original
+
+  --toolbar-bg-pressed-color: #444444; // Original
+  --toolbar-bg-hover-color: $light-gray; // Variável
+  --toolbar-text-color: #ffffff; // Original
+
+  --tab-text-color: #d9d9d9; // Original
+  --tab-border-color: #1167d3; // Original
+  --tab-under-line-color: $gray-1; // Variável
+
+  --content-card-date-text-color: $gray-2; // Variável
+  --content-card-category-bg-color: $informative-Blue-20; // Original
+
+  --content-typology-example-title: #d9d9d9; // Original
+  --content-typology-examples-bg: $light-gray; // Variável
+
+  --button-primary-border-color: #1167d3; // Original
+  --button-primary-bg-color: #1c1c1c; // Original
+  --button-primary-text-color: #d9d9d9; // Original
+  --button-primary-bg-hover-color: #1167d3; // Original
+  --button-primary-text-hover-color: #1c1c1c; // Original
+  --modal-primary-border-color: #1167d3; // Original
+
+  --button-negative-border-color: #d33535; // Original
+  --button-negative-bg-color: #1c1c1c; // Original
+  --button-negative-text-color: #d9d9d9; // Original
+  --button-negative-bg-hover-color: #d33535; // Original
+  --button-negative-text-hover-color: #ffffff; // Original
+  --modal-negative-border-color: #d33535; // Original
+
+  --button-forms-border-color: #86cc3f; // Original
+  --button-forms-bg-color: #2a2a2a; // Original
+  --button-forms-text-color: #d9d9d9; // Original
+  --button-forms-bg-hover-color: #86cc3f; // Original
+  --button-forms-text-hover-color: #1c1c1c; // Original
+  --invalid-button-forms-border-color: $gray-1; // Variável
+  --invalid-button-forms-bg-color: #444444; // Original
+
+  --forms-step1-feedback-bar-color: $gray-2; // Variável
+  --forms-step1-valid-feedback-bar-color: #86cc3f; // Original
+
+  --placeholder-container-text-color: $gray-1; // Variável
+
+  --content-creating-limit-border-color: $light-gray; // Variável
+
+  --section-bg-color: #2a2a2a; // Original
+  --section-drag-color: $gray-1; // Variável
+  --section-select-bg-color: #d0e1f5; // Original
+  --section-select-border-color: #1167d3; // Original
+
+  --audio-container-border-color: #d9d9d9; // Original
+  --audio-controls-buttons-bg-color: #444444; // Original
+  --audio-controls-buttons-bg-hover-color: $light-gray; // Variável
+  --audio-controls-buttons-svg-color: #ffffff; // Original
+
+  --image-uploaded-container-border-color: #d9d9d9; // Original
+  --image-uploaded-sections-slide-number-bg-color: #d9d9d9; // Original
+  --image-uploaded-sections-slide-number-text-color: #ffffff; // Original
+  --image-uploaded-sections-border-color: #d9d9d9; // Original
+
+  --video-bg-color: #1c1c1c; // Original
+  --video-current-subtitles-showing-bg-color: #1c1c1c; // Original
+  --video-current-subtitles-showing-text-color: #ffffff; // Original
+  --video-controls-bg-color: #1c1c1c; // Original
+  --video-all-subtitles-table-header-bg-color: #1c1c1c; // Original
+  --video-all-subtitles-table-header-text-color: $light-gray; // Variável
+  --video-set-time-pin-color: #ffffff; // Original
+  --video-set-time-pin-bg-color: #1c1c1c; // Original
+
+  --audio-section-time-bg-color: #1c1c1c; // Original
+  --audio-section-time-text-color: #ffffff; // Original
+
+  --content-detail-video-active-subtitles-mark-bg-color: #1c1c1c; // Original
+  --content-detail-video-active-subtitles-mark-text-color: #ffffff; // Original
+
+  /*  --bg-color: #1c1c1c; // Substitui o $light-blue para evitar tons claros
+  --base-text-color: #ffffff;
+
+  --content-scrollbar-bg-color: #444444;
+  --content-scrollbar-color: #1167d3;
+
+  --level-1-content-bg: #2a2a2a;
+  --level-2-content-bg: #1c1c1c;
+  --level-3-content-bg: #141414;
+
+  --icons-1-color: #d9d9d9;
+
+  --placeholders-text-color: #6d6d6d;
+  --input-bg-color: #2a2a2a;
+  --input-border-color: #444444;
+  --input-file-type-color: #878787;
+
+  --additional-text-color: #6d6d6d;
+
+  --headerMobile-bg: #444444;
+  --headerMobile-text-color: #ffffff;
+
+  --navbar-bg: #1c1c1c;
+  --navbar-elements-color: #d9d9d9;
+  --navbar-elements-active-border-bottom-color: #86cc3f; // Verde escuro acessível
+
+  --main-container: #2a2a2a;
+  --cards-bg: #2a2a2a;
+  --forms-container-bg: #2a2a2a;
+
+  --toolbar-bg-pressed-color: #444444;
+  --toolbar-bg-hover-color: #6d6d6d;
+  --toolbar-text-color: #ffffff;
+
+  --tab-text-color: #d9d9d9;
+  --tab-border-color: #1167d3;
+  --tab-under-line-color: #878787;
+
+  --content-card-date-text-color: #6d6d6d;
+  --content-card-category-bg-color: #d0e1f5;
+
+  --content-typology-example-title: #d9d9d9;
+  --content-typology-examples-bg: #2a2a2a;
+
+  // Botões primários
+  --button-primary-border-color: #d0e1f5;
+  --button-primary-bg-color: #1c1c1c;
+  --button-primary-text-color: #d0e1f5;
+  --button-primary-bg-hover-color: #d0e1f5;
+  --button-primary-text-hover-color: #1c1c1c;
+  --modal-primary-border-color: #d0e1f5;
+
+  // Botões negativos
+  --button-negative-border-color: #d33535;
+  --button-negative-bg-color: #1c1c1c;
+  --button-negative-text-color: #d9d9d9;
+  --button-negative-bg-hover-color: #d33535;
+  --button-negative-text-hover-color: #ffffff;
+  --modal-negative-border-color: #d33535;
+
+  // Botões de formulário
+  --button-forms-border-color: #86cc3f;
+  --button-forms-bg-color: #1c1c1c;
+  --button-forms-text-color: #d9d9d9;
+  --button-forms-bg-hover-color: #86cc3f;
+  --button-forms-text-hover-color: #ffffff;
+  --invalid-button-forms-border-color: #878787;
+  --invalid-button-forms-bg-color: #2a2a2a;
+
+  --forms-step1-feedback-bar-color: #6d6d6d;
+  --forms-step1-valid-feedback-bar-color: #86cc3f;
+
+  --placeholder-container-text-color: #878787;
+
+  --content-creating-limit-border-color: #444444;
+
+  --section-bg-color: #1c1c1c;
+  --section-drag-color: #6d6d6d;
+  --section-select-bg-color: #d0e1f5;
+  --section-select-border-color: #1167d3;
+
+  // Áudio
+  --audio-container-border-color: #444444;
+  --audio-controls-buttons-bg-color: #2a2a2a;
+  --audio-controls-buttons-bg-hover-color: #6d6d6d;
+  --audio-controls-buttons-svg-color: #ffffff;
+
+  --image-uploaded-container-border-color: #444444;
+  --image-uploaded-sections-slide-number-bg-color: #1c1c1c;
+  --image-uploaded-sections-slide-number-text-color: #ffffff;
+  --image-uploaded-sections-border-color: #444444;
+
+  // Vídeo
+  --video-bg-color: #1c1c1c;
+  --video-current-subtitles-showing-bg-color: #2a2a2a;
+  --video-current-subtitles-showing-text-color: #ffffff;
+  --video-controls-bg-color: #1c1c1c;
+  --video-all-subtitles-table-header-bg-color: #2a2a2a;
+  --video-all-subtitles-table-header-text-color: #6d6d6d;
+  --video-set-time-pin-color: #ffffff;
+  --video-set-time-pin-bg-color: #444444;
+
+  --audio-section-time-bg-color: #2a2a2a;
+  --audio-section-time-text-color: #d9d9d9;
+
+  --content-detail-video-active-subtitles-mark-bg-color: #2a2a2a;
+  --content-detail-video-active-subtitles-mark-text-color: #d9d9d9; */
+}
 
 // Spacing
 $header-desktop-padding: 2.5rem 4.375rem 0;
-$header-mobile-padding: 0.625rem 1.5625rem;
+$header-mobile-padding: 0.625rem 1.875rem;
 $header-mobile-height: 4.25rem;
 
-$main-min-height: calc(100svh - #{nth($header-desktop-padding, 1)} - 3rem);
+$main-desktop-min-height: calc(100svh - #{nth($header-desktop-padding, 1)} - 3rem);
 $main-mobile-min-height: calc(100svh - #{$header-mobile-height});
 
-$main-padding: 2.5rem 4.375rem 4.375rem;
+$main-desktop-padding: 2.5rem 4.375rem 4.375rem;
+$main-mobile-padding: 1.25rem 1.875rem;
 $tab-container-margin: 0 0 1.25rem;
 $tab-padding-bottom: 0.625rem;
 $toolbar-margin: 0 0 2.5rem;
@@ -166,21 +371,21 @@ $textarea-padding: 0.75rem 1.25rem;
 $input-forms-padding: 0.75rem 1.25rem;
 
 $content-cards-container-padding: 0 0 2.5rem;
-$content-cards-container-ArquivoUA-max-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 2.9063rem - 2.5rem);
-$content-cards-container-AreaPessoal-max-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 2.4375rem - 1.25rem - 2.9063rem - 2.5rem);
+$content-cards-container-ArquivoUA-max-height: calc(#{$main-desktop-min-height} - #{nth($main-desktop-padding, 1)} - #{nth($main-desktop-padding, 3)} - 2.9063rem - 2.5rem);
+$content-cards-container-AreaPessoal-max-height: calc(#{$main-desktop-min-height} - #{nth($main-desktop-padding, 1)} - #{nth($main-desktop-padding, 3)} - 2.4375rem - 1.25rem - 2.9063rem - 2.5rem);
 
 $content-cards-padding: 0.9375rem;
 $content-typology-pre-info-margin: 0 0 2.5rem;
 $content-typology-cards-padding: 1.875rem;
 
-$content-showing-description-paragraph-max-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 14.5rem - 2.5rem - 2.625rem - 2.5rem - 1.6875rem - 0.9375rem - 1.875rem - 1.875rem);
-$content-showing-container-max-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 1.875rem - 1.875rem);
-$content-showing-video-responsive-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 18.25rem);
-$content-showing-all-subtitles-table-content-max-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - #{$content-showing-video-responsive-height} - 1.875rem - 1.875rem - 1.25rem);
+$content-showing-description-paragraph-max-height: calc(#{$main-desktop-min-height} - #{nth($main-desktop-padding, 1)} - #{nth($main-desktop-padding, 3)} - 14.5rem - 2.5rem - 2.625rem - 2.5rem - 1.6875rem - 0.9375rem - 1.875rem - 1.875rem);
+$content-showing-container-max-height: calc(#{$main-desktop-min-height} - #{nth($main-desktop-padding, 1)} - #{nth($main-desktop-padding, 3)} - 1.875rem - 1.875rem);
+$content-showing-video-responsive-height: calc(#{$main-desktop-min-height} - #{nth($main-desktop-padding, 1)} - #{nth($main-desktop-padding, 3)} - 18.25rem);
+$content-showing-all-subtitles-table-content-max-height: calc(#{$main-desktop-min-height} - #{nth($main-desktop-padding, 1)} - #{nth($main-desktop-padding, 3)} - #{$content-showing-video-responsive-height} - 1.875rem - 1.875rem - 1.25rem);
 
-$content-typology-card-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 3rem - #{nth($content-typology-pre-info-margin, 3)});
+$content-typology-card-min-height: calc(#{$main-desktop-min-height} - #{nth($main-desktop-padding, 1)} - #{nth($main-desktop-padding, 3)} - 3rem - #{nth($content-typology-pre-info-margin, 3)});
 
-$content-typology-general-card-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 2.3125rem - 0.125rem - #{nth($tab-container-margin, 3)});
+$content-typology-general-card-min-height: calc(#{$main-desktop-min-height} - #{nth($main-desktop-padding, 1)} - #{nth($main-desktop-padding, 3)} - 2.3125rem - 0.125rem - #{nth($tab-container-margin, 3)});
 
 $forms-step1-padding: 1.875rem 2.5rem;
 $forms-step2-content-creation-top-bar-padding: 1.25rem 1.875rem;
@@ -188,18 +393,19 @@ $modal-padding: 1.875rem;
 
 $forms-step2-language-container-padding: 1.25rem 1.875rem 1.875rem;
 
-$text-forms-step2-main-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 2.625rem - 2.5rem - 2.9063rem - 1.875rem - 5.5625rem - 1.25rem);
-$image-forms-step2-main-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 2.625rem - 2.5rem - 5.5625rem - 1.25rem);
-$video-forms-step2-main-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 2.625rem - 2.5rem - 5.5625rem - 1.25rem);
-$audio-forms-step2-main-min-height: calc(#{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 2.625rem - 2.5rem - 5.5625rem - 1.25rem);
+$text-forms-step2-main-min-height: calc(#{$main-desktop-min-height} - #{nth($main-desktop-padding, 1)} - #{nth($main-desktop-padding, 3)} - 2.625rem - 2.5rem - 2.9063rem - 1.875rem - 5.5625rem - 1.25rem);
+$image-forms-step2-main-min-height: calc(#{$main-desktop-min-height} - #{nth($main-desktop-padding, 1)} - #{nth($main-desktop-padding, 3)} - 2.625rem - 2.5rem - 5.5625rem - 1.25rem);
+$video-forms-step2-main-min-height: calc(#{$main-desktop-min-height} - #{nth($main-desktop-padding, 1)} - #{nth($main-desktop-padding, 3)} - 2.625rem - 2.5rem - 5.5625rem - 1.25rem);
+$audio-forms-step2-main-min-height: calc(#{$main-desktop-min-height} - #{nth($main-desktop-padding, 1)} - #{nth($main-desktop-padding, 3)} - 2.625rem - 2.5rem - 5.5625rem - 1.25rem);
 
 $text-forms-step2-work-space-max-height: calc(#{$text-forms-step2-main-min-height} - #{nth($forms-step2-content-creation-top-bar-padding, 1)} - #{nth($forms-step2-content-creation-top-bar-padding, 1)} - 2.5313rem - 0.3125rem);
 
 $text-forms-step2-sections-container-min-height: calc(
-  #{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 2.625rem - 2.5rem - 2.9063rem - 1.875rem - 5.5625rem - 1.25rem - #{nth($forms-step2-language-container-padding, 1)} - #{nth($forms-step2-language-container-padding, 3)} - 1.6875rem - 0.625rem - 3.0313rem - 0.3125rem
+  #{$main-desktop-min-height} - #{nth($main-desktop-padding, 1)} - #{nth($main-desktop-padding, 3)} - 2.625rem - 2.5rem - 2.9063rem - 1.875rem - 5.5625rem - 1.25rem - #{nth($forms-step2-language-container-padding, 1)} - #{nth($forms-step2-language-container-padding, 3)} - 1.6875rem - 0.625rem - 3.0313rem -
+    0.3125rem
 );
 $Image-forms-step2-sections-container-min-height: calc(
-  #{$main-min-height} - #{nth($main-padding, 1)} - #{nth($main-padding, 3)} - 2.625rem - 2.5rem - 5.5625rem - 1.25rem - #{nth($forms-step2-language-container-padding, 1)} - #{nth($forms-step2-language-container-padding, 3)} - 1.6875rem - 0.625rem - 3.0313rem - 0.3125rem
+  #{$main-desktop-min-height} - #{nth($main-desktop-padding, 1)} - #{nth($main-desktop-padding, 3)} - 2.625rem - 2.5rem - 5.5625rem - 1.25rem - #{nth($forms-step2-language-container-padding, 1)} - #{nth($forms-step2-language-container-padding, 3)} - 1.6875rem - 0.625rem - 3.0313rem - 0.3125rem
 );
 
 $image-uploaded-container: 0.5rem 0.75rem;
@@ -286,3 +492,14 @@ $section-title-text-size: 1rem;
 
 $image-uploaded-container-p-text-size: 0.875rem;
 $image-uploaded-container-span-text-size: 0.75rem;
+
+// MediaQueries breakpoints
+
+$mobile: '320px';
+$mobileM: '375px';
+$mobileL: '425px';
+$tablet: '768px';
+$laptop: '1066px';
+$laptopL: '1440px';
+$desktop: '1537px';
+$desktopL: '2560px';

@@ -21,7 +21,7 @@ import Video from 'next-video/player';
 import Content_Showing_Video_Subtitles_Section from '@/components/Content_Showing_Video_Subtitles_Section';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleLeft, faAngleRight, faFile } from '@fortawesome/free-solid-svg-icons';
+import { faAngleLeft, faAngleRight, faFile, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 export default function Conteudo() {
   const searchParams = useSearchParams();
@@ -41,7 +41,7 @@ export default function Conteudo() {
 
   const [audioCurrentTime, setAudioCurrentTime] = useState(0);
   const [audioDuration, setAudioDuration] = useState(0);
-  const globalAudioVolume = useRef(0.5);
+  const globalAudioVolume = useRef(1);
 
   // Image variables
 
@@ -66,7 +66,7 @@ export default function Conteudo() {
 
   useEffect(() => {
     const createBlobFromUrl = async () => {
-      const baseServerUrl = 'http://localhost:3001';
+      const baseServerUrl = `${window.location.protocol}//${window.location.hostname}:3001`;
       if (currentContent && currentContent.originalFilePath && currentContent.content_typology !== 'Imagem') {
         const fileUrl = `${baseServerUrl}${currentContent.originalFilePath}`;
         setOriginalFileUrl(fileUrl);
@@ -191,6 +191,25 @@ export default function Conteudo() {
     setVideoCurrentTime(videoRef.current.currentTime);
   };
 
+  const desktopBreakpoint = '(min-width: 1066px)';
+  const isMatching = window.matchMedia(desktopBreakpoint).matches;
+  const [mediaQueryMatches, setMediaQueryMatches] = useState(isMatching);
+
+  useEffect(() => {
+    // Define a função de verificação da media query
+    const checkMediaQuery = () => {
+      const isMatching = window.matchMedia(desktopBreakpoint).matches;
+      setMediaQueryMatches(isMatching);
+    };
+
+    // Adiciona um listener de eventos para mudanças na media query
+    const mediaQueryList = window.matchMedia(desktopBreakpoint);
+    mediaQueryList.addEventListener('change', checkMediaQuery);
+
+    // Limpeza ao desmontar o componente
+    return () => mediaQueryList.removeEventListener('change', checkMediaQuery);
+  }, []); // Não depende de nada, roda apenas na montagem do componente
+
   const typeExamples = (type) => {
     switch (type) {
       case 'Texto':
@@ -226,28 +245,32 @@ export default function Conteudo() {
               )}
             </div>
             <div className="image-preview-bottom-bar">
-              <button
-                className="imageSetBtn"
-                onClick={handlePreviousImage}
-              >
-                <FontAwesomeIcon icon={faAngleLeft} />
-              </button>
-              <button
-                className="imageSetBtn"
-                onClick={handleNextImage}
-              >
-                <FontAwesomeIcon icon={faAngleRight} />
-              </button>
-              <p className="imagesCountPreview">
-                {imageSelectedContent} / {imageTotalContent}
-              </p>
-              <button
-                className="primary-button btnContentPreview"
-                type="button"
-                onClick={handleOriginalContentPreview}
-              >
-                Abrir Imagem
-              </button>
+              <div className="image-preview-set">
+                <p className="imagesCountPreview">
+                  {imageSelectedContent} / {imageTotalContent}
+                </p>
+                <button
+                  className="imageSetBtn"
+                  onClick={handlePreviousImage}
+                >
+                  <FontAwesomeIcon icon={faAngleLeft} />
+                </button>
+                <button
+                  className="imageSetBtn"
+                  onClick={handleNextImage}
+                >
+                  <FontAwesomeIcon icon={faAngleRight} />
+                </button>
+              </div>
+              <div className="btnContentPreview">
+                <button
+                  className="primary-button"
+                  type="button"
+                  onClick={handleOriginalContentPreview}
+                >
+                  Abrir Imagem
+                </button>
+              </div>
             </div>
             <div className="image-preview-audio">
               <Content_Showing_Image_AudioDescription
@@ -256,12 +279,6 @@ export default function Conteudo() {
                 setAudioDuration={setAudioDuration}
                 globalAudioVolume={globalAudioVolume}
               />
-              {/* <Audio_Forms_Visualiser
-                setAudioCurrentTime={setAudioCurrentTime}
-                setAudioDuration={setAudioDuration}
-                globalAudioVolume={globalAudioVolume}
-                original_content_file={audioFile}
-              /> */}
             </div>
           </div>
         );
@@ -304,7 +321,7 @@ export default function Conteudo() {
               />
               {isSubtitlesOn && <p className="current-subtitles-showing">{currentSubtitle}</p>}
             </div>
-            {currentContent && isVideoLoaded && currentContent.videoSubtitles && (
+            {mediaQueryMatches !== undefined && mediaQueryMatches && currentContent && isVideoLoaded && currentContent.videoSubtitles && (
               <div className="all-subtitles-table">
                 <span className="all-subtitles-table-header">Idioma</span>
                 <span className="all-subtitles-table-header">Data</span>
@@ -320,13 +337,44 @@ export default function Conteudo() {
                 ))}
               </div>
             )}
+            {mediaQueryMatches !== undefined && !mediaQueryMatches && (
+              <div
+                className="subtitle-options-mobile-container"
+                aria-label="Legendas disponíveis para seleção"
+              >
+                <label htmlFor="subtitles">Legendas disponíveis:</label>
+
+                <div className="forms-select">
+                  <FontAwesomeIcon icon={faCaretDown} />
+                  <select
+                    id="subtitles"
+                    name="subtitles"
+                    value={currentContent.videoSubtitles[atualVideoSubtitles].created_content_language}
+                    onChange={(e) => {
+                      const selectedValue = e.target.value; // valor selecionado
+                      const selectedIndex = currentContent.videoSubtitles.findIndex((item) => item.created_content_language === selectedValue); // índice correspondente
+                      setAtualVideoSubtitles(selectedIndex); // estado com o índice
+                    }}
+                  >
+                    {currentContent.videoSubtitles.map((item, index) => (
+                      <option
+                        key={item.id}
+                        value={item.created_content_language}
+                      >
+                        {item.created_content_language}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            )}
           </div>
         );
     }
   };
 
   return (
-    <main className="main grid-template-columns-1fr">
+    <main className="main grid-template-rows-1fr">
       {loading
         ? 'Loading content'
         : currentContent && (

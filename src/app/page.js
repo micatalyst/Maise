@@ -78,6 +78,25 @@ export default function Arquivo_UA() {
     }
   }, [filter, searchParam, data, filterLevel2]);
 
+  const desktopBreakpoint = '(min-width: 1066px)';
+  const isMatching = window.matchMedia(desktopBreakpoint).matches;
+  const [mediaQueryMatches, setMediaQueryMatches] = useState(isMatching);
+
+  useEffect(() => {
+    // Define a função de verificação da media query
+    const checkMediaQuery = () => {
+      const isMatching = window.matchMedia(desktopBreakpoint).matches;
+      setMediaQueryMatches(isMatching);
+    };
+
+    // Adiciona um listener de eventos para mudanças na media query
+    const mediaQueryList = window.matchMedia(desktopBreakpoint);
+    mediaQueryList.addEventListener('change', checkMediaQuery);
+
+    // Limpeza ao desmontar o componente
+    return () => mediaQueryList.removeEventListener('change', checkMediaQuery);
+  }, []); // Não depende de nada, roda apenas na montagem do componente
+
   return (
     <main className="main">
       {/* <div>
@@ -96,14 +115,17 @@ export default function Arquivo_UA() {
               </div>
             )}
       </div> */}
-
-      {/* <Toolbar
+      {mediaQueryMatches !== undefined && !mediaQueryMatches && <h1>Arquivo UA</h1>}
+      <Toolbar
         onFilterType={handleFilter}
+        filter={filter}
         onSearch={handleSearch}
-      /> */}
+        mediaQueryMatches={mediaQueryMatches}
+      />
       <Content_Cards_Container
         site="ArquivoUA"
         data={finalData}
+        mediaQueryMatches={mediaQueryMatches}
       />
     </main>
   );
