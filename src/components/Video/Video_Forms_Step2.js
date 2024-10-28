@@ -183,6 +183,14 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
       }
 
       dispatch(setSubtitleCreatedLanguage(''));
+    } else {
+      toast.warning('Por favor selecione um idioma antes de criar um grupo de legendas', {
+        style: {
+          background: '#f3b21b',
+          color: '#1c1c1c',
+          border: 'none',
+        },
+      });
     }
   };
 
@@ -311,7 +319,7 @@ export default function Video_Forms_Step2({ handlePreviousStep, handleSubmit, or
                 value=""
                 disabled
               >
-                Idioma da legenda...
+                Idioma do grupo de legendas...
               </option>
               <option value="Português">Português</option>
               <option value="English">English</option>

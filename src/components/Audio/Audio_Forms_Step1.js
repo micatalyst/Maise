@@ -237,7 +237,7 @@ export default function Audio_Forms_Step1({ handleNextStep, original_content_fil
                     type="button"
                     onClick={handlePreview}
                   >
-                    Ver áudio
+                    Ouvir áudio
                   </button>
                 </div>
               </div>
