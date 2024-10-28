@@ -9,7 +9,7 @@ Siga os passos abaixo para testar a plataforma no seu computador.
 
 1. **Acesse o Repositório**  
    Visite o repositório do projeto no GitHub através do seguinte link:  
-   [MAISE Repository](https://github.com/micatalyst/Maise)
+   [Repositório MAISE](https://github.com/micatalyst/Maise)
 
 2. **Clone o Repositório**  
    Faça um fork do repositório para a sua própria conta do GitHub ou transfira manualmente todo o código para o seu computador.
